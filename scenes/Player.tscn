@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8d8d8d8d8d8"]
+
+[ext_resource type="Script" uid="uid://dsvfc500dl2mn" path="res://scripts/Player.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="2_icon"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1"]
+friction = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(120, 120)
+
+[node name="Player" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_1")
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("RectangleShape2D_1")

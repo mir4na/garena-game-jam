@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0dugtkj4vqvq"]
+
+[ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://dwifx811xduhx" path="res://scripts/Chain.gd" id="3_chain"]
+[ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="4_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(4352.8574, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig"]
+size = Vector2(301, 302)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Platform" type="AnimatableBody2D" parent="."]
+position = Vector2(1500, 600)
+scale = Vector2(0.7, 0.7)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+scale = Vector2(234.375, 0.39)
+texture = ExtResource("4_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2(39.286377, 0)
+scale = Vector2(0.99999964, 0.99999964)
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="Player1" parent="." instance=ExtResource("2_player")]
+position = Vector2(100, 500)
+contact_monitor = false
+max_contacts_reported = 0
+
+[node name="Player2" parent="." instance=ExtResource("2_player")]
+position = Vector2(262, 501)
+contact_monitor = false
+max_contacts_reported = 0
+player_id = 2
+
+[node name="Chain" type="Node2D" parent="."]
+script = ExtResource("3_chain")
+
+[node name="TriggerEnd" type="Area2D" parent="."]
+position = Vector2(2826, 442)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerEnd"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_trig")
+
+[node name="TriggerStart" type="Area2D" parent="."]
+position = Vector2(70, 438)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerStart"]
+position = Vector2(100.5, 0)
+shape = SubResource("RectangleShape2D_trig")
+
+[connection signal="body_entered" from="TriggerEnd" to="." method="_on_trigger_end_body_entered"]
+[connection signal="body_entered" from="TriggerStart" to="." method="_on_trigger_start_body_entered"]
