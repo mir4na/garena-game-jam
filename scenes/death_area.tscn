@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhct6lyt8cosj"]
+
+[ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="1_wtpbu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ecr63"]
+size = Vector2(2003, 126)
+
+[node name="DeathArea" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(936, 0)
+scale = Vector2(15.625001, 1)
+texture = ExtResource("1_wtpbu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(941.5, -1)
+shape = SubResource("RectangleShape2D_ecr63")

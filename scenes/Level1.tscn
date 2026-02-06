@@ -2,92 +2,95 @@
 
 [ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
-[ext_resource type="Script" uid="uid://dwifx811xduhx" path="res://scripts/Chain.gd" id="3_chain"]
 [ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="4_icon"]
 [ext_resource type="PackedScene" uid="uid://blcfjil1ywrmu" path="res://scenes/door.tscn" id="5_lrl65"]
+[ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="6_76388"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trig"]
-size = Vector2(211.5, 302)
+size = Vector2(394.375, 302)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrl65"]
-size = Vector2(61, 762)
+size = Vector2(61, 1531)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76388"]
-size = Vector2(1017, 118)
+size = Vector2(1556, 132)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svatc"]
-size = Vector2(435, 127)
+size = Vector2(491, 131.5)
 
 [node name="Level1" type="Node2D"]
-position = Vector2(2, -57)
 script = ExtResource("1_script")
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
-position = Vector2(111, 576)
+position = Vector2(141, 923)
 
 [node name="Player1" parent="." instance=ExtResource("2_player")]
-position = Vector2(110, 573)
+position = Vector2(85, 932)
 
-[node name="Player2" parent="." instance=ExtResource("2_player")]
-position = Vector2(203, 572)
-player_id = 2
-
-[node name="Chain" type="Node2D" parent="."]
-position = Vector2(1, -18)
-script = ExtResource("3_chain")
-
-[node name="TriggerEnd" type="Area2D" parent="."]
+[node name="Trigger1" type="Area2D" parent="."]
 position = Vector2(983, 500)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerEnd"]
-position = Vector2(44.75, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger1"]
+position = Vector2(570.1875, 362)
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="TriggerStart" type="Area2D" parent="."]
+[node name="Trigger2" type="Area2D" parent="."]
 position = Vector2(160, 478)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerStart"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger2"]
+position = Vector2(-26, 378)
+shape = SubResource("RectangleShape2D_trig")
+
+[node name="Trigger3" type="Area2D" parent="."]
+position = Vector2(160, 478)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger3"]
+position = Vector2(1395, 462)
 shape = SubResource("RectangleShape2D_trig")
 
 [node name="Door" parent="." instance=ExtResource("5_lrl65")]
-position = Vector2(1066, 573)
+position = Vector2(1715, 971)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-32.5, 357)
+position = Vector2(-32.5, 575)
 shape = SubResource("RectangleShape2D_lrl65")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1181, 338)
+position = Vector2(1950, 554)
 shape = SubResource("RectangleShape2D_lrl65")
+
+[node name="DeathArea" parent="." instance=ExtResource("6_76388")]
+position = Vector2(53, 1191)
 
 [node name="Platform" type="Node2D" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Platform"]
-position = Vector2(71, 658)
+[node name="PlatformBergerak" type="StaticBody2D" parent="Platform"]
+position = Vector2(49, 1067)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D"]
-position = Vector2(433, 2)
-scale = Vector2(7.953125, 0.96875)
+[node name="Sprite2D" type="Sprite2D" parent="Platform/PlatformBergerak"]
+position = Vector2(699.00006, 6.999995)
+scale = Vector2(12.109375, 1.0468749)
 texture = ExtResource("4_icon")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D"]
-position = Vector2(431.5, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/PlatformBergerak"]
+position = Vector2(701, 7)
 shape = SubResource("RectangleShape2D_76388")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Platform"]
 position = Vector2(1039, 667)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
-position = Vector2(154, -2)
-scale = Vector2(3.40625, 1.03125)
+position = Vector2(727.9999, 409.99997)
+scale = Vector2(3.843751, 1.03125)
 texture = ExtResource("4_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
-position = Vector2(158.5, -4.5)
+position = Vector2(725.5, 406.75)
 shape = SubResource("RectangleShape2D_svatc")
 
-[connection signal="body_entered" from="TriggerEnd" to="." method="_on_trigger_end_body_entered"]
-[connection signal="body_entered" from="TriggerStart" to="." method="_on_trigger_start_body_entered"]
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
+[connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
+[connection signal="body_entered" from="Trigger3" to="." method="_on_trigger_3_body_entered"]
 [connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]
