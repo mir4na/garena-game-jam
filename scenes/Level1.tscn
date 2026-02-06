@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0dugtkj4vqvq"]
+[gd_scene format=3 uid="uid://b0dugtkj4vqvq"]
 
 [ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
@@ -18,73 +18,73 @@ size = Vector2(1017, 118)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svatc"]
 size = Vector2(435, 127)
 
-[node name="Level1" type="Node2D"]
+[node name="Level1" type="Node2D" unique_id=1669776858]
 position = Vector2(2, -57)
 script = ExtResource("1_script")
 
-[node name="SpawnPoint" type="Marker2D" parent="."]
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=681670491]
 position = Vector2(111, 576)
 
-[node name="Player1" parent="." instance=ExtResource("2_player")]
+[node name="Player1" parent="." unique_id=1731368674 instance=ExtResource("2_player")]
 position = Vector2(110, 573)
 
-[node name="Player2" parent="." instance=ExtResource("2_player")]
+[node name="Player2" parent="." unique_id=1218608217 instance=ExtResource("2_player")]
 position = Vector2(203, 572)
 player_id = 2
 
-[node name="Chain" type="Node2D" parent="."]
+[node name="Chain" type="Node2D" parent="." unique_id=988147172]
 position = Vector2(1, -18)
 script = ExtResource("3_chain")
 
-[node name="TriggerEnd" type="Area2D" parent="."]
+[node name="TriggerEnd" type="Area2D" parent="." unique_id=1282466687]
 position = Vector2(983, 500)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerEnd"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerEnd" unique_id=1726667525]
 position = Vector2(44.75, -1)
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="TriggerStart" type="Area2D" parent="."]
+[node name="TriggerStart" type="Area2D" parent="." unique_id=1164943887]
 position = Vector2(160, 478)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerStart"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerStart" unique_id=1355440474]
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="Door" parent="." instance=ExtResource("5_lrl65")]
+[node name="Door" parent="." unique_id=1639370849 instance=ExtResource("5_lrl65")]
 position = Vector2(1066, 573)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1900022952]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=468990018]
 position = Vector2(-32.5, 357)
 shape = SubResource("RectangleShape2D_lrl65")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1075368783]
 position = Vector2(1181, 338)
 shape = SubResource("RectangleShape2D_lrl65")
 
-[node name="Platform" type="Node2D" parent="."]
+[node name="Platform" type="Node2D" parent="." unique_id=977030956]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Platform"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform" unique_id=1992695631]
 position = Vector2(71, 658)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D" unique_id=888680547]
 position = Vector2(433, 2)
 scale = Vector2(7.953125, 0.96875)
 texture = ExtResource("4_icon")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D" unique_id=722376637]
 position = Vector2(431.5, 0)
 shape = SubResource("RectangleShape2D_76388")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Platform"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platform" unique_id=1600691060]
 position = Vector2(1039, 667)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2" unique_id=1657325952]
 position = Vector2(154, -2)
 scale = Vector2(3.40625, 1.03125)
 texture = ExtResource("4_icon")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2" unique_id=1596290370]
 position = Vector2(158.5, -4.5)
 shape = SubResource("RectangleShape2D_svatc")
 
