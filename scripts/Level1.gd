@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player1 = $Player1
-#@onready var player2 = $Player2
+@onready var player2 = $Player2
 @onready var trigger1 = $Trigger1
 @onready var trigger2 = $Trigger2
 @onready var trigger3 = $Trigger3
@@ -19,38 +19,46 @@ var trigger1_activated = false
 var trigger2_activated = false
 var trigger3_activated = false
 
-const SHRINK_SPEED = 300.0
+const SHRINK_SPEED = 250.0
 
 func _ready():
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	
 	original_sprite_scale = platform_sprite.scale
 	original_sprite_pos = platform_sprite.position
 	original_collision_pos = platform_collision.position
 	original_collision_size = platform_collision.shape.size
 
 func _on_trigger_1_body_entered(body):
-	if not trigger1_activated and (body == player1):
+	if not trigger1_activated and (body == player1 or body == player2 ):
 		trigger1_activated = true
 		print("Trigger1 activated! Shrinking right side...")
 		
-		var shrink_distance = original_collision_size.x * 0.5
+		# Shrink until width is 325
+		var target_width = 325.0
+		var shrink_distance = original_collision_size.x - target_width
 		var duration = shrink_distance / SHRINK_SPEED
 		
 		var tween = create_tween().set_parallel(true)
 		
-		tween.tween_property(platform_collision.shape, "size:x", original_collision_size.x * 0.5, duration).set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(platform_collision.shape, "size:x", target_width, duration).set_trans(Tween.TRANS_LINEAR)
 		tween.tween_property(platform_collision, "position:x", original_collision_pos.x - shrink_distance * 0.5, duration).set_trans(Tween.TRANS_LINEAR)
 		
 		# Shrink sprite (visual)
-		tween.tween_property(platform_sprite, "scale:x", original_sprite_scale.x * 0.5, duration).set_trans(Tween.TRANS_LINEAR)
+		var scale_ratio = target_width / original_collision_size.x
+		tween.tween_property(platform_sprite, "scale:x", original_sprite_scale.x * scale_ratio, duration).set_trans(Tween.TRANS_LINEAR)
 		tween.tween_property(platform_sprite, "position:x", original_sprite_pos.x - shrink_distance * 0.5, duration).set_trans(Tween.TRANS_LINEAR)
 
 func _on_trigger_2_body_entered(body):
-	if trigger1_activated and not trigger2_activated and (body == player1):
+	if trigger1_activated and not trigger2_activated and (body == player1 or body == player2):
 		trigger2_activated = true
 		print("Trigger2 activated! Extending right, shrinking left...")
 		
-		var extend_distance = original_collision_size.x * 0.5
-		var extend_duration = extend_distance / SHRINK_SPEED
+		var extend_distance = original_collision_size.x - 325.0 # Restore from previous shrink
+		
+		# FASTER speed for Trigger 2 (2x normal speed)
+		var fast_speed = SHRINK_SPEED * 2.0
+		var extend_duration = extend_distance / fast_speed
 		
 		var tween = create_tween().set_parallel(true)
 		
@@ -74,7 +82,7 @@ func _on_trigger_2_body_entered(body):
 		tween2.tween_property(platform_sprite, "position:x", original_sprite_pos.x + shrink_distance * 0.5, shrink_duration).set_trans(Tween.TRANS_LINEAR)
 
 func _on_door_body_entered(body):
-	if body == player1:
+	if body == player1 or body == player2:
 		print("Level Complete!")
 		for child in get_children():
 			child.queue_free()
@@ -82,7 +90,7 @@ func _on_door_body_entered(body):
 
 
 func _on_trigger_3_body_entered(body):
-	if trigger2_activated and not trigger3_activated and (body == player1):
+	if trigger2_activated and not trigger3_activated and (body == player1 or body == player2):
 		trigger3_activated = true
 		print("Trigger3 activated! Shrinking right side slightly...")
 		

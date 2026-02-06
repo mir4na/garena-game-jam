@@ -1,17 +1,40 @@
-extends RigidBody2D
+extends CharacterBody2D
+
+## Player untuk platformer dengan rope/chain constraint
 
 @export var player_id: int = 1
-@export var move_force: float = 666.0
-@export var jump_impulse: float = 400.0
 
+# Movement parameters
+@export_group("Movement")
+@export var move_speed: float = 280.0
+
+# Jump parameters
+@export_group("Jump")
+@export var jump_velocity: float = -400.0
+@export var gravity_scale: float = 1.0
+@export var fall_gravity_multiplier: float = 1.5
+@export var coyote_time: float = 0.1
+@export var jump_buffer_time: float = 0.1
+
+# Animation references
 @onready var animated = $Player1Animated
 @onready var animated2 = $Player2Animated
 var current_sprite: AnimatedSprite2D
 
-func _ready():
-	lock_rotation = true
-	can_sleep = false
-	
+# Internal state
+var coyote_timer: float = 0.0
+var jump_buffer_timer: float = 0.0
+var was_on_floor: bool = false
+var jump_key_was_pressed: bool = false
+
+# External force from rope constraint
+var rope_force: Vector2 = Vector2.ZERO
+
+# Get gravity from project settings
+var base_gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+func _ready() -> void:
+	# Setup correct sprite based on player_id
 	if player_id == 1:
 		current_sprite = animated
 		animated2.visible = false
@@ -20,65 +43,109 @@ func _ready():
 		current_sprite = animated2
 		animated.visible = false
 		animated2.visible = true
-		
-	if not physics_material_override:
-		physics_material_override = PhysicsMaterial.new()
-		physics_material_override.friction = 0.5
+	
+	current_sprite.play("idle")
 
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	var input_dir := 0.0
-	var jump_requested := false
-
-	# Check floor state first
-	var on_floor = false
-	if state.get_contact_count() > 0:
-		for i in range(state.get_contact_count()):
-			if state.get_contact_local_normal(i).dot(Vector2.UP) > 0.5:
-				on_floor = true
-				break
-
-	if player_id == 1:
-		if Input.is_key_pressed(KEY_A): 
-			input_dir -= 1
-			if on_floor: current_sprite.play("run")
-			current_sprite.flip_h = true
-		if Input.is_key_pressed(KEY_D): 
-			input_dir += 1
-			if on_floor: current_sprite.play("run")
-			current_sprite.flip_h = false
-		if Input.is_key_pressed(KEY_W): 
-			jump_requested = true
+func _physics_process(delta: float) -> void:
+	# Get input based on player_id
+	var input_dir := _get_input_direction()
+	
+	# Apply gravity
+	if not is_on_floor():
+		var current_gravity = base_gravity * gravity_scale
+		# Heavier gravity when falling for better game feel
+		if velocity.y > 0:
+			current_gravity *= fall_gravity_multiplier
+		velocity.y += current_gravity * delta
+	
+	# Coyote time logic
+	if is_on_floor():
+		coyote_timer = coyote_time
 	else:
-		if Input.is_key_pressed(KEY_LEFT): 
-			input_dir -= 1
-			if on_floor: current_sprite.play("run")
-			current_sprite.flip_h = true
-		if Input.is_key_pressed(KEY_RIGHT): 
-			input_dir += 1
-			if on_floor: current_sprite.play("run")
-			current_sprite.flip_h = false
-		if Input.is_key_pressed(KEY_UP): 
-			jump_requested = true
-
+		coyote_timer -= delta
+	
+	# Jump buffer logic
+	var jump_just_pressed = _is_jump_just_pressed()
+	if jump_just_pressed:
+		jump_buffer_timer = jump_buffer_time
+	else:
+		jump_buffer_timer -= delta
+	
+	# Handle jump
+	var did_jump = false
+	if jump_buffer_timer > 0 and coyote_timer > 0:
+		velocity.y = jump_velocity
+		jump_buffer_timer = 0
+		coyote_timer = 0
+		did_jump = true
+	
+	# Horizontal movement (instant, no acceleration)
+	if input_dir != 0:
+		velocity.x = input_dir * move_speed
+		# Flip sprite based on direction
+		current_sprite.flip_h = (input_dir < 0)
+	else:
+		velocity.x = 0
+	
+	# Apply rope force (from VerletRope constraint)
+	velocity += rope_force
+	rope_force = Vector2.ZERO
+	
+	# Move the character
+	move_and_slide()
+	
 	# Animation Logic
-	if jump_requested and on_floor:
+	_update_animation(input_dir, did_jump)
+	
+	was_on_floor = is_on_floor()
+
+func _update_animation(input_dir: float, did_jump: bool) -> void:
+	if did_jump:
 		current_sprite.play("jump")
-	elif on_floor and input_dir == 0:
-		current_sprite.play("idle")
-	elif not on_floor:
-		# Keep playing jump loop or frame if airborne
+	elif is_on_floor():
+		if input_dir != 0:
+			current_sprite.play("run")
+		else:
+			current_sprite.play("idle")
+	else:
+		# Airborne
 		if current_sprite.animation != "jump":
 			current_sprite.play("jump")
 
-	# Physics Application
-	if input_dir != 0:
-		apply_central_force(Vector2(input_dir * move_force, 0))
+func _get_input_direction() -> float:
+	if player_id == 1:
+		# Player 1: WASD only
+		var left = Input.is_key_pressed(KEY_A)
+		var right = Input.is_key_pressed(KEY_D)
+		return float(right) - float(left)
+	else:
+		# Player 2: Arrow keys only
+		var left = Input.is_key_pressed(KEY_LEFT)
+		var right = Input.is_key_pressed(KEY_RIGHT)
+		return float(right) - float(left)
+
+func _is_jump_just_pressed() -> bool:
+	var is_pressed: bool
+	if player_id == 1:
+		# Player 1: W or Space
+		is_pressed = Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_SPACE)
+	else:
+		# Player 2: Up arrow
+		is_pressed = Input.is_key_pressed(KEY_UP)
 	
-	if jump_requested and on_floor:
-		apply_central_impulse(Vector2.UP * jump_impulse)
+	# Only return true on the first frame the key is pressed
+	var just_pressed = is_pressed and not jump_key_was_pressed
+	jump_key_was_pressed = is_pressed
+	return just_pressed
 
-func apply_external_force(force: Vector2):
-	apply_central_force(force)
+## Apply external force (called by rope system)
+func apply_rope_force(force: Vector2) -> void:
+	rope_force += force
 
-func launch(impulse: Vector2):
-	apply_central_impulse(impulse)
+## Get the attachment point for the rope (center of player)
+func get_rope_attachment_point() -> Vector2:
+	return global_position
+
+## Launch player with impulse (for special mechanics)
+func launch(impulse: Vector2) -> void:
+	velocity += impulse

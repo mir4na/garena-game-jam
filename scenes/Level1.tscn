@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0dugtkj4vqvq"]
+[gd_scene load_steps=11 format=3 uid="uid://b0dugtkj4vqvq"]
 
 [ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://ce2juxikih7kp" path="res://scripts/Chain.gd" id="3_chain"]
 [ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="4_icon"]
 [ext_resource type="PackedScene" uid="uid://blcfjil1ywrmu" path="res://scenes/door.tscn" id="5_lrl65"]
 [ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="6_76388"]
@@ -23,9 +24,6 @@ script = ExtResource("1_script")
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
 position = Vector2(141, 923)
-
-[node name="Player1" parent="." instance=ExtResource("2_player")]
-position = Vector2(85, 932)
 
 [node name="Trigger1" type="Area2D" parent="."]
 position = Vector2(983, 500)
@@ -50,6 +48,18 @@ shape = SubResource("RectangleShape2D_trig")
 
 [node name="Door" parent="." instance=ExtResource("5_lrl65")]
 position = Vector2(1715, 971)
+
+[node name="Player1" parent="." instance=ExtResource("2_player")]
+position = Vector2(110, 573)
+
+[node name="Player2" parent="." instance=ExtResource("2_player")]
+position = Vector2(203, 572)
+player_id = 2
+
+[node name="Chain" type="Node2D" parent="."]
+script = ExtResource("3_chain")
+player1_path = NodePath("../Player1")
+player2_path = NodePath("../Player2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

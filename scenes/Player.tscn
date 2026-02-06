@@ -124,11 +124,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(127.499985, 152.5)
 
-[node name="Player" type="RigidBody2D"]
-physics_material_override = SubResource("PhysicsMaterial_1")
-lock_rotation = true
-contact_monitor = true
-max_contacts_reported = 4
+[node name="Player" type="CharacterBody2D" unique_id=200080487]
+collision_layer = 1
 script = ExtResource("1_script")
 
 [node name="Player1Animated" type="AnimatedSprite2D" parent="."]
