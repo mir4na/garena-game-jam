@@ -2,9 +2,9 @@ extends Node2D
 
 @export var player1: RigidBody2D
 @export var player2: RigidBody2D
-@export var max_length: float = 300.0
-@export var stiffness: float = 20.0
-@export var damping: float = 0.5
+@export var max_length: float = 100.0
+@export var stiffness: float = 300.0
+@export var damping: float = 25.0
 
 func _process(delta: float) -> void:
 	queue_redraw()

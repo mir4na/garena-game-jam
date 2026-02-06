@@ -10,26 +10,29 @@ extends Node2D
 var trigger_tripped = false
 
 func _ready():
-    # Setup chain
-    chain.player1 = player1
-    chain.player2 = player2
+	# Setup chain
+	chain.player1 = player1
+	chain.player2 = player2
 
 func _on_trigger_end_body_entered(body):
-    if not trigger_tripped and (body == player1 or body == player2):
-        trigger_tripped = true
-        # TROLL: Pull platform back
-        var tween = create_tween()
-        tween.tween_property(platform, "position:x", -2000, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-        print("Troll triggered! Returning to start...")
+	if not trigger_tripped and (body == player1 or body == player2):
+		trigger_tripped = true
+		# TROLL: Pull platform back
+		var tween = create_tween()
+		tween.tween_property(platform, "position:x", -440, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+		print("Troll triggered! Returning to start...")
+
+var launcher_activated = false
 
 func _on_trigger_start_body_entered(body):
-    if trigger_tripped and (body == player1 or body == player2):
-        # Force forward
-        var tween = create_tween()
-        tween.tween_property(platform, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-        # Launch players right
-        if player1.has_method("launch"):
-            player1.launch(Vector2(2000, -500))
-        if player2.has_method("launch"):
-            player2.launch(Vector2(2000, -500))
-        print("Launcher triggered! Go to Level 2!")
+	if trigger_tripped and not launcher_activated and (body == player1 or body == player2):
+		launcher_activated = true
+		# Force forward
+		var tween = create_tween()
+		tween.tween_property(platform, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		# Launch players right
+		if player1.has_method("launch"):
+			player1.launch(Vector2(440, -1000)) # Increased force for better launch feel
+		if player2.has_method("launch"):
+			player2.launch(Vector2(440, -1000))
+		print("Launcher triggered! Go to Level 2!")

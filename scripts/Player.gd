@@ -1,11 +1,12 @@
 extends RigidBody2D
 
 @export var player_id: int = 1
-@export var move_force: float = 3000.0
-@export var jump_impulse: float = 600.0
+@export var move_force: float = 666.0
+@export var jump_impulse: float = 800.0
 
 func _ready():
 	lock_rotation = true
+	can_sleep = false
 	# Adjust physics material if not set in editor
 	if not physics_material_override:
 		physics_material_override = PhysicsMaterial.new()
@@ -13,21 +14,21 @@ func _ready():
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	var input_dir := 0.0
-	var jump := false
-	
+	var jump_requested := false
+
 	if player_id == 1:
 		if Input.is_key_pressed(KEY_A): input_dir -= 1
 		if Input.is_key_pressed(KEY_D): input_dir += 1
-		if Input.is_key_pressed(KEY_W) and state.get_contact_count() > 0: jump = true
+		if Input.is_key_pressed(KEY_W): jump_requested = true
 	else:
 		if Input.is_key_pressed(KEY_LEFT): input_dir -= 1
 		if Input.is_key_pressed(KEY_RIGHT): input_dir += 1
-		if Input.is_key_pressed(KEY_UP) and state.get_contact_count() > 0: jump = true
+		if Input.is_key_pressed(KEY_UP): jump_requested = true
 
 	if input_dir != 0:
 		apply_central_force(Vector2(input_dir * move_force, 0))
 	
-	if jump:
+	if jump_requested and state.get_contact_count() > 0:
 		# Check if we are roughly on floor (contact normal points up)
 		var on_floor = false
 		for i in range(state.get_contact_count()):
@@ -37,8 +38,6 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		
 		if on_floor:
 			apply_central_impulse(Vector2.UP * jump_impulse)
-	
-	# Custom force application for chain (if needed explicitly, but Chain.gd will likely call apply_central_force directly)
 
 func apply_external_force(force: Vector2):
 	apply_central_force(force)
