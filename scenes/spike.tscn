@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://o5py3v55mwhg"]
+
+[ext_resource type="Script" uid="uid://tmejtwapnm7f" path="res://scripts/spike.gd" id="1_7a7y0"]
+[ext_resource type="Texture2D" uid="uid://bm83xwaba4y3g" path="res://assets/tileset/IMG_8597.png" id="1_ljd5v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7a7y0"]
+size = Vector2(58, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2mqm"]
+atlas = ExtResource("1_ljd5v")
+region = Rect2(232, 779, 67, 70)
+
+[node name="Spike" type="Area2D" unique_id=98624488]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_7a7y0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=108127255]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_7a7y0")
+
+[node name="SpikeSprite" type="Sprite2D" parent="." unique_id=1648288154]
+texture = SubResource("AtlasTexture_d2mqm")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

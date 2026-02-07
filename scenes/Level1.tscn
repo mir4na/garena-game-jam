@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0dugtkj4vqvq"]
+[gd_scene format=3 uid="uid://b0dugtkj4vqvq"]
 
 [ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="4_icon"]
 [ext_resource type="PackedScene" uid="uid://blcfjil1ywrmu" path="res://scenes/door.tscn" id="5_lrl65"]
 [ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="6_76388"]
+[ext_resource type="PackedScene" uid="uid://bjxdgyyyq402b" path="res://scenes/platform.tscn" id="7_svatc"]
+[ext_resource type="PackedScene" uid="uid://o5py3v55mwhg" path="res://scenes/spike.tscn" id="8_ecr63"]
+[ext_resource type="PackedScene" uid="uid://bb2w83ex3k24u" path="res://scenes/hidden_spike.tscn" id="9_n34uq"]
+[ext_resource type="PackedScene" path="res://scenes/JumpMushroom.tscn" id="10_kbo48"]
+[ext_resource type="PackedScene" path="res://scenes/SpikeMove.tscn" id="11_4dyl1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trig"]
 size = Vector2(394.375, 302)
@@ -19,86 +24,106 @@ size = Vector2(1556, 132)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svatc"]
 size = Vector2(491, 131.5)
 
-[node name="Level1" type="Node2D"]
+[node name="Level1" type="Node2D" unique_id=1876568670]
 script = ExtResource("1_script")
 
-[node name="SpawnPoint" type="Marker2D" parent="."]
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=837278407]
 position = Vector2(141, 923)
 
-[node name="Trigger1" type="Area2D" parent="."]
+[node name="Trigger1" type="Area2D" parent="." unique_id=1095979923]
 position = Vector2(983, 500)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger1" unique_id=1002007362]
 position = Vector2(570.1875, 362)
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="Trigger2" type="Area2D" parent="."]
+[node name="Trigger2" type="Area2D" parent="." unique_id=1462913678]
 position = Vector2(160, 478)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger2" unique_id=24000676]
 position = Vector2(-26, 378)
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="Trigger3" type="Area2D" parent="."]
+[node name="Trigger3" type="Area2D" parent="." unique_id=1607698467]
 position = Vector2(160, 478)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger3" unique_id=1055570268]
 position = Vector2(1395, 462)
 shape = SubResource("RectangleShape2D_trig")
 
-[node name="Door" parent="." instance=ExtResource("5_lrl65")]
+[node name="Door" parent="." unique_id=759274470 instance=ExtResource("5_lrl65")]
 position = Vector2(1715, 971)
 
-[node name="Player1" parent="." instance=ExtResource("2_player")]
+[node name="Player1" parent="." unique_id=770678026 instance=ExtResource("2_player")]
 position = Vector2(110, 573)
 
-[node name="Player2" parent="." instance=ExtResource("2_player")]
+[node name="Player2" parent="." unique_id=1195883223 instance=ExtResource("2_player")]
 position = Vector2(203, 572)
 player_id = 2
 
-[node name="Chain" type="Node2D" parent="."]
+[node name="Chain" type="Node2D" parent="." unique_id=1263172565]
 script = ExtResource("3_chain")
 player1_path = NodePath("../Player1")
 player2_path = NodePath("../Player2")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=169569341]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1635661703]
 position = Vector2(-32.5, 575)
 shape = SubResource("RectangleShape2D_lrl65")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=2074568485]
 position = Vector2(1950, 554)
 shape = SubResource("RectangleShape2D_lrl65")
 
-[node name="DeathArea" parent="." instance=ExtResource("6_76388")]
+[node name="DeathArea" parent="." unique_id=1722856536 instance=ExtResource("6_76388")]
 position = Vector2(53, 1191)
 
-[node name="Platform" type="Node2D" parent="."]
+[node name="Platform" type="Node2D" parent="." unique_id=249036305]
 
-[node name="PlatformBergerak" type="StaticBody2D" parent="Platform"]
+[node name="PlatformBergerak" type="StaticBody2D" parent="Platform" unique_id=1484618599]
 position = Vector2(49, 1067)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platform/PlatformBergerak"]
+[node name="Sprite2D" type="Sprite2D" parent="Platform/PlatformBergerak" unique_id=1100660046]
 position = Vector2(699.00006, 6.999995)
 scale = Vector2(12.109375, 1.0468749)
 texture = ExtResource("4_icon")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/PlatformBergerak"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/PlatformBergerak" unique_id=1513110253]
 position = Vector2(701, 7)
 shape = SubResource("RectangleShape2D_76388")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Platform"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platform" unique_id=1078695010]
 position = Vector2(1039, 667)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2" unique_id=1940751422]
 position = Vector2(727.9999, 409.99997)
 scale = Vector2(3.843751, 1.03125)
 texture = ExtResource("4_icon")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2" unique_id=615027366]
 position = Vector2(725.5, 406.75)
 shape = SubResource("RectangleShape2D_svatc")
+
+[node name="Platform2" parent="." unique_id=1804540557 instance=ExtResource("7_svatc")]
+position = Vector2(633, 806)
+
+[node name="Platform3" parent="." unique_id=664335102 instance=ExtResource("7_svatc")]
+position = Vector2(489, 903)
+
+[node name="Background" type="TileMapLayer" parent="." unique_id=2057090413]
+
+[node name="Spike" parent="." unique_id=98624488 instance=ExtResource("8_ecr63")]
+position = Vector2(823, 969)
+
+[node name="HiddenSpike" parent="." unique_id=1802017463 instance=ExtResource("9_n34uq")]
+position = Vector2(694, 971)
+
+[node name="JumpMushroom" parent="." unique_id=949058558 instance=ExtResource("10_kbo48")]
+position = Vector2(391, 996)
+
+[node name="SpikeMove" parent="." unique_id=108690846 instance=ExtResource("11_4dyl1")]
+position = Vector2(1022, 976)
 
 [connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
 [connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
