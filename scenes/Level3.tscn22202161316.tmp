@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://crugu06xvo7fc"]
+
+[ext_resource type="Script" uid="uid://32gysmj8y54n" path="res://scripts/Level3.gd" id="1_level3"]
+[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/HeavyRock.tscn" id="3_rock"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
+size = Vector2(5000, 100)
+
+[node name="Level3" type="Node2D" unique_id=976105069 groups=["level"]]
+script = ExtResource("1_level3")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1629434522]
+offset_right = 3000.0
+offset_bottom = 1080.0
+color = Color(0.15, 0.2, 0.25, 1)
+
+[node name="Player1" parent="." unique_id=425658188 instance=ExtResource("2_player")]
+position = Vector2(600, 450)
+
+[node name="Player2" parent="." unique_id=791084905 instance=ExtResource("2_player")]
+position = Vector2(700, 450)
+player_id = 2
+
+[node name="HeavyRock" parent="." unique_id=290030063 instance=ExtResource("3_rock")]
+position = Vector2(857, 589)
+rock_mass = 30.0
+player1_path = NodePath("../Player1")
+player2_path = NodePath("../Player2")
+rope_length = 120.0
+
+[node name="Ground" type="Node2D" parent="." unique_id=1855374665]
+position = Vector2(0, 600)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Ground" unique_id=640745905]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground/StaticBody2D" unique_id=1651221525]
+polygon = PackedVector2Array(100, 0, 2400, 0, 2400, 300, 100, 300)
+
+[node name="Polygon2D" type="Polygon2D" parent="Ground" unique_id=1793726259]
+color = Color(0.3, 0.25, 0.2, 1)
+polygon = PackedVector2Array(100, 0, 2400, 0, 2400, 300, 100, 300)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Ground" unique_id=1077619985]
+color = Color(0.4, 0.35, 0.25, 1)
+polygon = PackedVector2Array(100, 0, 2400, 0, 2400, 50, 100, 50)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2111616591]
+position = Vector2(960, 540)
+zoom = Vector2(0.7, 0.7)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=663594563]
+
+[node name="TimerLabel" type="Label" parent="UI" unique_id=1003988614]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="UI" unique_id=1610146863]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -180.0
+offset_right = 400.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "BERSIAP!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="DeathZone" type="Area2D" parent="." unique_id=1680928215]
+position = Vector2(1250, 1200)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=1973495890]
+shape = SubResource("RectangleShape2D_death")
+
+[node name="SpikeSpawnLeft" type="Marker2D" parent="." unique_id=113930305]
+position = Vector2(200, 100)
+
+[node name="SpikeSpawnRight" type="Marker2D" parent="." unique_id=353969735]
+position = Vector2(2300, 100)

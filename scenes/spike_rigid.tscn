@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bfqnkmhj827k8"]
+
+[ext_resource type="Script" uid="uid://b8dk1ybm68hbk" path="res://scripts/kill_zone_rigid.gd" id="1_8upqp"]
+[ext_resource type="Texture2D" uid="uid://blaip7jkd4ax8" path="res://assets/spike.png" id="2_bv1nv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spike"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilmci"]
+atlas = ExtResource("2_bv1nv")
+region = Rect2(232, 779, 67, 70)
+
+[node name="SpikeRigid" type="RigidBody2D" unique_id=570602749]
+mass = 30.0
+script = ExtResource("1_8upqp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1758042457]
+shape = SubResource("RectangleShape2D_spike")
+
+[node name="SpikeSprite" type="Sprite2D" parent="." unique_id=16166596]
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_ilmci")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

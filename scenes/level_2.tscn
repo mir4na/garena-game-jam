@@ -1,0 +1,67 @@
+[gd_scene format=4 uid="uid://bu65ei2emjkkb"]
+
+[ext_resource type="PackedScene" uid="uid://834ahddecqsc" path="res://scenes/level_base.tscn" id="1_y0kc7"]
+[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="2_ne2mo"]
+[ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="3_6cvei"]
+[ext_resource type="PackedScene" uid="uid://d0gs6p2dmo8f0" path="res://scenes/DroppingBlock.tscn" id="4_que50"]
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="5_hey2k"]
+[ext_resource type="PackedScene" uid="uid://3ccehdmfmhue" path="res://scenes/dropping_ground.tscn" id="6_172wr"]
+[ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="7_g2hoc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0kc7"]
+resource_local_to_scene = true
+size = Vector2(91, 223)
+
+[node name="LevelBase" unique_id=1259302262 instance=ExtResource("1_y0kc7")]
+
+[node name="Checkpoint" parent="." index="2" unique_id=1989630016]
+position = Vector2(116, 566)
+
+[node name="Chain" type="Node2D" parent="." index="3" unique_id=1307565403]
+z_index = 1
+script = ExtResource("2_ne2mo")
+player1_path = NodePath("../Player1")
+player2_path = NodePath("../Player2")
+rope_length = 150.0
+
+[node name="Player1" parent="." index="4" unique_id=769047023]
+position = Vector2(161, 570)
+
+[node name="Player2" parent="." index="5" unique_id=1054873841]
+position = Vector2(161, 570)
+player_id = 2
+
+[node name="TileMapLayer" parent="." index="6" unique_id=1532937240]
+tile_map_data = PackedByteArray("AAAAAAoAAQAAAAAAAAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAdAAoAAQABAAAAAAAdAAsAAQABAAEAAAAdAAwAAQABAAEAAAAdAA0AAQABAAEAAAAdAA4AAQABAAEAAAAdAA8AAQABAAEAAAAcAA8AAQABAAEAAAAcAA4AAQABAAEAAAAcAA0AAQABAAEAAAAcAAwAAQABAAEAAAAcAAsAAQABAAEAAAAcAAoAAQABAAEAAAAeAA0AAQACAAEAAAAeAA4AAQACAAEAAAAeAAwAAQACAAEAAAAeAAsAAQACAAEAAAAeAA8AAQACAAEAAAAdABAAAQABAAEAAAAcABAAAQABAAEAAAAcABEAAQABAAIAAAAeABAAAQACAAEAAAAeABEAAQACAAIAAAAdABEAAQABAAIAAAAeAAoAAQACAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQACAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAAiAAoAAAABAAEAAAAhAAoAAAABAAEAAAAgAAoAAAABAAEAAAAfAAoAAAABAAEAAAAVAAoAAQABAAAAAAAVAAsAAQABAAEAAAAVAAwAAQABAAEAAAAVAA0AAQABAAEAAAAVAA4AAQABAAEAAAAVAA8AAQABAAEAAAAVABAAAQABAAEAAAAVABEAAQABAAIAAAAWAAoAAQABAAAAAAAWAAsAAQABAAEAAAAWAAwAAQABAAEAAAAWAA0AAQABAAEAAAAWAA4AAQABAAEAAAAWAA8AAQABAAEAAAAWABAAAQABAAEAAAAWABEAAQABAAIAAAAXAAsAAQABAAEAAAAXAAwAAQABAAEAAAAXAA0AAQABAAEAAAAXAA4AAQABAAEAAAAXAA8AAQABAAEAAAAXABAAAQABAAEAAAAXABEAAQABAAIAAAAUAAoAAQAAAAAAAAAUAAsAAQAAAAEAAAAUAAwAAQAAAAEAAAAUAA0AAQAAAAEAAAAUAA4AAQAAAAEAAAAUAA8AAQAAAAEAAAAUABAAAQAAAAEAAAAUABEAAQAAAAIAAAAaAAsAAQABAAEAAAAaAAwAAQABAAEAAAAaAA0AAQABAAEAAAAaAA4AAQABAAEAAAAaAA8AAQABAAEAAAAaABAAAQABAAEAAAAaABEAAQABAAIAAAAbAAsAAQABAAEAAAAbAAwAAQABAAEAAAAbAA0AAQABAAEAAAAbAA4AAQABAAEAAAAbAA8AAQABAAEAAAAbABAAAQABAAEAAAAbABEAAQABAAIAAAAaAAoAAQABAAAAAAAbAAoAAQABAAEAAAAXAAoAAQABAAAAAAA=")
+
+[node name="MovingBlock" parent="." index="7" unique_id=1504593245 instance=ExtResource("3_6cvei")]
+position = Vector2(441, 521)
+move_speed = 500.0
+
+[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" parent_id_path=PackedInt32Array(1504593245, 2078843788) index="0" unique_id=1206900178]
+position = Vector2(-0.5, -80.5)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="DroppingBlock" parent="." index="8" unique_id=2117705523 instance=ExtResource("4_que50")]
+position = Vector2(758, 444)
+respawn_time = 0.0
+
+[node name="NormalBlock" parent="." index="9" unique_id=2118917713 instance=ExtResource("5_hey2k")]
+position = Vector2(941, 521)
+
+[node name="NormalBlock2" parent="." index="10" unique_id=1842734218 instance=ExtResource("5_hey2k")]
+position = Vector2(1005, 521)
+
+[node name="DroppingGround" parent="." index="11" unique_id=1441491989 instance=ExtResource("6_172wr")]
+position = Vector2(1519, 612)
+drop_delay = 0.0
+shake_amount = 0.0
+respawn_time = 0.0
+
+[node name="SpikeMove" parent="." index="12" unique_id=758195686 instance=ExtResource("7_g2hoc")]
+position = Vector2(2110, 591)
+move_speed = 600.0
+move_direction = Vector2(-1, 0)
+
+[editable path="MovingBlock"]
+[editable path="DroppingBlock"]

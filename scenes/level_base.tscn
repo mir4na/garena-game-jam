@@ -1,14 +1,26 @@
 [gd_scene format=4 uid="uid://834ahddecqsc"]
 
 [ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="1_548ah"]
-[ext_resource type="Texture2D" uid="uid://c4hs4f2jm46ah" path="res://assets/tileset/IMG_8595.png" id="1_krm4r"]
-[ext_resource type="Texture2D" uid="uid://c0p75qlq6b0d4" path="res://assets/tileset/IMG_8594.png" id="2_8n3nq"]
+[ext_resource type="Shader" uid="uid://dmaq7dryhvamx" path="res://shaders/scroll_background.gdshader" id="1_vm68j"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_osu2p"]
-[ext_resource type="Texture2D" uid="uid://b07mtiub2oxdk" path="res://assets/tileset/IMG_8596.png" id="3_2v7b3"]
+[ext_resource type="Texture2D" uid="uid://oj482pgdflbk" path="res://assets/IMG_8611.jpg" id="2_rth7s"]
 [ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="3_bkdr1"]
+[ext_resource type="PackedScene" uid="uid://dcagtpnah3328" path="res://scenes/flag.tscn" id="7_8n3nq"]
+[ext_resource type="Texture2D" uid="uid://dkqbuj6btlogi" path="res://assets/tileset/IMG_8631.png" id="7_evabm"]
+[ext_resource type="Shader" uid="uid://bqfvdsmdxonph" path="res://shaders/squigglevision.gdshader" id="8_2v7b3"]
+[ext_resource type="Texture2D" uid="uid://dscua4q81s4cn" path="res://assets/tileset/IMG_8632.png" id="8_qurbw"]
+[ext_resource type="Texture2D" uid="uid://cf7p60cpj8ryn" path="res://assets/tileset/IMG_8636.png" id="13_agxjp"]
+[ext_resource type="Texture2D" uid="uid://d1vejf8skxshp" path="res://assets/tileset/IMG_8637.png" id="14_117i7"]
+[ext_resource type="Texture2D" uid="uid://d0kk6yjbel7rm" path="res://assets/tileset/IMG_8642.png" id="15_copb0"]
+[ext_resource type="Texture2D" uid="uid://cd7ffnxr1wor5" path="res://assets/tileset/IMG_8643.png" id="16_wj5ly"]
+[ext_resource type="Texture2D" uid="uid://cy48t0jq4nmc0" path="res://assets/tileset/IMG_8647.png" id="17_g5705"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngfo8"]
+shader = ExtResource("1_vm68j")
+shader_parameter/speed = 0.01
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
-size = Vector2(1939, 41)
+size = Vector2(2511, 41)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k8qy"]
 texture = ExtResource("3_bkdr1")
@@ -40,40 +52,57 @@ texture_region_size = Vector2i(124, 124)
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 3:1/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vm68j"]
+texture = ExtResource("7_evabm")
+margins = Vector2i(45, 58)
+texture_region_size = Vector2i(124, 124)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rth7s"]
+texture = ExtResource("8_qurbw")
+margins = Vector2i(25, 30)
+texture_region_size = Vector2i(124, 124)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_8rhjg"]
 tile_size = Vector2i(124, 124)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_6k8qy")
+sources/1 = SubResource("TileSetAtlasSource_vm68j")
+sources/2 = SubResource("TileSetAtlasSource_rth7s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6k8qy"]
+shader = ExtResource("8_2v7b3")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 1.0
+shader_parameter/fps = 6.0
 
 [node name="LevelBase" type="Node2D" unique_id=1259302262]
 
-[node name="Background" type="ColorRect" parent="." unique_id=1143105163]
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 1920.0
-offset_bottom = 1080.0
-color = Color(0.76862746, 0.92941177, 1, 1)
-
-[node name="Img8595" type="Sprite2D" parent="Background" unique_id=1515150549]
-position = Vector2(898, 515)
-texture = ExtResource("1_krm4r")
-
-[node name="Img8594" type="Sprite2D" parent="Background" unique_id=533314557]
-position = Vector2(364, 348)
-texture = ExtResource("2_8n3nq")
-
-[node name="Img8597" type="Sprite2D" parent="Background" unique_id=1119647206]
-position = Vector2(1758, 682)
-texture = ExtResource("1_krm4r")
-
-[node name="Img8598" type="Sprite2D" parent="Background" unique_id=1240192624]
-position = Vector2(1224, 515)
-texture = ExtResource("2_8n3nq")
-
-[node name="Img8596" type="Sprite2D" parent="Background" unique_id=241209914]
-position = Vector2(191, 285)
-texture = ExtResource("3_2v7b3")
-region_enabled = true
-region_rect = Rect2(1372, 104, 490, 679)
+[node name="Background" type="Sprite2D" parent="." unique_id=1541214559]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_ngfo8")
+position = Vector2(960, 1003)
+texture = ExtResource("2_rth7s")
 
 [node name="KillZone" type="Area2D" parent="." unique_id=1780928457]
 collision_layer = 0
@@ -92,7 +121,38 @@ shape = SubResource("RectangleShape2D_osu2p")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1532937240]
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAABAAsAAAABAAIAAAABAAwAAAABAAIAAAABAA0AAAABAAIAAAACAAsAAAABAAIAAAACAAwAAAABAAIAAAACAA0AAAABAAIAAAADAAsAAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAAAAoAAAAAAAEAAAAAAAsAAAAAAAIAAAAAAAwAAAAAAAIAAAAAAA0AAAAAAAIAAAABAAoAAAABAAEAAAACAAoAAAABAAEAAAADAAoAAAABAAEAAAAFAAoAAAACAAEAAAAFAAsAAAACAAIAAAAFAAwAAAACAAIAAAAFAA0AAAACAAIAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAABAA4AAAABAAIAAAACAA4AAAABAAIAAAADAA4AAAABAAIAAAAEAA4AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAIAAAAFAA4AAAACAAIAAAAFAA8AAAACAAIAAAAAABAAAAAAAAIAAAAAABEAAAAAAAMAAAAFABEAAAACAAMAAAAEABEAAAABAAMAAAADABEAAAABAAMAAAACABEAAAABAAMAAAABABEAAAABAAMAAAAFABAAAAACAAIAAAAEABAAAAABAAIAAAADABAAAAABAAIAAAACABAAAAABAAIAAAABABAAAAABAAIAAAAYAAoAAAAAAAEAAAAYAAsAAAAAAAIAAAAYAAwAAAAAAAIAAAAYAA0AAAAAAAIAAAAYAA4AAAAAAAIAAAAYAA8AAAAAAAIAAAAYABAAAAAAAAIAAAAZAAoAAAABAAEAAAAZAAsAAAABAAIAAAAZAAwAAAABAAIAAAAZAA0AAAABAAIAAAAZAA4AAAABAAIAAAAZAA8AAAABAAIAAAAZABAAAAABAAIAAAAcAAoAAAABAAEAAAAcAAsAAAABAAIAAAAcAAwAAAABAAIAAAAcAA0AAAABAAIAAAAcAA4AAAABAAIAAAAcAA8AAAABAAIAAAAcABAAAAABAAIAAAAYABEAAAAAAAMAAAAZABEAAAABAAMAAAAcABEAAAABAAMAAAAeAAoAAAACAAEAAAAeAAsAAAACAAIAAAAeAAwAAAACAAIAAAAeAA0AAAACAAIAAAAeAA4AAAACAAIAAAAeAA8AAAACAAIAAAAeABAAAAACAAIAAAAeABEAAAACAAMAAAAdAAoAAAABAAEAAAAdAAsAAAABAAIAAAAdAAwAAAABAAIAAAAdAA0AAAABAAIAAAAdAA4AAAABAAIAAAAdAA8AAAABAAIAAAAdABAAAAABAAIAAAAdABEAAAABAAMAAAA=")
+tile_map_data = PackedByteArray("AAAAAAoAAQAAAAAAAAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAZAAoAAQABAAEAAAAZAAsAAQABAAEAAAAZAAwAAQABAAEAAAAYAA0AAQAAAAEAAAAYAA4AAQAAAAEAAAAYAAwAAQAAAAEAAAAYAAsAAQAAAAEAAAAYAAoAAQAAAAAAAAAZAA0AAQABAAEAAAAZAA4AAQABAAEAAAAdAAoAAQABAAEAAAAdAAsAAQABAAEAAAAdAAwAAQABAAEAAAAdAA0AAQABAAEAAAAdAA4AAQACAAEAAAAdAA8AAQACAAEAAAAcAA8AAQABAAEAAAAcAA4AAQABAAEAAAAcAA0AAQABAAEAAAAcAAwAAQABAAEAAAAcAAsAAQABAAEAAAAcAAoAAQABAAEAAAAeAA0AAQACAAEAAAAeAA4AAQACAAEAAAAeAAwAAQACAAEAAAAeAAsAAQACAAEAAAAeAA8AAQACAAEAAAAdABAAAQACAAEAAAAcABAAAQABAAEAAAAZABAAAQABAAEAAAAYABAAAQAAAAEAAAAYABEAAQAAAAIAAAAZABEAAQABAAIAAAAZAA8AAQABAAEAAAAYAA8AAQAAAAEAAAAcABEAAQABAAIAAAAeABAAAQACAAEAAAAeABEAAQACAAIAAAAdABEAAQABAAIAAAAeAAoAAQACAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQABAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAA=")
 tile_set = SubResource("TileSet_8rhjg")
+
+[node name="Flag" parent="." unique_id=1000268655 instance=ExtResource("7_8n3nq")]
+material = SubResource("ShaderMaterial_6k8qy")
+position = Vector2(1834, 566)
+
+[node name="Img8636" type="Sprite2D" parent="." unique_id=1293210340]
+position = Vector2(433, 162)
+texture = ExtResource("13_agxjp")
+
+[node name="Img8637" type="Sprite2D" parent="." unique_id=308944583]
+position = Vector2(1011, 144)
+texture = ExtResource("14_117i7")
+
+[node name="Img8638" type="Sprite2D" parent="." unique_id=411365588]
+position = Vector2(1576, 356)
+texture = ExtResource("14_117i7")
+
+[node name="Img8642" type="Sprite2D" parent="." unique_id=842301560]
+position = Vector2(103, 432)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_copb0")
+
+[node name="Img8643" type="Sprite2D" parent="." unique_id=1970179649]
+position = Vector2(291, 567)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("16_wj5ly")
+
+[node name="Img8647" type="Sprite2D" parent="." unique_id=880929450]
+position = Vector2(290, 520)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("17_g5705")
 
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

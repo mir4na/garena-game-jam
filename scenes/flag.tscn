@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dcagtpnah3328"]
+
+[ext_resource type="Script" uid="uid://bki20i78e6dqc" path="res://scripts/flag.gd" id="1_32e5v"]
+[ext_resource type="Texture2D" uid="uid://d3okm87lwdbxh" path="res://assets/IMG_8644.png" id="1_76ss4"]
+[ext_resource type="Shader" uid="uid://bqfvdsmdxonph" path="res://shaders/squigglevision.gdshader" id="2_q38m2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkyk4"]
+size = Vector2(128, 128)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s5mf2"]
+shader = ExtResource("2_q38m2")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 1.0
+shader_parameter/fps = 6.0
+
+[node name="Flag" type="Area2D" unique_id=1000268655]
+collision_mask = 2
+script = ExtResource("1_32e5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=729752139]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_jkyk4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=984819526]
+material = SubResource("ShaderMaterial_s5mf2")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_76ss4")
