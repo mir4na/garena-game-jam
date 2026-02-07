@@ -1,46 +1,35 @@
-[gd_scene load_steps=0 format=3 uid="uid://dwxpx3mvaqpoi"]
+[gd_scene format=3 uid="uid://d0gs6p2dmo8f0"]
 
-[ext_resource type="Script" path="res://scripts/DroppingBlock.gd" id="1_drop"]
+[ext_resource type="Script" uid="uid://by4mhvgdo76qd" path="res://scripts/DroppingBlock.gd" id="1_drop"]
+[ext_resource type="Texture2D" uid="uid://5krbjywyv0es" path="res://assets/tileset/IMG_8593.png" id="2_a80vw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
-size = Vector2(64, 16)
+size = Vector2(64, 39)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(64, 32)
 
-[node name="DroppingBlock" type="StaticBody2D"]
-script = ExtResource("1_drop")
-drop_delay = 0.5
-drop_speed = 800.0
-shake_amount = 3.0
-respawn_time = 3.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_s680w"]
+atlas = ExtResource("2_a80vw")
+region = Rect2(471, 777, 133, 131)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="DroppingBlock" type="StaticBody2D" unique_id=2117705523]
+script = ExtResource("1_drop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=48041209]
+position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_block")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.125)
-
-[node name="Visual" type="ColorRect" parent="."]
-offset_left = -32.0
-offset_top = -8.0
-offset_right = 32.0
-offset_bottom = 8.0
-color = Color(0.6, 0.4, 0.2, 1)
-
-[node name="WarningStripes" type="ColorRect" parent="Visual"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 16.0
-offset_bottom = 16.0
-color = Color(0.9, 0.7, 0.1, 1)
-
-[node name="TriggerArea" type="Area2D" parent="."]
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1680788225]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1167794818]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_trigger")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=944595571]
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_s680w")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_body_entered"]

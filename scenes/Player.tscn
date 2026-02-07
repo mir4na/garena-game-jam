@@ -1,6 +1,7 @@
-[gd_scene load_steps=38 format=3 uid="uid://b8d8d8d8d8d8"]
+[gd_scene format=3 uid="uid://b8d8d8d8d8d8"]
 
-[ext_resource type="Script" uid="uid://dsvfc500dl2mn" path="res://scripts/Player.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://bqfvdsmdxonph" path="res://shaders/squigglevision.gdshader" id="1_axnmu"]
+[ext_resource type="Script" uid="uid://be3ck7u420y7w" path="res://scripts/Player.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bha8yeahld01u" path="res://assets/player1/idle1.png" id="2_cw2d6"]
 [ext_resource type="Texture2D" uid="uid://btk558l7tkagl" path="res://assets/player1/idle2.png" id="3_khinc"]
 [ext_resource type="Texture2D" uid="uid://dgbs3q3q435tt" path="res://assets/player1/run1.png" id="4_bruh7"]
@@ -23,16 +24,23 @@
 [ext_resource type="Texture2D" uid="uid://biw0txav8q7vi" path="res://assets/player2/walk4.png" id="21_p07f3"]
 [ext_resource type="Texture2D" uid="uid://bgam3hmkgdpft" path="res://assets/player3/idle1.png" id="22_agngo"]
 [ext_resource type="Texture2D" uid="uid://cxo5y0mipovew" path="res://assets/player3/idle2.png" id="23_qrixf"]
-[ext_resource type="Texture2D" uid="uid://83tfsv8d0xtw" path="res://assets/player3/jump1.png" id="24_qmt83"]
-[ext_resource type="Texture2D" uid="uid://jgqhq8c3e71t" path="res://assets/player3/jump2.png" id="25_m4as6"]
 [ext_resource type="Texture2D" uid="uid://cfln51ivofxja" path="res://assets/player3/jump3.png" id="26_b1r6t"]
 [ext_resource type="Texture2D" uid="uid://bw1ly478y5bwa" path="res://assets/player3/jump4.png" id="27_c0asu"]
-[ext_resource type="Texture2D" uid="uid://bgwx8k734vcp4" path="res://assets/player3/jump5.png" id="28_fq1a3"]
-[ext_resource type="Texture2D" uid="uid://vo3kqb6xalq5" path="res://assets/player3/jump6.png" id="29_gu4mg"]
 [ext_resource type="Texture2D" uid="uid://2m46bdmxvtio" path="res://assets/player3/run1.png" id="30_tk6la"]
 [ext_resource type="Texture2D" uid="uid://b3b667tp1b2lk" path="res://assets/player3/run2.png" id="31_yrxk4"]
 [ext_resource type="Texture2D" uid="uid://cmvhaqyfda6r8" path="res://assets/player3/run3.png" id="32_eg1p0"]
 [ext_resource type="Texture2D" uid="uid://hsc3po8fljec" path="res://assets/player3/run4.png" id="33_x2u8p"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_axnmu"]
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fvsjc"]
+shader = ExtResource("1_axnmu")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 1.0
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_axnmu")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p0vlq"]
 animations = [{
@@ -141,26 +149,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 30.0
+"speed": 3.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("24_qmt83")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_m4as6")
-}, {
 "duration": 1.0,
 "texture": ExtResource("26_b1r6t")
 }, {
 "duration": 1.0,
 "texture": ExtResource("27_c0asu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_fq1a3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_gu4mg")
 }],
 "loop": true,
 "name": &"jump",
@@ -187,13 +183,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(127.499985, 152.5)
 
-[node name="Player" type="CharacterBody2D"]
-collision_layer = 3
+[node name="Player" type="CharacterBody2D" unique_id=769047023]
+material = SubResource("ShaderMaterial_fvsjc")
+collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_script")
-jump_velocity = -600.0
+jump_velocity = -500.0
+fall_gravity_multiplier = 1.05
 
-[node name="Player1Animated" type="AnimatedSprite2D" parent="."]
+[node name="Player1Animated" type="AnimatedSprite2D" parent="." unique_id=614214300]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_p0vlq")
 animation = &"run"
@@ -201,17 +199,17 @@ autoplay = "idle"
 frame = 3
 frame_progress = 1.0
 
-[node name="Player2Animated" type="AnimatedSprite2D" parent="."]
+[node name="Player2Animated" type="AnimatedSprite2D" parent="." unique_id=942213796]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_6e537")
 animation = &"jump"
 
-[node name="Player3Animated" type="AnimatedSprite2D" parent="."]
+[node name="Player3Animated" type="AnimatedSprite2D" parent="." unique_id=211187505]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_qv10x")
-animation = &"idle"
+animation = &"jump"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.9999999, -3.9999998)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1925327469]
+position = Vector2(1.9999999, 4.999999)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_1")

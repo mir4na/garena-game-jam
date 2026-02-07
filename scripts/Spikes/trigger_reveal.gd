@@ -11,7 +11,7 @@ func _ready() -> void:
 	if spike_collision:
 		spike_collision.set_deferred("disabled", true)
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	if not revealed:
 		revealed = true
 		

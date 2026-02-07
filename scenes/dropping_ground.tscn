@@ -1,0 +1,74 @@
+[gd_scene load_steps=0 format=4 uid="uid://3ccehdmfmhue"]
+
+[ext_resource type="Script" uid="uid://by4mhvgdo76qd" path="res://scripts/DroppingBlock.gd" id="1_1u1vp"]
+[ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="1_je6cy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1u1vp"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_va6si"]
+size = Vector2(64, 32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1u1vp"]
+texture = ExtResource("1_je6cy")
+margins = Vector2i(112, 116)
+texture_region_size = Vector2i(124, 124)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:2/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:4/0 = 0
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_va6si"]
+tile_size = Vector2i(124, 124)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_1u1vp")
+
+[node name="DroppingGround" type="StaticBody2D" unique_id=1441491989]
+collision_mask = 0
+script = ExtResource("1_1u1vp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350006706]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_1u1vp")
+
+[node name="TriggerArea" type="Area2D" parent="." unique_id=543598180]
+position = Vector2(0, 10)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=46246435]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_va6si")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TriggerArea" unique_id=580496610]
+position = Vector2(61, -16)
+shape = SubResource("RectangleShape2D_va6si")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=464402719]
+position = Vector2(-31, 8)
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAAAAAEAAAABAAIAAAAAAAIAAAABAAIAAAAAAAMAAAABAAIAAAAAAAQAAAABAAIAAAAAAAUAAAABAAIAAAAAAAYAAAABAAIAAAAAAAcAAAABAAIAAAABAAAAAAABAAEAAAABAAEAAAABAAIAAAABAAIAAAABAAIAAAABAAMAAAABAAIAAAABAAQAAAABAAIAAAABAAUAAAABAAIAAAABAAYAAAABAAIAAAABAAcAAAABAAIAAAA=")
+tile_set = SubResource("TileSet_va6si")
+
+[connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_body_entered"]

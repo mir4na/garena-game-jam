@@ -4,7 +4,7 @@ extends Node
 
 # Character style selection (1, 2, or 3)
 var player1_style: int = 1
-var player2_style: int = 1
+var player2_style: int = 3
 
 func set_player_style(player_id: int, style: int) -> void:
 	if player_id == 1:

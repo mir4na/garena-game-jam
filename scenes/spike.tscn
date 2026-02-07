@@ -1,18 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://spike001"]
+[gd_scene format=3 uid="uid://spike001"]
 
-[ext_resource type="Script" path="res://scripts/Spike.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/kill_zone.gd" id="1_7a7y0"]
+[ext_resource type="Texture2D" uid="uid://blaip7jkd4ax8" path="res://assets/spike.png" id="2_7a7y0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_spike"]
+resource_local_to_scene = true
 size = Vector2(32, 32)
 
-[node name="Spike" type="Area2D"]
-collision_layer = 0
-collision_mask = 1
-script = ExtResource("1_script")
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2mqm"]
+atlas = ExtResource("2_7a7y0")
+region = Rect2(232, 779, 67, 70)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Spike" type="Area2D" unique_id=217683343]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_7a7y0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=879762266]
 shape = SubResource("RectangleShape2D_spike")
 
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.7, 0.15, 0.15, 1)
-polygon = PackedVector2Array(-16, 16, 0, -16, 16, 16)
+[node name="SpikeSprite" type="Sprite2D" parent="." unique_id=43265774]
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_d2mqm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

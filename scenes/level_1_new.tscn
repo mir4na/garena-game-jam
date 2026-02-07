@@ -1,84 +1,76 @@
-[gd_scene load_steps=0 format=4 uid="uid://bu65ei2emjkkb"]
+[gd_scene load_steps=0 format=4]
 
-[ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="1_kbwfl"]
-[ext_resource type="Texture2D" uid="uid://b07mtiub2oxdk" path="res://assets/tileset/IMG_8596.png" id="2_g5rll"]
+[ext_resource type="PackedScene" path="res://scenes/level_base.tscn" id="1_8lckh"]
 [ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="2_ite7j"]
-[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="3_fx4f8"]
-[ext_resource type="Script" uid="uid://ce2juxikih7kp" path="res://scripts/Chain.gd" id="4_b4fgl"]
-[ext_resource type="Texture2D" uid="uid://c0p75qlq6b0d4" path="res://assets/tileset/IMG_8594.png" id="5_8lckh"]
-[ext_resource type="Texture2D" uid="uid://c4hs4f2jm46ah" path="res://assets/tileset/IMG_8595.png" id="6_g5rll"]
+[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="4_b4fgl"]
+[ext_resource type="PackedScene" path="res://scenes/dropping_ground.tscn" id="7_g5rll"]
+[ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="8_f76hb"]
+[ext_resource type="PackedScene" uid="uid://d0gs6p2dmo8f0" path="res://scenes/DroppingBlock.tscn" id="8_gba4x"]
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="9_f76hb"]
+[ext_resource type="PackedScene" uid="uid://bb2w83ex3k24u" path="res://scenes/hidden_spike.tscn" id="10_y84te"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ite7j"]
-texture = ExtResource("1_kbwfl")
-margins = Vector2i(112, 116)
-texture_region_size = Vector2i(124, 124)
-1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-3:2/0 = 0
-1:3/0 = 0
-1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-3:3/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-0:4/0 = 0
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-2:1/0 = 0
-2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
-3:1/0 = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gba4x"]
+resource_local_to_scene = true
+size = Vector2(91, 223)
 
-[sub_resource type="TileSet" id="TileSet_m5ley"]
-tile_size = Vector2i(124, 124)
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_ite7j")
+[node name="LevelBase" unique_id=1259302262 instance=ExtResource("1_8lckh")]
 
-[node name="Level1New" type="Node2D" unique_id=381191905]
+[node name="Background" parent="." index="0" unique_id=1143105163]
+offset_left = 7.0
+offset_top = 2.0
+offset_right = 1927.0
+offset_bottom = 1082.0
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=121606458]
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.76862746, 0.92941177, 1, 1)
+[node name="Checkpoint" parent="." index="2" unique_id=1989630016]
+position = Vector2(116, 566)
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1343158231]
-scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAABAAsAAAABAAIAAAABAAwAAAABAAIAAAABAA0AAAABAAIAAAACAAsAAAABAAIAAAACAAwAAAABAAIAAAACAA0AAAABAAIAAAADAAsAAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAAAAoAAAAAAAEAAAAAAAsAAAAAAAIAAAAAAAwAAAAAAAIAAAAAAA0AAAAAAAIAAAABAAoAAAABAAEAAAACAAoAAAABAAEAAAADAAoAAAABAAEAAAAFAAoAAAACAAEAAAAFAAsAAAACAAIAAAAFAAwAAAACAAIAAAAFAA0AAAACAAIAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAABAA4AAAABAAIAAAACAA4AAAABAAIAAAADAA4AAAABAAIAAAAEAA4AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAIAAAAFAA4AAAACAAIAAAAFAA8AAAACAAIAAAAAABAAAAAAAAIAAAAAABEAAAAAAAMAAAAFABEAAAACAAMAAAAEABEAAAABAAMAAAADABEAAAABAAMAAAACABEAAAABAAMAAAABABEAAAABAAMAAAAFABAAAAACAAIAAAAEABAAAAABAAIAAAADABAAAAABAAIAAAACABAAAAABAAIAAAABABAAAAABAAIAAAA=")
-tile_set = SubResource("TileSet_m5ley")
+[node name="Player1" parent="." index="3" unique_id=769047023]
+position = Vector2(161, 570)
 
-[node name="Img8596" type="Sprite2D" parent="." unique_id=556873192]
-position = Vector2(-235, 375)
-texture = ExtResource("2_g5rll")
-
-[node name="Img8594" type="Sprite2D" parent="." unique_id=717542050]
-position = Vector2(308, 294)
-texture = ExtResource("5_8lckh")
-
-[node name="Img8595" type="Sprite2D" parent="." unique_id=1301385545]
-position = Vector2(1171, 469)
-texture = ExtResource("6_g5rll")
-
-[node name="MovingBlock" parent="." unique_id=1504593245 instance=ExtResource("2_ite7j")]
-position = Vector2(512, 473)
-
-[node name="Player1" parent="." unique_id=200080487 instance=ExtResource("3_fx4f8")]
-position = Vector2(110, 573)
-
-[node name="Player2" parent="." unique_id=1061695660 instance=ExtResource("3_fx4f8")]
-position = Vector2(203, 572)
+[node name="Player2" parent="." index="4" unique_id=1054873841]
+position = Vector2(161, 570)
 player_id = 2
 
-[node name="Chain" type="Node2D" parent="." unique_id=1589442096]
+[node name="Chain" type="Node2D" parent="." index="5" unique_id=1307565403]
 script = ExtResource("4_b4fgl")
 player1_path = NodePath("../Player1")
 player2_path = NodePath("../Player2")
+rope_length = 150.0
+
+[node name="TileMapLayer" parent="." index="6" unique_id=1532937240]
+tile_map_data = PackedByteArray("AAABAAsAAAABAAIAAAABAAwAAAABAAIAAAABAA0AAAABAAIAAAACAAsAAAABAAIAAAACAAwAAAABAAIAAAACAA0AAAABAAIAAAADAAsAAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAAAAoAAAAAAAEAAAAAAAsAAAAAAAIAAAAAAAwAAAAAAAIAAAAAAA0AAAAAAAIAAAABAAoAAAABAAEAAAACAAoAAAABAAEAAAADAAoAAAABAAEAAAAFAAoAAAACAAEAAAAFAAsAAAACAAIAAAAFAAwAAAACAAIAAAAFAA0AAAACAAIAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAABAA4AAAABAAIAAAACAA4AAAABAAIAAAADAA4AAAABAAIAAAAEAA4AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAIAAAAFAA4AAAACAAIAAAAFAA8AAAACAAIAAAAAABAAAAAAAAIAAAAAABEAAAAAAAMAAAAFABEAAAACAAMAAAAEABEAAAABAAMAAAADABEAAAABAAMAAAACABEAAAABAAMAAAABABEAAAABAAMAAAAFABAAAAACAAIAAAAEABAAAAABAAIAAAADABAAAAABAAIAAAACABAAAAABAAIAAAABABAAAAABAAIAAAAcAAoAAAABAAEAAAAcAAsAAAABAAIAAAAcAAwAAAABAAIAAAAcAA0AAAABAAIAAAAcAA4AAAABAAIAAAAcAA8AAAABAAIAAAAcABAAAAABAAIAAAAcABEAAAABAAMAAAAeAAoAAAACAAEAAAAeAAsAAAACAAIAAAAeAAwAAAACAAIAAAAeAA0AAAACAAIAAAAeAA4AAAACAAIAAAAeAA8AAAACAAIAAAAeABAAAAACAAIAAAAeABEAAAACAAMAAAAdAAoAAAABAAEAAAAdAAsAAAABAAIAAAAdAAwAAAABAAIAAAAdAA0AAAABAAIAAAAdAA4AAAABAAIAAAAdAA8AAAABAAIAAAAdABAAAAABAAIAAAAdABEAAAABAAMAAAAiAAoAAAABAAEAAAAhAAoAAAABAAEAAAAgAAoAAAABAAEAAAAfAAoAAAABAAEAAAAVAAoAAAABAAEAAAAVAAsAAAABAAIAAAAVAAwAAAABAAIAAAAVAA0AAAABAAIAAAAVAA4AAAABAAIAAAAVAA8AAAABAAIAAAAVABAAAAABAAIAAAAVABEAAAABAAMAAAAWAAoAAAABAAEAAAAWAAsAAAABAAIAAAAWAAwAAAABAAIAAAAWAA0AAAABAAIAAAAWAA4AAAABAAIAAAAWAA8AAAABAAIAAAAWABAAAAABAAIAAAAWABEAAAABAAMAAAAXAAoAAAABAAEAAAAXAAsAAAABAAIAAAAXAAwAAAABAAIAAAAXAA0AAAABAAIAAAAXAA4AAAABAAIAAAAXAA8AAAABAAIAAAAXABAAAAABAAIAAAAXABEAAAABAAMAAAAUAAoAAAAAAAEAAAAUAAsAAAAAAAIAAAAUAAwAAAAAAAIAAAAUAA0AAAAAAAIAAAAUAA4AAAAAAAIAAAAUAA8AAAAAAAIAAAAUABAAAAAAAAIAAAAUABEAAAAAAAMAAAAaAAsAAAABAAIAAAAaAAwAAAABAAIAAAAaAA0AAAABAAIAAAAaAA4AAAABAAIAAAAaAA8AAAABAAIAAAAaABAAAAABAAIAAAAaABEAAAABAAMAAAAbAAsAAAABAAIAAAAbAAwAAAABAAIAAAAbAA0AAAABAAIAAAAbAA4AAAABAAIAAAAbAA8AAAABAAIAAAAbABAAAAABAAIAAAAbABEAAAABAAMAAAAaAAoAAAABAAEAAAAbAAoAAAABAAEAAAA=")
+
+[node name="MovingBlock" parent="." index="7" unique_id=1504593245 instance=ExtResource("2_ite7j")]
+position = Vector2(441, 521)
+move_speed = 500.0
+
+[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" parent_id_path=PackedInt32Array(1504593245, 2078843788) index="0" unique_id=1206900178]
+position = Vector2(-0.5, -80.5)
+shape = SubResource("RectangleShape2D_gba4x")
+
+[node name="DroppingBlock" parent="." index="8" unique_id=2117705523 instance=ExtResource("8_gba4x")]
+position = Vector2(758, 444)
+respawn_time = 0.0
+
+[node name="NormalBlock" parent="." index="9" unique_id=2118917713 instance=ExtResource("9_f76hb")]
+position = Vector2(941, 521)
+
+[node name="NormalBlock2" parent="." index="10" unique_id=1842734218 instance=ExtResource("9_f76hb")]
+position = Vector2(1005, 521)
+
+[node name="HiddenSpike" parent="." index="11" unique_id=98624488 instance=ExtResource("10_y84te")]
+position = Vector2(927, 491)
+
+[node name="DroppingGround" parent="." index="12" unique_id=1441491989 instance=ExtResource("7_g5rll")]
+position = Vector2(1519, 612)
+drop_delay = 0.0
+shake_amount = 0.0
+respawn_time = 0.0
+
+[node name="SpikeMove" parent="." index="13" unique_id=758195686 instance=ExtResource("8_f76hb")]
+position = Vector2(2110, 591)
+move_speed = 800.0
+move_direction = Vector2(-1, 0)
+
+[editable path="MovingBlock"]
+[editable path="DroppingBlock"]

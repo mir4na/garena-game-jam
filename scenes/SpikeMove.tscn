@@ -1,7 +1,8 @@
-[gd_scene load_steps=0 format=3 uid="uid://spikemove001"]
+[gd_scene format=3 uid="uid://spikemove001"]
 
-[ext_resource type="Script" path="res://scripts/Spikes/SpikeMove.gd" id="1_spikemove"]
+[ext_resource type="Script" uid="uid://s1urpl8e62i0" path="res://scripts/Spikes/SpikeMove.gd" id="1_spikemove"]
 [ext_resource type="Texture2D" uid="uid://bm83xwaba4y3g" path="res://assets/tileset/IMG_8597.png" id="2_texture"]
+[ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="3_lv0kv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_move"]
 size = Vector2(58, 57)
@@ -10,17 +11,33 @@ size = Vector2(58, 57)
 atlas = ExtResource("2_texture")
 region = Rect2(232, 779, 67, 70)
 
-[node name="SpikeMove" type="Area2D"]
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("1_spikemove")
-move_speed = 200.0
-move_direction = Vector2(1, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hjs2"]
+size = Vector2(746, 58)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ho65q"]
+size = Vector2(58, 54)
+
+[node name="SpikeMove" type="RigidBody2D" unique_id=2034419307]
+script = ExtResource("1_spikemove")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=844441503]
 shape = SubResource("RectangleShape2D_move")
 
-[node name="SpikeSprite" type="Sprite2D" parent="."]
+[node name="SpikeSprite" type="Sprite2D" parent="." unique_id=1146149744]
 texture = SubResource("AtlasTexture_spike")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Area2D" type="Area2D" parent="." unique_id=919975489]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1525135391]
+shape = SubResource("RectangleShape2D_2hjs2")
+
+[node name="KillZone" type="Area2D" parent="." unique_id=261162623]
+collision_mask = 2
+script = ExtResource("3_lv0kv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=19060864]
+shape = SubResource("RectangleShape2D_ho65q")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

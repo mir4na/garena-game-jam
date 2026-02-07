@@ -1,48 +1,40 @@
-[gd_scene load_steps=0 format=3 uid="uid://bb2w83ex3k24u"]
+[gd_scene format=3 uid="uid://bb2w83ex3k24u"]
 
-[ext_resource type="PackedScene" uid="uid://o5py3v55mwhg" path="res://scenes/spike.tscn" id="1_ok4jl"]
+[ext_resource type="PackedScene" uid="uid://spike001" path="res://scenes/spike.tscn" id="1_ok4jl"]
 [ext_resource type="Script" uid="uid://cj5fp35cnkii0" path="res://scripts/Spikes/trigger_reveal.gd" id="2_i4sa2"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7laxs"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4sa2"]
-size = Vector2(58, 185)
+size = Vector2(75, 185)
 
 [sub_resource type="Animation" id="Animation_7laxs"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SpikeSprite:modulate")
+tracks/0/path = NodePath("../SpikeSprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Vector2(1e-05, 1e-05)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../SpikeSprite:scale")
+tracks/1/path = NodePath(".:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1e-05)]
+"values": [Vector2(0.5, 1e-05)]
 }
 
 [sub_resource type="Animation" id="Animation_ok4jl"]
@@ -51,38 +43,26 @@ length = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SpikeSprite:modulate")
+tracks/0/path = NodePath("../SpikeSprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.016666668),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Vector2(0.5, 0), Vector2(0.5, 0.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../SpikeSprite:scale")
+tracks/1/path = NodePath(".:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.016666668),
+"times": PackedFloat32Array(0, 0.019960938),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1, 1e-05), Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1e-05), Vector2(1, 1)]
+"values": [Vector2(1, 0), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i4sa2"]
@@ -93,15 +73,14 @@ _data = {
 
 [node name="HiddenSpike" unique_id=98624488 instance=ExtResource("1_ok4jl")]
 
-[node name="CollisionShape2D" parent="." index="0" unique_id=108127255]
-position = Vector2(0, -1.5)
-scale = Vector2(1, 1e-05)
+[node name="CollisionShape2D" parent="." index="0" unique_id=879762266]
+position = Vector2(0, -15)
+scale = Vector2(0.5, 1e-05)
+shape = SubResource("RectangleShape2D_7laxs")
 
-[node name="SpikeSprite" parent="." index="1" unique_id=1648288154]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(0, 25)
+[node name="SpikeSprite" parent="." index="1" unique_id=43265774]
 scale = Vector2(1e-05, 1e-05)
-offset = Vector2(0, -28)
+offset = Vector2(0, -29.285)
 
 [node name="TriggerReveal" type="Area2D" parent="." index="2" unique_id=1029215902]
 collision_mask = 2
@@ -109,6 +88,7 @@ script = ExtResource("2_i4sa2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerReveal" index="0" unique_id=1673909751]
 position = Vector2(0, -65.5)
+scale = Vector2(1, 0.5)
 shape = SubResource("RectangleShape2D_i4sa2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TriggerReveal" index="1" unique_id=1700018474]
