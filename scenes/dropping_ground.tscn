@@ -11,7 +11,7 @@ size = Vector2(64, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_va6si"]
 size = Vector2(64, 32)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_758q2"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jvimp"]
 texture = ExtResource("1_je6cy")
 margins = Vector2i(112, 116)
 texture_region_size = Vector2i(124, 124)
@@ -41,10 +41,9 @@ texture_region_size = Vector2i(124, 124)
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 3:1/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3a1va"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfya7"]
 texture = ExtResource("3_jvimp")
-margins = Vector2i(45, 58)
-texture_region_size = Vector2i(124, 124)
+texture_region_size = Vector2i(91, 121)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 1:0/0 = 0
@@ -63,28 +62,34 @@ texture_region_size = Vector2i(124, 124)
 1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 2:2/0 = 0
 2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_23s50"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_758q2"]
 texture = ExtResource("4_kfya7")
-margins = Vector2i(25, 30)
-texture_region_size = Vector2i(124, 124)
+texture_region_size = Vector2i(90, 122)
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
+3:0/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_mtik7"]
-tile_size = Vector2i(124, 124)
+[sub_resource type="TileSet" id="TileSet_3a1va"]
+tile_size = Vector2i(91, 121)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_758q2")
-sources/1 = SubResource("TileSetAtlasSource_3a1va")
-sources/2 = SubResource("TileSetAtlasSource_23s50")
+sources/0 = SubResource("TileSetAtlasSource_jvimp")
+sources/1 = SubResource("TileSetAtlasSource_kfya7")
+sources/2 = SubResource("TileSetAtlasSource_758q2")
 
 [node name="DroppingGround" type="StaticBody2D" unique_id=1441491989]
-collision_mask = 0
+position = Vector2(0, 2)
 script = ExtResource("1_1u1vp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350006706]
-position = Vector2(0, 16)
+position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_1u1vp")
 
 [node name="TriggerArea" type="Area2D" parent="." unique_id=543598180]
@@ -100,10 +105,10 @@ shape = SubResource("RectangleShape2D_va6si")
 position = Vector2(61, -16)
 shape = SubResource("RectangleShape2D_va6si")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=182038005]
-position = Vector2(-155, -612)
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1187464029]
+position = Vector2(0, -7)
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAADABEAAQABAAIAAAACABEAAQABAAIAAAACABAAAQABAAEAAAADABAAAQABAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAADAA4AAQABAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAA=")
-tile_set = SubResource("TileSet_mtik7")
+tile_map_data = PackedByteArray("AAABAAAAAQABAAAAAAAAAAAAAQABAAAAAAD//wAAAQABAAAAAAD//wEAAQACAAEAAAAAAAEAAQACAAEAAAABAAEAAQACAAEAAAABAAIAAQACAAEAAAAAAAIAAQACAAEAAAD//wIAAQACAAEAAAABAAMAAQACAAEAAAAAAAMAAQACAAEAAAAAAAQAAQACAAEAAAD//wQAAQACAAEAAAD//wMAAQACAAEAAAABAAQAAQACAAEAAAABAAYAAQACAAEAAAAAAAYAAQACAAEAAAD//wYAAQACAAEAAAAAAAUAAQACAAEAAAABAAUAAQACAAEAAAD//wUAAQACAAEAAAABAAcAAQABAAEAAAAAAAcAAQABAAEAAAD//wcAAQABAAEAAAA=")
+tile_set = SubResource("TileSet_3a1va")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_body_entered"]

@@ -152,6 +152,7 @@ collision_mask = 2
 script = ExtResource("13_trigger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlagTrigger" unique_id=1172186152]
+position = Vector2(-130, 0)
 shape = SubResource("RectangleShape2D_trigger")
 
 [node name="Rock" type="RigidBody2D" parent="." unique_id=2020030001]
