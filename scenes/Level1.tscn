@@ -104,3 +104,4 @@ shape = SubResource("RectangleShape2D_svatc")
 [connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
 [connection signal="body_entered" from="Trigger3" to="." method="_on_trigger_3_body_entered"]
 [connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]
+[connection signal="body_entered" from="DeathArea" to="." method="_on_death_area_body_entered"]

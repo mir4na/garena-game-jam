@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="garena-game-jam"
-run/main_scene="uid://b0dugtkj4vqvq"
+run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://scripts/GameManager.gd"
 
 [display]
 

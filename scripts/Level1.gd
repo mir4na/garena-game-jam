@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var player1 = $Player1
 @onready var player2 = $Player2
+@onready var spawn_point = $SpawnPoint
+@onready var chain = $Chain
 @onready var trigger1 = $Trigger1
 @onready var trigger2 = $Trigger2
 @onready var trigger3 = $Trigger3
@@ -88,6 +90,36 @@ func _on_door_body_entered(body):
 			child.queue_free()
 		RenderingServer.set_default_clear_color(Color.BLACK)
 
+
+func _on_death_area_body_entered(body):
+	if body == player1 or body == player2:
+		print("Player died! Resetting...")
+		_reset_level()
+
+func _reset_level():
+	# Reset players to spawn point
+	var spawn_pos = spawn_point.global_position
+	player1.global_position = spawn_pos + Vector2(-50, 0)
+	player2.global_position = spawn_pos + Vector2(50, 0)
+	
+	# Reset player velocities
+	player1.velocity = Vector2.ZERO
+	player2.velocity = Vector2.ZERO
+	
+	# Reset trigger states
+	trigger1_activated = false
+	trigger2_activated = false
+	trigger3_activated = false
+	
+	# Reset platform to original size/position
+	platform_collision.shape.size.x = original_collision_size.x
+	platform_collision.position = original_collision_pos
+	platform_sprite.scale = original_sprite_scale
+	platform_sprite.position = original_sprite_pos
+	
+	# Reset chain if exists
+	if chain and chain.has_method("reset_rope"):
+		chain.reset_rope()
 
 func _on_trigger_3_body_entered(body):
 	if trigger2_activated and not trigger3_activated and (body == player1 or body == player2):

@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 # Jump parameters
 @export_group("Jump")
-@export var jump_velocity: float = -400.0
+@export var jump_velocity: float = -500.0
 @export var gravity_scale: float = 1.0
 @export var fall_gravity_multiplier: float = 1.5
 @export var coyote_time: float = 0.1
@@ -19,6 +19,7 @@ extends CharacterBody2D
 # Animation references
 @onready var animated = $Player1Animated
 @onready var animated2 = $Player2Animated
+@onready var animated3 = $Player3Animated
 var current_sprite: AnimatedSprite2D
 
 # Internal state
@@ -34,16 +35,32 @@ var rope_force: Vector2 = Vector2.ZERO
 var base_gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready() -> void:
-	# Setup correct sprite based on player_id
-	if player_id == 1:
-		current_sprite = animated
-		animated2.visible = false
-		animated.visible = true
-	else:
-		current_sprite = animated2
-		animated.visible = false
-		animated2.visible = true
+	# Get selected style from GameManager
+	var style = 1
+	if GameManager:
+		style = GameManager.get_player_style(player_id)
 	
+	# Hide all sprites first
+	animated.visible = false
+	animated2.visible = false
+	if animated3:
+		animated3.visible = false
+	
+	# Select sprite based on style
+	match style:
+		1:
+			current_sprite = animated
+		2:
+			current_sprite = animated2
+		3:
+			if animated3:
+				current_sprite = animated3
+			else:
+				current_sprite = animated
+		_:
+			current_sprite = animated
+	
+	current_sprite.visible = true
 	current_sprite.play("idle")
 
 func _physics_process(delta: float) -> void:

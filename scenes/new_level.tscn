@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://bjwxdd3yjh6vb"]
+
+[ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="1_arhnm"]
+[ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="1_s0480"]
+[ext_resource type="Script" uid="uid://cefta7bjd888k" path="res://scripts/NewLevel.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ce2juxikih7kp" path="res://scripts/Chain.gd" id="3_3d5na"]
+[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="3_w7bw3"]
+[ext_resource type="PackedScene" path="res://scenes/spike.tscn" id="6_spike"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7bw3"]
+size = Vector2(524, 620)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arhnm"]
+size = Vector2(172.5, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3d5na"]
+size = Vector2(174, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tv6f0"]
+size = Vector2(125, 1176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4boi"]
+size = Vector2(132, 919.5)
+
+[node name="NewLevel" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Platform" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform"]
+position = Vector2(227, 729)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D"]
+position = Vector2(-30.000015, 87.000015)
+scale = Vector2(4.109375, 4.8593755)
+texture = ExtResource("1_arhnm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2(-29, 86)
+shape = SubResource("RectangleShape2D_w7bw3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+position = Vector2(1197, 1075)
+scale = Vector2(12.3828125, 4.8593755)
+texture = ExtResource("1_arhnm")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platform"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
+position = Vector2(707.75, 423)
+scale = Vector2(1.3632804, 0.21874988)
+texture = ExtResource("1_arhnm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
+position = Vector2(708.75, 422.5)
+shape = SubResource("RectangleShape2D_arhnm")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Platform"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D3"]
+position = Vector2(1034, 332.99997)
+scale = Vector2(1.3671877, 0.14062512)
+texture = ExtResource("1_arhnm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D3"]
+position = Vector2(1033, 333)
+shape = SubResource("RectangleShape2D_3d5na")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-60.5, 532)
+shape = SubResource("RectangleShape2D_tv6f0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1984, 521)
+shape = SubResource("RectangleShape2D_tv6f0")
+
+[node name="DeathArea" parent="." instance=ExtResource("1_s0480")]
+position = Vector2(117, 827)
+
+[node name="Spike1" parent="." instance=ExtResource("6_spike")]
+position = Vector2(1032, 745)
+
+[node name="Chain" type="Node2D" parent="."]
+position = Vector2(78, 387)
+script = ExtResource("3_3d5na")
+player1_path = NodePath("../Player")
+player2_path = NodePath("../Player2")
+
+[node name="Player" parent="." instance=ExtResource("3_w7bw3")]
+position = Vector2(221, 384)
+
+[node name="Player2" parent="." instance=ExtResource("3_w7bw3")]
+position = Vector2(78, 387)
+player_id = 2
+
+[node name="Trigger1" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger1"]
+position = Vector2(944, 319)
+shape = SubResource("RectangleShape2D_j4boi")
+
+[node name="Spike2" parent="." instance=ExtResource("6_spike")]
+position = Vector2(1001, 745)
+
+[node name="Spike3" parent="." instance=ExtResource("6_spike")]
+position = Vector2(969, 745)
+
+[node name="Spike4" parent="." instance=ExtResource("6_spike")]
+position = Vector2(1098, 745)
+
+[node name="Spike5" parent="." instance=ExtResource("6_spike")]
+position = Vector2(1065, 745)
+
+[connection signal="body_entered" from="DeathArea" to="." method="_on_death_area_body_entered"]
+[connection signal="body_entered" from="Spike1" to="." method="_on_spike_body_entered"]
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
