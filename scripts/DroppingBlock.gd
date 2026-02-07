@@ -13,12 +13,10 @@ var is_falling: bool = false
 var is_gone: bool = false
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var sprite: Sprite2D = $Sprite2D if has_node("Sprite2D") else null
 @onready var trigger_area: Area2D = $TriggerArea
 
 func _ready() -> void:
 	original_position = global_position
-	trigger_area.body_entered.connect(_on_trigger_body_entered)
 
 func _physics_process(delta: float) -> void:
 	if is_falling and not is_gone:

@@ -1,5 +1,4 @@
-extends Area2D
-
+extends RigidBody2D
 ## SpikeMove - Spike that starts moving when triggered
 
 @export var move_speed: float = 200.0
@@ -13,15 +12,10 @@ func _physics_process(delta: float) -> void:
 		global_position += move_direction.normalized() * move_speed * delta
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") or body.name.begins_with("Player"):
-		if not is_moving:
-			# Start moving when touched
-			is_moving = true
-			print("SpikeMove activated!")
-		else:
-			# Kill player if already moving
-			get_tree().reload_current_scene()
-
+	if not is_moving:
+		# Start moving when touched
+		is_moving = true
+		print("SpikeMove activated!")
 ## Called by external trigger to start movement
 func activate() -> void:
 	is_moving = true

@@ -1,0 +1,98 @@
+[gd_scene format=4 uid="uid://834ahddecqsc"]
+
+[ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="1_548ah"]
+[ext_resource type="Texture2D" uid="uid://c4hs4f2jm46ah" path="res://assets/tileset/IMG_8595.png" id="1_krm4r"]
+[ext_resource type="Texture2D" uid="uid://c0p75qlq6b0d4" path="res://assets/tileset/IMG_8594.png" id="2_8n3nq"]
+[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_osu2p"]
+[ext_resource type="Texture2D" uid="uid://b07mtiub2oxdk" path="res://assets/tileset/IMG_8596.png" id="3_2v7b3"]
+[ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="3_bkdr1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
+size = Vector2(1939, 41)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k8qy"]
+texture = ExtResource("3_bkdr1")
+margins = Vector2i(112, 116)
+texture_region_size = Vector2i(124, 124)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:2/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:4/0 = 0
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_8rhjg"]
+tile_size = Vector2i(124, 124)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_6k8qy")
+
+[node name="LevelBase" type="Node2D" unique_id=1259302262]
+
+[node name="Background" type="ColorRect" parent="." unique_id=1143105163]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.76862746, 0.92941177, 1, 1)
+
+[node name="Img8595" type="Sprite2D" parent="Background" unique_id=1515150549]
+position = Vector2(898, 515)
+texture = ExtResource("1_krm4r")
+
+[node name="Img8594" type="Sprite2D" parent="Background" unique_id=533314557]
+position = Vector2(364, 348)
+texture = ExtResource("2_8n3nq")
+
+[node name="Img8597" type="Sprite2D" parent="Background" unique_id=1119647206]
+position = Vector2(1758, 682)
+texture = ExtResource("1_krm4r")
+
+[node name="Img8598" type="Sprite2D" parent="Background" unique_id=1240192624]
+position = Vector2(1224, 515)
+texture = ExtResource("2_8n3nq")
+
+[node name="Img8596" type="Sprite2D" parent="Background" unique_id=241209914]
+position = Vector2(191, 285)
+texture = ExtResource("3_2v7b3")
+region_enabled = true
+region_rect = Rect2(1372, 104, 490, 679)
+
+[node name="KillZone" type="Area2D" parent="." unique_id=1780928457]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_548ah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1562238353]
+position = Vector2(959.5, 1103.5)
+shape = SubResource("RectangleShape2D_osu2p")
+
+[node name="Checkpoint" type="Node2D" parent="." unique_id=1989630016]
+
+[node name="Player1" parent="." unique_id=769047023 instance=ExtResource("2_osu2p")]
+
+[node name="Player2" parent="." unique_id=1054873841 instance=ExtResource("2_osu2p")]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1532937240]
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAABAAsAAAABAAIAAAABAAwAAAABAAIAAAABAA0AAAABAAIAAAACAAsAAAABAAIAAAACAAwAAAABAAIAAAACAA0AAAABAAIAAAADAAsAAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAAAAoAAAAAAAEAAAAAAAsAAAAAAAIAAAAAAAwAAAAAAAIAAAAAAA0AAAAAAAIAAAABAAoAAAABAAEAAAACAAoAAAABAAEAAAADAAoAAAABAAEAAAAFAAoAAAACAAEAAAAFAAsAAAACAAIAAAAFAAwAAAACAAIAAAAFAA0AAAACAAIAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAABAA4AAAABAAIAAAACAA4AAAABAAIAAAADAA4AAAABAAIAAAAEAA4AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAIAAAAFAA4AAAACAAIAAAAFAA8AAAACAAIAAAAAABAAAAAAAAIAAAAAABEAAAAAAAMAAAAFABEAAAACAAMAAAAEABEAAAABAAMAAAADABEAAAABAAMAAAACABEAAAABAAMAAAABABEAAAABAAMAAAAFABAAAAACAAIAAAAEABAAAAABAAIAAAADABAAAAABAAIAAAACABAAAAABAAIAAAABABAAAAABAAIAAAAYAAoAAAAAAAEAAAAYAAsAAAAAAAIAAAAYAAwAAAAAAAIAAAAYAA0AAAAAAAIAAAAYAA4AAAAAAAIAAAAYAA8AAAAAAAIAAAAYABAAAAAAAAIAAAAZAAoAAAABAAEAAAAZAAsAAAABAAIAAAAZAAwAAAABAAIAAAAZAA0AAAABAAIAAAAZAA4AAAABAAIAAAAZAA8AAAABAAIAAAAZABAAAAABAAIAAAAcAAoAAAABAAEAAAAcAAsAAAABAAIAAAAcAAwAAAABAAIAAAAcAA0AAAABAAIAAAAcAA4AAAABAAIAAAAcAA8AAAABAAIAAAAcABAAAAABAAIAAAAYABEAAAAAAAMAAAAZABEAAAABAAMAAAAcABEAAAABAAMAAAAeAAoAAAACAAEAAAAeAAsAAAACAAIAAAAeAAwAAAACAAIAAAAeAA0AAAACAAIAAAAeAA4AAAACAAIAAAAeAA8AAAACAAIAAAAeABAAAAACAAIAAAAeABEAAAACAAMAAAAdAAoAAAABAAEAAAAdAAsAAAABAAIAAAAdAAwAAAABAAIAAAAdAA0AAAABAAIAAAAdAA4AAAABAAIAAAAdAA8AAAABAAIAAAAdABAAAAABAAIAAAAdABEAAAABAAMAAAA=")
+tile_set = SubResource("TileSet_8rhjg")
+
+[connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

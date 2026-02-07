@@ -4,12 +4,14 @@
 [ext_resource type="Script" uid="uid://yjqjhg1u6leg" path="res://scripts/moving_block.gd" id="2_yl38g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_26jr0"]
+resource_local_to_scene = true
 size = Vector2(128, 256)
 
 [node name="MovingBlock" unique_id=1504593245 instance=ExtResource("1_26jr0")]
 script = ExtResource("2_yl38g")
 
 [node name="MoveTrigger" type="Area2D" parent="." index="2" unique_id=2078843788]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveTrigger" index="0" unique_id=1206900178]
 position = Vector2(0, -64)
