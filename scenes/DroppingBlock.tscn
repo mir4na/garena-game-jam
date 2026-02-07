@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dwxpx3mvaqpoi"]
+
+[ext_resource type="Script" path="res://scripts/DroppingBlock.gd" id="1_drop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(64, 32)
+
+[node name="DroppingBlock" type="StaticBody2D"]
+script = ExtResource("1_drop")
+drop_delay = 0.5
+drop_speed = 800.0
+shake_amount = 3.0
+respawn_time = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_block")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.125)
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="WarningStripes" type="ColorRect" parent="Visual"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(0.9, 0.7, 0.1, 1)
+
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_trigger")
+
+[connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_body_entered"]

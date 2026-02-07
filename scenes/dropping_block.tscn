@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b7067f4vfqg0i"]
+
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="1_3puwq"]
+[ext_resource type="Script" uid="uid://volflgujsum2" path="res://dropping_block.gd" id="2_1cnx0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmiuk"]
+size = Vector2(128, 128)
+
+[node name="DroppingBlock" unique_id=1504593245 instance=ExtResource("1_3puwq")]
+script = ExtResource("2_1cnx0")
+
+[node name="Area2D" type="Area2D" parent="." index="2" unique_id=857364897]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0" unique_id=1299627084]
+shape = SubResource("RectangleShape2D_nmiuk")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

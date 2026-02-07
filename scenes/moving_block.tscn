@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dugij7m2sitep"]
+
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="1_26jr0"]
+[ext_resource type="Script" uid="uid://yjqjhg1u6leg" path="res://scripts/moving_block.gd" id="2_yl38g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26jr0"]
+size = Vector2(128, 256)
+
+[node name="MovingBlock" unique_id=1504593245 instance=ExtResource("1_26jr0")]
+script = ExtResource("2_yl38g")
+
+[node name="MoveTrigger" type="Area2D" parent="." index="2" unique_id=2078843788]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveTrigger" index="0" unique_id=1206900178]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_26jr0")

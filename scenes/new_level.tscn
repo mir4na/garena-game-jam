@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjwxdd3yjh6vb"]
+[gd_scene format=3 uid="uid://bjwxdd3yjh6vb"]
 
 [ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="1_arhnm"]
 [ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="1_s0480"]

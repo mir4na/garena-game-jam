@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://gc1jfo64i1xj"]
+
+[ext_resource type="Texture2D" uid="uid://5krbjywyv0es" path="res://assets/tileset/IMG_8593.png" id="1_dqr7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmiuk"]
+size = Vector2(64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ok3k"]
+atlas = ExtResource("1_dqr7t")
+region = Rect2(471, 777, 133, 131)
+
+[node name="NormalBlock" type="StaticBody2D" unique_id=1504593245]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1251668053]
+shape = SubResource("RectangleShape2D_nmiuk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=947116057]
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_6ok3k")

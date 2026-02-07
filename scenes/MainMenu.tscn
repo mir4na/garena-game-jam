@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://mainmenu001"]
+[gd_scene format=3 uid="uid://mainmenu001"]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/player1/idle1.png" id="2_p1"]
