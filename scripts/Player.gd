@@ -1,18 +1,20 @@
 extends CharacterBody2D
 
-## Player untuk platformer dengan rope/chain constraint
+## Player untuk platformer dengan rope/chain constraint (Pico Park style)
+## Simple: can move, jump, connected by rope
 
 @export var player_id: int = 1
 
 # Movement parameters
 @export_group("Movement")
 @export var move_speed: float = 280.0
+@export var air_control: float = 0.5  # Control in air
 
 # Jump parameters
 @export_group("Jump")
-@export var jump_velocity: float = -500.0
+@export var jump_velocity: float = -420.0
 @export var gravity_scale: float = 1.0
-@export var fall_gravity_multiplier: float = 1.5
+@export var fall_gravity_multiplier: float = 1.4
 @export var coyote_time: float = 0.1
 @export var jump_buffer_time: float = 0.1
 
@@ -30,6 +32,12 @@ var jump_key_was_pressed: bool = false
 
 # External force from rope constraint
 var rope_force: Vector2 = Vector2.ZERO
+
+# Track if player has active input this frame
+var has_movement_input: bool = false
+
+# Partner reference (set by Chain)
+var partner: CharacterBody2D = null
 
 # Get gravity from project settings
 var base_gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -67,10 +75,13 @@ func _physics_process(delta: float) -> void:
 	# Get input based on player_id
 	var input_dir := _get_input_direction()
 	
+	# Track if player has movement input
+	has_movement_input = (input_dir != 0)
+	
 	# Apply gravity
 	if not is_on_floor():
 		var current_gravity = base_gravity * gravity_scale
-		# Heavier gravity when falling for better game feel
+		# Heavier gravity when falling
 		if velocity.y > 0:
 			current_gravity *= fall_gravity_multiplier
 		velocity.y += current_gravity * delta
@@ -96,22 +107,29 @@ func _physics_process(delta: float) -> void:
 		coyote_timer = 0
 		did_jump = true
 	
-	# Horizontal movement (instant, no acceleration)
+	# Horizontal movement
 	if input_dir != 0:
-		velocity.x = input_dir * move_speed
-		# Flip sprite based on direction
+		if is_on_floor():
+			velocity.x = input_dir * move_speed
+		else:
+			# Air control - lerp toward target
+			var target_vel = input_dir * move_speed
+			velocity.x = lerp(velocity.x, target_vel, air_control)
+		# Flip sprite
 		current_sprite.flip_h = (input_dir < 0)
 	else:
-		velocity.x = 0
+		if is_on_floor():
+			velocity.x = move_toward(velocity.x, 0, move_speed * 0.3)
+		# In air, preserve momentum
 	
-	# Apply rope force (from VerletRope constraint)
+	# Apply rope force (from Chain constraint)
 	velocity += rope_force
 	rope_force = Vector2.ZERO
 	
 	# Move the character
 	move_and_slide()
 	
-	# Animation Logic
+	# Animation
 	_update_animation(input_dir, did_jump)
 	
 	was_on_floor = is_on_floor()
@@ -125,18 +143,15 @@ func _update_animation(input_dir: float, did_jump: bool) -> void:
 		else:
 			current_sprite.play("idle")
 	else:
-		# Airborne
 		if current_sprite.animation != "jump":
 			current_sprite.play("jump")
 
 func _get_input_direction() -> float:
 	if player_id == 1:
-		# Player 1: WASD only
 		var left = Input.is_key_pressed(KEY_A)
 		var right = Input.is_key_pressed(KEY_D)
 		return float(right) - float(left)
 	else:
-		# Player 2: Arrow keys only
 		var left = Input.is_key_pressed(KEY_LEFT)
 		var right = Input.is_key_pressed(KEY_RIGHT)
 		return float(right) - float(left)
@@ -144,13 +159,10 @@ func _get_input_direction() -> float:
 func _is_jump_just_pressed() -> bool:
 	var is_pressed: bool
 	if player_id == 1:
-		# Player 1: W or Space
 		is_pressed = Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_SPACE)
 	else:
-		# Player 2: Up arrow
 		is_pressed = Input.is_key_pressed(KEY_UP)
 	
-	# Only return true on the first frame the key is pressed
 	var just_pressed = is_pressed and not jump_key_was_pressed
 	jump_key_was_pressed = is_pressed
 	return just_pressed
@@ -159,10 +171,10 @@ func _is_jump_just_pressed() -> bool:
 func apply_rope_force(force: Vector2) -> void:
 	rope_force += force
 
-## Get the attachment point for the rope (center of player)
-func get_rope_attachment_point() -> Vector2:
-	return global_position
+## Set partner reference (called by Chain)
+func set_partner(p: CharacterBody2D) -> void:
+	partner = p
 
-## Launch player with impulse (for special mechanics)
+## Launch player with impulse
 func launch(impulse: Vector2) -> void:
 	velocity += impulse

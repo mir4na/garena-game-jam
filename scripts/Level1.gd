@@ -24,7 +24,7 @@ var trigger3_activated = false
 const SHRINK_SPEED = 250.0
 
 func _ready():
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
 	original_sprite_scale = platform_sprite.scale
 	original_sprite_pos = platform_sprite.position

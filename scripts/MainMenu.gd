@@ -31,7 +31,7 @@ var style_previews = {
 }
 
 func _ready():
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
 	# Start with only start panel visible
 	start_panel.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0dugtkj4vqvq"]
+[gd_scene load_steps=16 format=3 uid="uid://b0dugtkj4vqvq"]
 
 [ext_resource type="Script" uid="uid://b2wf8x6g3v4hw" path="res://scripts/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://51fg12vrmgqw" path="res://icon.svg" id="4_icon"]
 [ext_resource type="PackedScene" uid="uid://blcfjil1ywrmu" path="res://scenes/door.tscn" id="5_lrl65"]
 [ext_resource type="PackedScene" uid="uid://dhct6lyt8cosj" path="res://scenes/death_area.tscn" id="6_76388"]
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="7_svatc"]
+[ext_resource type="PackedScene" uid="uid://spike001" path="res://scenes/spike.tscn" id="8_ecr63"]
+[ext_resource type="PackedScene" path="res://scenes/hidden_spike.tscn" id="9_n34uq"]
+[ext_resource type="PackedScene" path="res://scenes/JumpMushroom.tscn" id="10_kbo48"]
+[ext_resource type="PackedScene" path="res://scenes/SpikeMove.tscn" id="11_4dyl1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trig"]
 size = Vector2(394.375, 302)
@@ -50,13 +55,14 @@ shape = SubResource("RectangleShape2D_trig")
 position = Vector2(1715, 971)
 
 [node name="Player1" parent="." instance=ExtResource("2_player")]
-position = Vector2(110, 573)
+position = Vector2(118, 637)
 
 [node name="Player2" parent="." instance=ExtResource("2_player")]
-position = Vector2(203, 572)
+position = Vector2(238, 632)
 player_id = 2
 
 [node name="Chain" type="Node2D" parent="."]
+position = Vector2(48, 21)
 script = ExtResource("3_chain")
 player1_path = NodePath("../Player1")
 player2_path = NodePath("../Player2")
@@ -99,6 +105,26 @@ texture = ExtResource("4_icon")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
 position = Vector2(725.5, 406.75)
 shape = SubResource("RectangleShape2D_svatc")
+
+[node name="Platform2" parent="." instance=ExtResource("7_svatc")]
+position = Vector2(633, 806)
+
+[node name="Platform3" parent="." instance=ExtResource("7_svatc")]
+position = Vector2(489, 903)
+
+[node name="Background" type="TileMapLayer" parent="."]
+
+[node name="Spike" parent="." instance=ExtResource("8_ecr63")]
+position = Vector2(823, 969)
+
+[node name="HiddenSpike" parent="." instance=ExtResource("9_n34uq")]
+position = Vector2(694, 971)
+
+[node name="JumpMushroom" parent="." instance=ExtResource("10_kbo48")]
+position = Vector2(391, 996)
+
+[node name="SpikeMove" parent="." instance=ExtResource("11_4dyl1")]
+position = Vector2(1022, 976)
 
 [connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
 [connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]

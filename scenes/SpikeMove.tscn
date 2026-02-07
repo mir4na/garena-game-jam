@@ -1,0 +1,26 @@
+[gd_scene load_steps=0 format=3 uid="uid://spikemove001"]
+
+[ext_resource type="Script" path="res://scripts/Spikes/SpikeMove.gd" id="1_spikemove"]
+[ext_resource type="Texture2D" uid="uid://bm83xwaba4y3g" path="res://assets/tileset/IMG_8597.png" id="2_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_move"]
+size = Vector2(58, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spike"]
+atlas = ExtResource("2_texture")
+region = Rect2(232, 779, 67, 70)
+
+[node name="SpikeMove" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_spikemove")
+move_speed = 200.0
+move_direction = Vector2(1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_move")
+
+[node name="SpikeSprite" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_spike")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

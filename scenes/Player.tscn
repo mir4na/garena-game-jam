@@ -45,7 +45,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 30.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -79,7 +79,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 30.0
+"speed": 15.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6e537"]
@@ -93,7 +93,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 30.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -181,31 +181,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 30.0
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(127.499985, 152.5)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_script")
+jump_velocity = -600.0
 
 [node name="Player1Animated" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_p0vlq")
-animation = &"jump"
+animation = &"run"
 autoplay = "idle"
+frame = 3
+frame_progress = 1.0
 
 [node name="Player2Animated" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_6e537")
-animation = &"run"
+animation = &"jump"
 
 [node name="Player3Animated" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_qv10x")
-animation = &"run"
-frame_progress = 0.080477
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.9999999, -3.9999998)

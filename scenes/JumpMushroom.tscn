@@ -1,0 +1,34 @@
+[gd_scene load_steps=0 format=3 uid="uid://clf4wthl51gnj"]
+
+[ext_resource type="Script" uid="uid://2f3hvbqinlaa" path="res://scripts/JumpMushroom.gd" id="1_mushroom"]
+[ext_resource type="Texture2D" uid="uid://ecr4mhvvkdo6" path="res://assets/tileset/IMG_8578.png" id="2_pe72p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mushroom"]
+size = Vector2(60, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_540to"]
+atlas = ExtResource("2_pe72p")
+region = Rect2(110, 775, 75, 71)
+
+[node name="JumpMushroom" type="Node2D" unique_id=697174703]
+
+[node name="BounceArea" type="Area2D" parent="." unique_id=1748625176]
+position = Vector2(0, -13)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_mushroom")
+bounce_force = -1200.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BounceArea" unique_id=215550891]
+position = Vector2(0, -30.5)
+shape = SubResource("RectangleShape2D_mushroom")
+one_way_collision = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BounceArea" unique_id=1011403861]
+
+[node name="Sprite2D" type="Sprite2D" parent="BounceArea" unique_id=1918027692]
+position = Vector2(0, -20)
+texture = SubResource("AtlasTexture_540to")
+
+[connection signal="body_entered" from="BounceArea" to="BounceArea" method="_on_body_entered"]
+[connection signal="body_exited" from="BounceArea" to="BounceArea" method="_on_body_exited"]

@@ -16,7 +16,7 @@ var trigger1_activated = false
 var original_spike_position: Vector2
 
 func _ready():
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
 	# Store initial spawn positions
 	player1_spawn = player1.global_position
