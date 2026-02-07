@@ -12,12 +12,13 @@ atlas = ExtResource("2_texture")
 region = Rect2(232, 779, 67, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2hjs2"]
-size = Vector2(746, 58)
+size = Vector2(854, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ho65q"]
 size = Vector2(58, 54)
 
 [node name="SpikeMove" type="RigidBody2D" unique_id=2034419307]
+collision_mask = 0
 script = ExtResource("1_spikemove")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=844441503]

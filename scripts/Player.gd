@@ -22,7 +22,7 @@ extends CharacterBody2D
 @export var jump_hold_gravity_multiplier: float = 0.55  # Gravity saat tombol ditahan (lebih kecil = lebih tinggi)
 @export var coyote_time: float = 0.12
 @export var jump_buffer_time: float = 0.1
-
+@export var gravity_right := false
 # Animation references
 @onready var animated = $Player1Animated
 @onready var animated2 = $Player2Animated
@@ -38,6 +38,9 @@ var is_jumping: bool = false  # Track apakah sedang dalam lompatan
 var jump_hold_timer: float = 0.0
 var jump_held_prev: bool = false
 
+# Animation smoothing (prevents jump anim on 1-2 frame floor jitter)
+var anim_airborne_time: float = 0.0
+
 # Stacking state - Pico Park style
 var player_on_top: CharacterBody2D = null  # Player yang berdiri di atas kita
 var player_below: CharacterBody2D = null   # Player yang kita injak
@@ -48,6 +51,7 @@ var rope_force: Vector2 = Vector2.ZERO
 
 # Track if player has active input this frame
 var has_movement_input: bool = false
+var last_input_dir: float = 0.0
 
 # Partner reference (set by Chain)
 var partner: CharacterBody2D = null
@@ -56,6 +60,10 @@ var partner: CharacterBody2D = null
 var base_gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready() -> void:
+	if gravity_right:
+		rotation = rad_to_deg(3.14159)
+		
+	
 	# Get selected style from GameManager
 	var style = 1
 	if GameManager:
@@ -90,6 +98,10 @@ func _ready() -> void:
 	last_y_position = global_position.y
 
 func _physics_process(delta: float) -> void:
+	if gravity_right:
+		gravity_scale = 0
+		velocity.x += delta * base_gravity
+		
 	# Simpan posisi Y sebelum movement untuk stacking
 	var _prev_y = global_position.y
 
@@ -100,8 +112,14 @@ func _physics_process(delta: float) -> void:
 	# Get input based on player_id
 	var input_dir := _get_input_direction()
 	has_movement_input = (input_dir != 0)
+	last_input_dir = input_dir
 	
 	var grounded = is_on_floor()
+	# Track how long we've been off the floor for animation purposes
+	if grounded:
+		anim_airborne_time = 0.0
+	else:
+		anim_airborne_time += delta
 	
 	# Coyote time logic
 	if grounded:
@@ -204,17 +222,26 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_animation(input_dir: float, did_jump: bool) -> void:
-	var grounded = is_on_floor()
-	if did_jump:
-		current_sprite.play("jump")
-	elif grounded:
-		if input_dir != 0:
-			current_sprite.play("run")
-		else:
-			current_sprite.play("idle")
+	# Catatan: is_on_floor() bisa false 1 frame (jitter/rotating ground/stacking)
+	# Jadi untuk anim, kita treat airborne hanya kalau gerak vertikalnya signifikan.
+	var grounded := is_on_floor()
+	var vertical_speed := absf(velocity.y)
+	# Require being off-floor for a short time to avoid rope/tilt jitter triggering jump anim
+	var considered_airborne := (not grounded) and (anim_airborne_time > 0.08) and (vertical_speed > 30.0)
+
+	var target_anim: StringName
+	if did_jump or considered_airborne:
+		target_anim = &"jump"
 	else:
-		if current_sprite.animation != "jump":
-			current_sprite.play("jump")
+		# Ground (atau "nyaris ground"), gunakan gerak horizontal utk idle/run
+		if absf(velocity.x) > 5.0 and input_dir != 0:
+			target_anim = &"run"
+		else:
+			target_anim = &"idle"
+
+	# Jangan restart anim yang sama tiap frame
+	if current_sprite.animation != target_anim:
+		current_sprite.play(target_anim)
 
 func _get_input_direction() -> float:
 	if player_id == 1:
@@ -237,6 +264,9 @@ func _is_jump_held() -> bool:
 		return Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_SPACE)
 	else:
 		return Input.is_key_pressed(KEY_UP)
+
+func get_move_input_dir() -> float:
+	return last_input_dir
 
 ## Apply external force (called by rope system)
 func apply_rope_force(force: Vector2) -> void:

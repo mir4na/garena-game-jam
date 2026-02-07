@@ -158,7 +158,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("27_c0asu")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump",
 "speed": 5.0
 }, {
@@ -184,11 +184,11 @@ animations = [{
 size = Vector2(127.499985, 152.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=769047023]
+z_index = 2
 material = SubResource("ShaderMaterial_fvsjc")
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_script")
-jump_velocity = -500.0
 fall_gravity_multiplier = 1.05
 
 [node name="Player1Animated" type="AnimatedSprite2D" parent="." unique_id=614214300]
@@ -196,18 +196,16 @@ scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_p0vlq")
 animation = &"run"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="Player2Animated" type="AnimatedSprite2D" parent="." unique_id=942213796]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_6e537")
-animation = &"jump"
+animation = &"run"
 
 [node name="Player3Animated" type="AnimatedSprite2D" parent="." unique_id=211187505]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_qv10x")
-animation = &"jump"
+animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1925327469]
 position = Vector2(1.9999999, 4.999999)
