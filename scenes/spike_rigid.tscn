@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bfqnkmhj827k8"]
+[gd_scene load_steps=0 format=3 uid="uid://bfqnkmhj827k8"]
 
 [ext_resource type="Script" uid="uid://b8dk1ybm68hbk" path="res://scripts/kill_zone_rigid.gd" id="1_8upqp"]
 [ext_resource type="Texture2D" uid="uid://blaip7jkd4ax8" path="res://assets/spike.png" id="2_bv1nv"]

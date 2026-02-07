@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://dmawknlfeutoi"]
+[gd_scene load_steps=0 format=4 uid="uid://dmawknlfeutoi"]
 
 [ext_resource type="PackedScene" uid="uid://834ahddecqsc" path="res://scenes/level_base.tscn" id="1_6malg"]
 [ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="2_6j14n"]

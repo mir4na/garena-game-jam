@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://ogiq47ha7y46"]
+[gd_scene load_steps=0 format=4 uid="uid://ogiq47ha7y46"]
 
 [ext_resource type="Script" uid="uid://3eqdl10t4vlq" path="res://scripts/Level3.gd" id="1_level3"]
 [ext_resource type="Texture2D" uid="uid://c4hs4f2jm46ah" path="res://assets/tileset/IMG_8595.png" id="1_p6vls"]
