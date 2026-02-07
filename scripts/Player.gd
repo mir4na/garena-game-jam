@@ -129,6 +129,15 @@ func _physics_process(delta: float) -> void:
 	# Move the character
 	move_and_slide()
 	
+	# Push RigidBody2D objects by body collision
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is RigidBody2D and not collider.freeze:
+			var push_direction = collision.get_normal() * -1
+			var push_force = 50.0  # Gentle push force
+			collider.apply_central_impulse(push_direction * push_force)
+	
 	# Animation
 	_update_animation(input_dir, did_jump)
 	

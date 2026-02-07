@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bl1r45e7rjmfo"]
+[gd_scene load_steps=0 format=3 uid="uid://bl1r45e7rjmfo"]
 
 [ext_resource type="Script" path="res://scripts/MovingBlock.gd" id="1_move"]
 

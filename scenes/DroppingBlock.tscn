@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dwxpx3mvaqpoi"]
+[gd_scene load_steps=0 format=3 uid="uid://dwxpx3mvaqpoi"]
 
 [ext_resource type="Script" path="res://scripts/DroppingBlock.gd" id="1_drop"]
 
