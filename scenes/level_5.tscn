@@ -117,7 +117,7 @@ size = Vector2(64, 96)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vorqn"]
 size = Vector2(2247, 177)
 
-[node name="Level5" type="Node2D" unique_id=1137203276]
+[node name="Flag" type="Node2D" unique_id=1137203276]
 script = ExtResource("1_level5")
 
 [node name="Background" type="TextureRect" parent="." unique_id=238093679]
@@ -204,6 +204,7 @@ position = Vector2(1491, 430)
 collision_mask = 3
 
 [node name="Flag" parent="FlagTrigger" unique_id=1000268655 instance=ExtResource("3_ij176")]
+level = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlagTrigger" unique_id=511203436]
 shape = SubResource("RectangleShape2D_flag")

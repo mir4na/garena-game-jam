@@ -14,7 +14,6 @@ var hurt_audio = preload("res://assets/sfx/Hurt.wav")
 @onready var player_platform = $PlayerPlatform
 @onready var box_platform = $BoxPlatform
 @onready var button_area = $Button/Area2D
-@onready var warning_label = $WarningLabel
 @onready var box = $Box
 
 @onready var trigger_spike = $TriggerSpike
@@ -161,8 +160,6 @@ func _ready():
 		box_platform.visible = false
 		_disable_platform_collision(box_platform)
 	
-	if warning_label:
-		warning_label.visible = false
 	
 	# Setup TextKiller (the falling "Congrats" text)
 	if text_killer:
@@ -200,7 +197,6 @@ func _ready():
 			s_shape.shape = unique_shape
 
 	# Setup Info Sign (Dynamic Creation if not found)
-	_setup_info_sign()
 
 	# SETUP NEW SPIKES
 	# Store target positions and hide them below ground AND make invisible
@@ -260,60 +256,7 @@ func _physics_process(_delta):
 			if not (p1_touching and p2_touching) and box.linear_velocity.length() > 10:
 				box.linear_velocity = box.linear_velocity.lerp(Vector2.ZERO, 0.1)
 
-func _setup_info_sign():
-	# Look for existing SignInfo node (scene uses "SignInfo" not "InfoSign")
-	var info_sign = get_node_or_null("SignInfo")
-	if not info_sign:
-		info_sign = get_node_or_null("InfoSign")
-	if not info_sign:
-		info_sign = get_node_or_null("Background/InfoSign")
-	
-	# If still not found, create dynamically on Sign sprite
-	if not info_sign:
-		var sign_sprite = get_node_or_null("Background/Sign")
-		if not sign_sprite:
-			sign_sprite = get_node_or_null("SignInfo/Sign")
-		if sign_sprite:
-			print("Creating dynamic SignInfo trigger...")
-			info_sign = Area2D.new()
-			info_sign.name = "SignInfo_Dynamic"
-			add_child(info_sign)
-			info_sign.global_position = sign_sprite.global_position
-			
-			var col = CollisionShape2D.new()
-			var rect = RectangleShape2D.new()
-			rect.size = Vector2(120, 120)
-			col.shape = rect
-			info_sign.add_child(col)
-			
-			info_sign.collision_layer = 0
-			info_sign.collision_mask = 2
-	
-	if info_sign:
-		# Connect signals for SignInfo
-		if not info_sign.body_entered.is_connected(_on_info_sign_entered):
-			info_sign.body_entered.connect(_on_info_sign_entered)
-		if not info_sign.body_exited.is_connected(_on_info_sign_exited):
-			info_sign.body_exited.connect(_on_info_sign_exited)
-		# Ensure collision mask is set
-		info_sign.collision_layer = 0
-		info_sign.collision_mask = 2
-		print("SignInfo connected at: ", info_sign.global_position)
 
-func _on_info_sign_entered(body):
-	if body == player1 or body == player2:
-		if warning_label:
-			warning_label.visible = true
-			warning_label.text = "In this world,\nthere is no one you can trust."
-			warning_label.modulate.a = 1.0
-
-func _on_info_sign_exited(body):
-	if body == player1 or body == player2:
-		# Only hide if BOTH players are away? 
-		# Or if ANY player leaves? Simple logic: if exit, hide.
-		# Ideally check overlapping bodies, but simple for now.
-		if warning_label:
-			warning_label.visible = false
 
 func _disable_platform_collision(platform_node: Node2D):
 	for child in platform_node.get_children():
@@ -484,12 +427,6 @@ func _hide_box_platform():
 				flag.position = Vector2(1824, 832)
 		)
 
-func _show_warning():
-	if warning_label:
-		warning_label.visible = true
-		warning_label.text = "In this world,\nthere is no one you can trust."
-		# "Langsung muncul saja" = No animation required, just show it
-		warning_label.modulate.a = 1.0
 
 func _execute_text_drop():
 	print("Text DROPPING!")
@@ -597,8 +534,6 @@ func _reset_level():
 			platform_part_2.position = Vector2(2839, 1100)
 		if flag:
 			flag.position = Vector2(1824, 832)
-	if warning_label:
-		warning_label.visible = false
 	
 	# Clean up bridge spike (REMOVED)
 	# if bridge_spike_instance:

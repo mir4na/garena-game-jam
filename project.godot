@@ -16,13 +16,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="garena-game-jam"
 run/main_scene="res://scenes/main_menu.tscn"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
-AudioGlobal="*res://scripts/audio_global.gd"
+AudioGlobal="*uid://cvoa7csw0sysr"
 
 [display]
 

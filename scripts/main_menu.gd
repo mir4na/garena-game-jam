@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 		title.position = title_base_pos + current_parallax_offset * parallax_title_strength
 
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://level_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()

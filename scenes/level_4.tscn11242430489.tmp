@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://llm80baohwbq" path="res://assets/bg.jpg" id="1_yk4f3"]
 [ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="2_cp0rv"]
 [ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="3_6j14n"]
-[ext_resource type="PackedScene" uid="uid://c0nx1wiowyuv8" path="res://scenes/sun.tscn" id="3_dmmei"]
+[ext_resource type="Texture2D" uid="uid://3kss6o2xwcte" path="res://assets/sun.png" id="3_hy5x3"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="3_rr1tt"]
 [ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="4_g31h8"]
 [ext_resource type="PackedScene" uid="uid://dcagtpnah3328" path="res://scenes/flag.tscn" id="5_7ewpb"]
@@ -88,8 +88,9 @@ texture = ExtResource("1_yk4f3")
 [node name="SunLayer" type="ParallaxLayer" parent="Background" unique_id=1811521345]
 motion_scale = Vector2(0.1, 1)
 
-[node name="Sun" parent="Background/SunLayer" unique_id=286137051 instance=ExtResource("3_dmmei")]
-position = Vector2(1247, 197)
+[node name="Sun" type="Sprite2D" parent="Background/SunLayer" unique_id=258725699]
+position = Vector2(1344, 224)
+texture = ExtResource("3_hy5x3")
 
 [node name="CloudLayer1" type="ParallaxLayer" parent="Background" unique_id=1097166280]
 motion_scale = Vector2(0.4, 1)

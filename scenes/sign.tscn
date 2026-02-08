@@ -104,7 +104,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ng4at")
 
 [node name="Mark" type="Sprite2D" parent="." unique_id=760537480]
-position = Vector2(0, -150)
+position = Vector2(0, -45)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_ge2pc")
 

@@ -630,8 +630,6 @@ func _win_level() -> void:
 		flag_area.monitoring = true
 		flag_area.monitorable = true
 		# Set level_5_completed so flag.gd allows advancement
-		if flag_area.has_method("get") or "level_5_completed" in flag_area:
-			flag_area.level_5_completed = true
 	
 	if message_label:
 		message_label.text = "YOU WIN!"

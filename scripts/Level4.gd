@@ -32,7 +32,6 @@ var current_state: GameState = GameState.INTRO_TUTORIAL # Modified from INTRO_AP
 @onready var rock_chain: Node2D = $RockChain if has_node("RockChain") else null
 @onready var rock: RigidBody2D = $Rock if has_node("Rock") else null
 @onready var flag: Node2D = $Flag
-@onready var camera: Camera2D = $Camera2D
 @onready var platform: Node2D = $Platform if has_node("Platform") else null
 @onready var obstacle_container: Node2D = $ObstacleContainer if has_node("ObstacleContainer") else null
 @onready var ui_label: Label = $UI/Label if has_node("UI/Label") else null
@@ -52,7 +51,7 @@ var current_state: GameState = GameState.INTRO_TUTORIAL # Modified from INTRO_AP
 @export var tutorial_duration: float = 5.0
 @export var buffer_duration: float = 2.0
 
-# === Flappy Bird Settings ===
+# === Flappy Bird Settings ===5
 @export_group("Flappy Gameplay")
 @export var flap_impulse: float = -350.0
 @export var gravity: float = 800.0
@@ -132,9 +131,6 @@ func _ready() -> void:
 		chain.visible = false
 	
 	# Setup camera for intro (zoomed in)
-	if camera:
-		camera.zoom = Vector2(2.0, 2.0)
-		camera.global_position = flag_start_pos
 	
 	# === BUG FIXES ===
 	# 1. Enable Chain Physics (Pico Park Style Constraint)
@@ -196,9 +192,6 @@ func _ready() -> void:
 	player2.global_position = spawn_pos + Vector2(0, 60)
 	
 	# Force Camera
-	if camera:
-		camera.global_position = Vector2(screen_width / 2, screen_height / 2)
-		camera.zoom = Vector2(1.0, 1.0)
 	
 	# Hide Intro Elements
 	if platform: platform.visible = false
@@ -325,9 +318,6 @@ func _process_approach(delta: float) -> void:
 		_start_flag_shake()
 	
 	# Camera follows players
-	if camera:
-		var center = (player1.global_position + player2.global_position) / 2
-		camera.global_position = camera.global_position.lerp(center, 3 * delta)
 
 func _start_flag_shake() -> void:
 	current_state = GameState.INTRO_FLAG_SHAKE
@@ -376,9 +366,6 @@ func _process_flag_escape(delta: float) -> void:
 	state_timer -= delta
 	
 	# Camera stays on players
-	if camera:
-		var center = (player1.global_position + player2.global_position) / 2
-		camera.global_position = camera.global_position.lerp(center, 3 * delta)
 	
 	if state_timer <= 0:
 		_start_go_to_rock()
@@ -412,9 +399,6 @@ func _process_go_to_rock(delta: float) -> void:
 			_play_player_animation(player2, "idle")
 	
 	# Camera follows
-	if camera:
-		var center = (player1.global_position + player2.global_position) / 2
-		camera.global_position = camera.global_position.lerp(center, 3 * delta)
 	
 	if state_timer <= 0:
 		_start_detach()
@@ -446,9 +430,6 @@ func _process_detach(delta: float) -> void:
 	state_timer -= delta
 	
 	# Camera follows players
-	if camera:
-		var center = (player1.global_position + player2.global_position) / 2
-		camera.global_position = camera.global_position.lerp(center, 3 * delta)
 	
 	if state_timer <= 0:
 		_start_jump()
@@ -489,9 +470,6 @@ func _process_jump(delta: float) -> void:
 	state_timer -= delta
 	
 	# Zoom out camera during jump
-	if camera:
-		camera.zoom = camera.zoom.lerp(Vector2(1.0, 1.0), 2 * delta)
-		camera.global_position = camera.global_position.lerp(Vector2(screen_width / 2, screen_height / 2), 2 * delta)
 	
 	if state_timer <= 0:
 		_start_tutorial()
@@ -501,9 +479,6 @@ func _start_tutorial() -> void:
 	state_timer = tutorial_duration
 	
 	# Ensure camera is positioned correctly
-	if camera:
-		camera.zoom = Vector2(1.0, 1.0)
-		camera.global_position = Vector2(screen_width / 2, screen_height / 2)
 	
 	# HIDE PLATFORM - We're in the sky now (Flappy Bird mode)
 	if platform:
@@ -621,9 +596,6 @@ func _start_playing() -> void:
 	player2.global_position = Vector2(start_x, screen_height / 2 + 50)
 	
 	# Force Camera Position (in case tutorial was skipped/bugged)
-	if camera:
-		camera.global_position = Vector2(screen_width / 2, screen_height / 2)
-		camera.zoom = Vector2(1.0, 1.0)
 	
 	print("DEBUG: Force Set Position: P1 ", player1.global_position)
 	
@@ -911,15 +883,12 @@ func _setup_surprise_triggers() -> void:
 	trigger3 = get_node_or_null("Trigger3")
 	
 	if trigger1: 
-		trigger1.body_entered.connect(_on_trigger_1_entered)
 		trigger1.collision_mask = 15 # Detect Layers 1-4
 		trigger1.monitoring = true
 	if trigger2: 
-		trigger2.body_entered.connect(_on_trigger_2_entered)
 		trigger2.collision_mask = 15
 		trigger2.monitoring = true
 	if trigger3: 
-		trigger3.body_entered.connect(_on_trigger_3_entered)
 		trigger3.collision_mask = 15
 		trigger3.monitoring = true
 	
