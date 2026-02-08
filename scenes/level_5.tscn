@@ -213,11 +213,34 @@ position = Vector2(1858, 114)
 [node name="Player1" parent="." unique_id=1446377489 instance=ExtResource("2_player")]
 position = Vector2(200, 850)
 collision_mask = 1
+player_id = null
+move_speed = null
+air_control = null
+jump_velocity = null
+min_jump_velocity = null
+gravity_scale = null
+jump_cut_multiplier = null
+jump_hold_time = null
+jump_hold_gravity_multiplier = null
+coyote_time = null
+jump_buffer_time = null
+gravity_right = null
 
 [node name="Player2" parent="." unique_id=412507697 instance=ExtResource("2_player")]
 position = Vector2(350, 850)
 collision_mask = 1
 player_id = 2
+move_speed = null
+air_control = null
+jump_velocity = null
+min_jump_velocity = null
+gravity_scale = null
+jump_cut_multiplier = null
+jump_hold_time = null
+jump_hold_gravity_multiplier = null
+coyote_time = null
+jump_buffer_time = null
+gravity_right = null
 
 [node name="Chain" type="Node2D" parent="." unique_id=639083917]
 script = ExtResource("4_chain")

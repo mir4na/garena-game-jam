@@ -37,7 +37,6 @@ var map_container: Node2D   # Container for map elements
 var timer_label: Label
 var lives_label: Label
 var message_label: Label
-var skill_label: Label
 
 enum GamePhase { 
 	PLATFORMER,      # Normal platformer gameplay
@@ -52,7 +51,7 @@ enum GamePhase {
 
 var current_phase: GamePhase = GamePhase.PLATFORMER
 var phase_timer: float = 0.0
-var current_lives: int = 3
+var current_lives: int = 5
 var burn_progress: float = 0.0
 
 # Sun positions
@@ -143,7 +142,6 @@ func _setup_node_references() -> void:
 		timer_label = get_node_or_null("UI/TimerLabel")
 		lives_label = get_node_or_null("UI/LivesLabel")
 		message_label = get_node_or_null("UI/MessageLabel")
-		skill_label = get_node_or_null("UI/SkillLabel")
 		# Create missing UI elements
 		_create_ui_elements()
 	
@@ -183,19 +181,7 @@ func _create_ui_elements() -> void:
 		lives_label.add_theme_constant_override("outline_size", 3)
 		ui_node.add_child(lives_label)
 	
-	# Create Skill Label (bottom center)
-	if not skill_label:
-		skill_label = Label.new()
-		skill_label.name = "SkillLabel"
-		skill_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		skill_label.position = Vector2(960, 950)
-		skill_label.size = Vector2(400, 40)
-		skill_label.pivot_offset = Vector2(200, 20)
-		skill_label.add_theme_font_size_override("font_size", 28)
-		skill_label.add_theme_color_override("font_color", Color.YELLOW)
-		skill_label.add_theme_color_override("font_outline_color", Color.BLACK)
-		skill_label.add_theme_constant_override("outline_size", 2)
-		ui_node.add_child(skill_label)
+
 
 func _setup_burn_materials() -> void:
 	var burn_shader = load("res://shaders/pixelated_burn.gdshader")
@@ -270,8 +256,6 @@ func _setup_cloud_burn_materials() -> void:
 func _process(delta: float) -> void:
 	match current_phase:
 		GamePhase.PLATFORMER:
-			if skill_label:
-				skill_label.text = ""
 			pass
 		
 		GamePhase.FLAG_FLY:
@@ -415,9 +399,6 @@ func _start_bullet_hell() -> void:
 		if sun_boss.has_signal("boss_defeated"):
 			if not sun_boss.is_connected("boss_defeated", _on_boss_defeated):
 				sun_boss.boss_defeated.connect(_on_boss_defeated)
-		if sun_boss.has_signal("skill_started"):
-			if not sun_boss.is_connected("skill_started", _on_boss_skill_started):
-				sun_boss.skill_started.connect(_on_boss_skill_started)
 	
 	# Transfer flag to boss for orbiting - SMOOTH transition
 	if flag and sun_boss:
@@ -452,11 +433,6 @@ func _start_bullet_hell() -> void:
 		await get_tree().create_timer(2.0).timeout
 		if current_phase == GamePhase.BULLET_HELL:
 			message_label.text = ""
-
-func _on_boss_skill_started(skill_name: String) -> void:
-	if not skill_label:
-		return
-	skill_label.text = "SKILL: %s" % skill_name
 
 func _enable_topdown_movement() -> void:
 	# Switch players to top-down mode
