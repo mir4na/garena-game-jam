@@ -517,11 +517,11 @@ func _start_tutorial() -> void:
 func _show_control_hints() -> void:
 	if note_sprite:
 		note_sprite.visible = true
+		note_sprite.scale = Vector2.ZERO # Start small
 		
-		# Optional: Pulse animation if desired, or just static
-		var tween = create_tween().set_loops()
-		tween.tween_property(note_sprite, "scale", Vector2(1.05, 1.05), 0.5)
-		tween.tween_property(note_sprite, "scale", Vector2(1.0, 1.0), 0.5)
+		# Entrance Animation (Pop up)
+		var tween = create_tween()
+		tween.tween_property(note_sprite, "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 # =====================
 # INTRO STATE 7: TUTORIAL (5 seconds)
@@ -547,10 +547,17 @@ func _process_tutorial(delta: float) -> void:
 
 func _start_buffer() -> void:
 	current_state = GameState.INTRO_BUFFER
-	state_timer = buffer_duration
+	# Buffer after OUT animation (0.5s anim + 2.0s buffer)
+	state_timer = 0.5 + 2.0
 	
 	if ui_label:
 		ui_label.text = "HERE WE GO!"
+		
+	# Exit Animation for Note
+	if note_sprite:
+		var tween = create_tween()
+		tween.tween_property(note_sprite, "scale", Vector2.ZERO, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		tween.tween_callback(func(): note_sprite.visible = false)
 
 # =====================
 # INTRO STATE 8: BUFFER (2 seconds)

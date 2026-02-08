@@ -1,0 +1,105 @@
+[gd_scene load_steps=0 format=3 uid="uid://c0nx1wiowyuv8"]
+
+[ext_resource type="Texture2D" uid="uid://cguwaf1rllpks" path="res://assets/matahari/Untitled845_20260208021346.png" id="1_vtvjq"]
+[ext_resource type="Texture2D" uid="uid://di8u3vo056sv6" path="res://assets/matahari/Untitled845_20260208021348.png" id="2_t1pnj"]
+[ext_resource type="Texture2D" uid="uid://b363dcs17vpyv" path="res://assets/matahari/Untitled845_20260208021350.png" id="3_i8fpp"]
+[ext_resource type="Texture2D" uid="uid://datomayvo6dyd" path="res://assets/matahari/Untitled845_20260208021352.png" id="4_tcere"]
+[ext_resource type="Texture2D" uid="uid://dkhhp4uy3qrrx" path="res://assets/matahari/Untitled851_20260208021309.png" id="5_ybq6a"]
+[ext_resource type="Texture2D" uid="uid://brl8yh5ik5dv4" path="res://assets/matahari/Untitled851_20260208021316.png" id="6_vsfj3"]
+[ext_resource type="Texture2D" uid="uid://b1egkugk1pk1g" path="res://assets/matahari/Untitled851_20260208021318.png" id="7_50ou6"]
+[ext_resource type="Texture2D" uid="uid://chx8wssdxm5pk" path="res://assets/matahari/Untitled851_20260208021320.png" id="8_1x5cx"]
+[ext_resource type="Texture2D" uid="uid://dsm8khxsstp3n" path="res://assets/matahari/Untitled851_20260208021322.png" id="9_elg2j"]
+[ext_resource type="Texture2D" uid="uid://c5sckoqdnmv7e" path="res://assets/matahari/Untitled851_20260208021324.png" id="10_h2cu8"]
+[ext_resource type="Texture2D" uid="uid://co8uo7qgdesqf" path="res://assets/matahari/Untitled851_20260208021332.png" id="11_0c43n"]
+[ext_resource type="Texture2D" uid="uid://dvu74b2kykwjb" path="res://assets/matahari/Untitled851_20260208021711.png" id="12_njprj"]
+[ext_resource type="Texture2D" uid="uid://bwov0m5b7066r" path="res://assets/matahari/Untitled851_20260208021713.png" id="13_hd3gy"]
+[ext_resource type="Texture2D" uid="uid://dcnyslm4a81lt" path="res://assets/matahari/Untitled851_20260208021716.png" id="14_tx5j4"]
+[ext_resource type="Texture2D" uid="uid://bj1ww2kir0fpg" path="res://assets/matahari/Untitled852_20260208021841.png" id="15_nk1g0"]
+[ext_resource type="Texture2D" uid="uid://syndw3nbvpgx" path="res://assets/matahari/Untitled852_20260208021843.png" id="16_ms2ax"]
+[ext_resource type="Texture2D" uid="uid://byilp0tfg20lv" path="res://assets/matahari/Untitled852_20260208021845.png" id="17_yfn1b"]
+[ext_resource type="Texture2D" uid="uid://bin418qco4fai" path="res://assets/matahari/Untitled852_20260208021847.png" id="18_db4lp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pkgqr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_njprj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hd3gy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_tx5j4")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_nk1g0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ms2ax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yfn1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_db4lp")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vtvjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_t1pnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i8fpp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tcere")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ybq6a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vsfj3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_50ou6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1x5cx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_elg2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_h2cu8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0c43n")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 7.0
+}]
+
+[node name="Sun" type="Node2D" unique_id=286137051]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2086405575]
+position = Vector2(0, 2)
+sprite_frames = SubResource("SpriteFrames_pkgqr")
+autoplay = "default"
+frame_progress = 0.9639812

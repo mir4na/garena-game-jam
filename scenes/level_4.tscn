@@ -382,7 +382,6 @@ position = Vector2(5152, 576)
 shape = SubResource("RectangleShape2D_sykev")
 
 [node name="Note" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(696, 528)
 texture = ExtResource("15_hy5x3")
 

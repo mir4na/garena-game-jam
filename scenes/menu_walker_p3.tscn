@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://menu_walker_p3"]
+
+[ext_resource type="Script" uid="uid://menu_walker_script" path="res://scripts/menu_walker.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bgam3hmkgdpft" path="res://assets/player3/idle1.png" id="2_idle1"]
+[ext_resource type="Texture2D" uid="uid://cxo5y0mipovew" path="res://assets/player3/idle2.png" id="3_idle2"]
+[ext_resource type="Texture2D" uid="uid://cfln51ivofxja" path="res://assets/player3/jump3.png" id="4_jump1"]
+[ext_resource type="Texture2D" uid="uid://bw1ly478y5bwa" path="res://assets/player3/jump4.png" id="5_jump2"]
+[ext_resource type="Texture2D" uid="uid://2m46bdmxvtio" path="res://assets/player3/run1.png" id="6_run1"]
+[ext_resource type="Texture2D" uid="uid://b3b667tp1b2lk" path="res://assets/player3/run2.png" id="7_run2"]
+[ext_resource type="Texture2D" uid="uid://cmvhaqyfda6r8" path="res://assets/player3/run3.png" id="8_run3"]
+[ext_resource type="Texture2D" uid="uid://hsc3po8fljec" path="res://assets/player3/run4.png" id="9_run4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_walker"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jump1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jump2")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_run4")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[node name="MenuWalkerP3" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_walker")
+animation = &"run"

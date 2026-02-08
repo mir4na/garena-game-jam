@@ -15,6 +15,7 @@ extends Node2D
 @export var pull_requires_grounded: bool = true
 
 @export var player_snap_strength: float = 1.0  # 1.0 = hard clamp ke rope length
+@export var max_position_correction_per_frame: float = 60.0  # Batasi snap biar ga terlihat teleport
 @export var player_pull_velocity: float = 900.0
 
 ## Visual settings
@@ -63,8 +64,12 @@ func _enforce_player_rope(player: CharacterBody2D, rope_len: float, delta: float
 	var dir = to_player / dist
 	var excess = dist - rope_len
 
-	# Hard correction posisi player mendekat ke batu
-	player.global_position -= dir * excess * player_snap_strength
+	# Position correction (dibatasi supaya ga terlihat "teleport")
+	var correction = excess * player_snap_strength
+	if max_position_correction_per_frame > 0.0:
+		correction = min(correction, max_position_correction_per_frame)
+	player.global_position -= dir * correction
+	player.reset_physics_interpolation()
 
 	# Beri velocity ke arah batu biar terasa ketarik
 	var toward_rock = -dir

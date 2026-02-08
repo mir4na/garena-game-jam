@@ -1,5 +1,8 @@
 extends Node2D
 
+## Level 1 - Introduction level with shrinking platform puzzle
+## Polished with visual feedback and smooth transitions
+
 @onready var player1 = $Player1
 @onready var player2 = $Player2
 @onready var spawn_point = $SpawnPoint
@@ -11,6 +14,13 @@ extends Node2D
 @onready var platform_body = $Platform/PlatformBergerak
 @onready var platform_sprite = $Platform/PlatformBergerak/Sprite2D
 @onready var platform_collision = $Platform/PlatformBergerak/CollisionShape2D
+
+# Death overlay for visual feedback
+var death_overlay: ColorRect
+
+# Checkpoint system
+var checkpoint_p1: Vector2
+var checkpoint_p2: Vector2
 
 var original_sprite_scale: Vector2
 var original_sprite_pos: Vector2
@@ -24,12 +34,18 @@ var trigger3_activated = false
 const SHRINK_SPEED = 250.0
 
 func _ready():
-	# DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# Create death overlay for visual feedback
+	_create_death_overlay()
 	
 	original_sprite_scale = platform_sprite.scale
 	original_sprite_pos = platform_sprite.position
 	original_collision_pos = platform_collision.position
 	original_collision_size = platform_collision.shape.size
+	
+	# Initialize checkpoint to spawn position
+	var spawn_pos = spawn_point.global_position if spawn_point else player1.global_position
+	checkpoint_p1 = spawn_pos + Vector2(-50, 0)
+	checkpoint_p2 = spawn_pos + Vector2(50, 0)
 
 func _on_trigger_1_body_entered(body):
 	if not trigger1_activated and (body == player1 or body == player2 ):
@@ -86,21 +102,52 @@ func _on_trigger_2_body_entered(body):
 func _on_door_body_entered(body):
 	if body == player1 or body == player2:
 		print("Level Complete!")
-		for child in get_children():
-			child.queue_free()
-		RenderingServer.set_default_clear_color(Color.BLACK)
+		_level_complete()
 
+func _level_complete() -> void:
+	# Smooth fade to next level
+	if death_overlay:
+		death_overlay.color = Color(0, 0, 0, 0)
+		var tween = create_tween()
+		tween.tween_property(death_overlay, "color:a", 1.0, 0.5)
+		tween.tween_callback(func():
+			get_tree().change_scene_to_file("res://scenes/Level2.tscn")
+		)
 
 func _on_death_area_body_entered(body):
 	if body == player1 or body == player2:
 		print("Player died! Resetting...")
+		_show_death_flash()
+
+func _show_death_flash() -> void:
+	if death_overlay:
+		death_overlay.color = Color(1, 0.2, 0.2, 0)
+		var tween = create_tween()
+		tween.tween_property(death_overlay, "color:a", 0.5, 0.1)
+		tween.tween_property(death_overlay, "color:a", 0.0, 0.2)
+		tween.tween_callback(_reset_level)
+	else:
 		_reset_level()
 
+func _create_death_overlay() -> void:
+	death_overlay = ColorRect.new()
+	death_overlay.color = Color(0, 0, 0, 0)
+	death_overlay.anchor_left = 0
+	death_overlay.anchor_top = 0
+	death_overlay.anchor_right = 1
+	death_overlay.anchor_bottom = 1
+	death_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# Create a CanvasLayer so overlay is always on top
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100
+	canvas_layer.add_child(death_overlay)
+	add_child(canvas_layer)
+
 func _reset_level():
-	# Reset players to spawn point
-	var spawn_pos = spawn_point.global_position
-	player1.global_position = spawn_pos + Vector2(-50, 0)
-	player2.global_position = spawn_pos + Vector2(50, 0)
+	# Reset players to checkpoint
+	player1.global_position = checkpoint_p1
+	player2.global_position = checkpoint_p2
 	
 	# Reset player velocities
 	player1.velocity = Vector2.ZERO
@@ -120,6 +167,12 @@ func _reset_level():
 	# Reset chain if exists
 	if chain and chain.has_method("reset_rope"):
 		chain.reset_rope()
+
+## Update checkpoint to current player positions
+func update_checkpoint() -> void:
+	checkpoint_p1 = player1.global_position
+	checkpoint_p2 = player2.global_position
+	print("Checkpoint updated!")
 
 func _on_trigger_3_body_entered(body):
 	if trigger2_activated and not trigger3_activated and (body == player1 or body == player2):

@@ -1,5 +1,8 @@
 extends Node2D
 
+## Level 2 - Trap filled level with Box puzzle
+## Polished with visual feedback and smooth transitions
+
 @onready var player1 = $Player1
 @onready var player2 = $Player2
 @onready var chain = $Chain
@@ -14,6 +17,9 @@ extends Node2D
 @onready var trigger_text = $TriggerText
 @onready var text_killer = $TextKiller # The "Congrats" text that falls and kills
 
+# Death overlay for visual feedback
+var death_overlay: ColorRect
+
 # Text Trap state
 var trigger_text_start_pos: Vector2
 var text_killer_start_pos: Vector2
@@ -23,6 +29,11 @@ var text_fall_tween: Tween
 # Store spawn positions
 var player1_spawn: Vector2
 var player2_spawn: Vector2
+
+# Checkpoint system
+var checkpoint_p1: Vector2
+var checkpoint_p2: Vector2
+
 var massive_spike_start_pos: Vector2
 var box_start_pos: Vector2
 var is_launching_spike: bool = false
@@ -54,9 +65,17 @@ var spike_tween: Tween
 # Trap checks now handled by signal toggling.
 
 func _ready():
+	# Create death overlay for visual feedback
+	_create_death_overlay()
+	
 	# Store initial spawn positions
 	player1_spawn = player1.global_position
 	player2_spawn = player2.global_position
+	
+	# Initialize checkpoint to spawn position
+	checkpoint_p1 = player1_spawn
+	checkpoint_p2 = player2_spawn
+	
 	if box:
 		box_start_pos = box.global_position
 		# TUE BOX PHYSICS: Heavier, no bounce
@@ -355,6 +374,31 @@ func _on_text_killer_hit(body):
 	# TextKiller collided with something - kill player if it's them
 	if body == player1 or body == player2:
 		print("Player killed by falling text!")
+		_show_death_flash()
+
+## Visual polish helper functions
+func _create_death_overlay() -> void:
+	death_overlay = ColorRect.new()
+	death_overlay.color = Color(0, 0, 0, 0)
+	death_overlay.anchor_left = 0
+	death_overlay.anchor_top = 0
+	death_overlay.anchor_right = 1
+	death_overlay.anchor_bottom = 1
+	death_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100
+	canvas_layer.add_child(death_overlay)
+	add_child(canvas_layer)
+
+func _show_death_flash() -> void:
+	if death_overlay:
+		death_overlay.color = Color(1, 0.2, 0.2, 0)
+		var tween = create_tween()
+		tween.tween_property(death_overlay, "color:a", 0.5, 0.1)
+		tween.tween_property(death_overlay, "color:a", 0.0, 0.2)
+		tween.tween_callback(_reset_level)
+	else:
 		call_deferred("_reset_level")
 
 
@@ -388,9 +432,9 @@ func _reset_level():
 	if text_fall_tween and text_fall_tween.is_valid():
 		text_fall_tween.kill()
 
-	# Reset players to spawn positions
-	player1.global_position = player1_spawn
-	player2.global_position = player2_spawn
+	# Reset players to checkpoint
+	player1.global_position = checkpoint_p1
+	player2.global_position = checkpoint_p2
 	
 	# Reset player velocities
 	player1.velocity = Vector2.ZERO
@@ -494,3 +538,9 @@ func _on_trigger_text_entered(body: Node2D) -> void:
 			var delay = 120.0 
 			text_fall_tween.tween_interval(delay)
 			text_fall_tween.tween_callback(_execute_text_drop)
+
+## Update checkpoint to current player positions
+func update_checkpoint() -> void:
+	checkpoint_p1 = player1.global_position
+	checkpoint_p2 = player2.global_position
+	print("Checkpoint updated!")

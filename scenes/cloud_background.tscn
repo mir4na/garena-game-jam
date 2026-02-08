@@ -1,0 +1,7 @@
+[gd_scene load_steps=0 format=3 uid="uid://cwkm3ev70p4jp"]
+
+[ext_resource type="Script" uid="uid://cxvyk3tbl4ph4" path="res://scripts/CloudBackground.gd" id="1_cloud"]
+
+[node name="CloudBackground" type="Node2D" unique_id=180541856]
+z_index = 1
+script = ExtResource("1_cloud")
