@@ -1,150 +1,527 @@
-[gd_scene load_steps=22 format=4 uid="uid://djq2trcuy6a1k"]
+[gd_scene load_steps=39 format=3 uid="uid://83kdporfvghl"]
 
-[ext_resource type="PackedScene" uid="uid://da1xty3fptsa1" path="res://scenes/level_base.tscn" id="1_y0kc7"]
-[ext_resource type="PackedScene" path="res://scenes/cloud_background.tscn" id="2_go7sj"]
-[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="2_ne2mo"]
-[ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="3_6cvei"]
-[ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="3_7gny6"]
-[ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="4_2aecg"]
-[ext_resource type="PackedScene" uid="uid://d0gs6p2dmo8f0" path="res://scenes/DroppingBlock.tscn" id="4_que50"]
-[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="5_hey2k"]
-[ext_resource type="PackedScene" uid="uid://3ccehdmfmhue" path="res://scenes/dropping_ground.tscn" id="6_172wr"]
-[ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="7_g2hoc"]
-[ext_resource type="Texture2D" uid="uid://dvmk5ck78ntio" path="res://assets/tileset/IMG_8638.png" id="8_e3sih"]
-[ext_resource type="Texture2D" uid="uid://d0kk6yjbel7rm" path="res://assets/tileset/Pohon.png" id="9_2y5yt"]
-[ext_resource type="Shader" path="res://shaders/sawit.gdshader" id="12_1s4pk"]
-[ext_resource type="PackedScene" path="res://scenes/sign.tscn" id="15_6dial"]
-[ext_resource type="Texture2D" uid="uid://dqavbtfuulp8k" path="res://assets/tileset/IMG_8639.png" id="15_7nomh"]
-[ext_resource type="Texture2D" uid="uid://cspwcekrsvo5x" path="res://assets/tileset/IMG_8645.png" id="16_1s4pk"]
-[ext_resource type="PackedScene" path="res://scenes/sun.tscn" id="16_7nomh"]
-[ext_resource type="Texture2D" uid="uid://b1264480cgc2j" path="res://assets/tileset/IMG_8640.png" id="18_x2xxo"]
+[ext_resource type="Script" uid="uid://d0srw8y53ymlm" path="res://scripts/Level2.gd" id="2_level2"]
+[ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="3_awan1"]
+[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="3_chain"]
+[ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="3_guvtl"]
+[ext_resource type="Texture2D" uid="uid://oj482pgdflbk" path="res://assets/background.jpg" id="4_bg"]
+[ext_resource type="Texture2D" uid="uid://ctwxoop44edyh" path="res://assets/sawit.png" id="4_igmy8"]
+[ext_resource type="Shader" path="res://shaders/scroll_background.gdshader" id="4_scroll"]
+[ext_resource type="PackedScene" path="res://scenes/flag.tscn" id="5_igmy8"]
+[ext_resource type="Texture2D" uid="uid://ecr4mhvvkdo6" path="res://assets/tileset/IMG_8578.png" id="5_img_tileset"]
+[ext_resource type="Texture2D" uid="uid://br61mgvqklbqk" path="res://assets/sign.png" id="5_wdtqu"]
+[ext_resource type="Texture2D" uid="uid://lk61fjvb6m7l" path="res://assets/warning.png" id="6_7qsfm"]
+[ext_resource type="Texture2D" uid="uid://5krbjywyv0es" path="res://assets/tileset/IMG_8593.png" id="6_box_tex"]
+[ext_resource type="PackedScene" path="res://scenes/cloud_background.tscn" id="6_cloud"]
+[ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="7_bv48q"]
+[ext_resource type="PackedScene" uid="uid://spike001" path="res://scenes/spike.tscn" id="7_spike"]
+[ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="8_k22d5"]
+[ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="9_k6a82"]
+[ext_resource type="Texture2D" uid="uid://b08m5iyuo0eyx" path="res://assets/platform.png" id="11_1sb0y"]
+[ext_resource type="Texture2D" uid="uid://bpssw2k1s2ard" path="res://assets/tileset/IMG_8361.png" id="16_igmy8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("4_scroll")
+shader_parameter/speed = 0.01
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
-size = Vector2(2511, 41)
+size = Vector2(1939, 41)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cbcq"]
-resource_local_to_scene = true
-size = Vector2(91, 223)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guvtl"]
+size = Vector2(136, 80)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cbcq"]
-shader = ExtResource("12_1s4pk")
-shader_parameter/speed = 0.78
-shader_parameter/minStrength = 0.3030000143925
-shader_parameter/maxStrength = 0.406000019285
-shader_parameter/strengthScale = 100.0
-shader_parameter/interval = 3.5
-shader_parameter/detail = 1.0
-shader_parameter/distortion = 0.0
-shader_parameter/heightOffset = 0.0
-shader_parameter/offset = 0.0
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k8qy"]
+texture = ExtResource("9_k6a82")
+margins = Vector2i(112, 116)
+texture_region_size = Vector2i(124, 124)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:2/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:2/0 = 0
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:4/0 = 0
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+3:1/0 = 0
 
-[node name="LevelBase" instance=ExtResource("1_y0kc7")]
+[sub_resource type="TileSet" id="TileSet_8rhjg"]
+tile_size = Vector2i(124, 124)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_6k8qy")
 
-[node name="Background" parent="." index="0"]
-offset_left = 1.0
-offset_right = 2001.0
-offset_bottom = 2000.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wo48x"]
+size = Vector2(634, 359.5)
 
-[node name="CloudBackground" parent="." index="1" instance=ExtResource("2_go7sj")]
-cloud_textures = Array[Texture2D]([ExtResource("3_7gny6"), ExtResource("4_2aecg")])
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0kc7"]
+size = Vector2(78, 2103.9998)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbc48"]
+size = Vector2(1128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4j7a"]
+atlas = ExtResource("5_img_tileset")
+region = Rect2(110, 775, 75, 71)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqxsl"]
+size = Vector2(24.5, 65)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1"]
+friction = 0.8
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_box"]
+size = Vector2(70, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ne2mo"]
+size = Vector2(166.38165, 272.98126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6cvei"]
+size = Vector2(248, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_que50"]
+size = Vector2(644.07544, 559.9831)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igmy8"]
+size = Vector2(125, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdtqu"]
+size = Vector2(285, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qsfm"]
+size = Vector2(256, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bv48q"]
+size = Vector2(102.27063, 52.84613)
+
+[node name="Level2" type="Node2D"]
+script = ExtResource("2_level2")
+
+[node name="CloudBackground" parent="." instance=ExtResource("6_cloud")]
+cloud_textures = Array[Texture2D]([ExtResource("3_awan1"), ExtResource("3_guvtl")])
 cloud_count = 4
 spawn_margin = 400.0
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="KillZone" index="1"]
-position = Vector2(-21, 160)
-rotation = 1.5707964
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_bg")
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 2000.0
+offset_bottom = 2000.0
+texture = ExtResource("4_bg")
+
+[node name="Sawit" type="Sprite2D" parent="."]
+position = Vector2(160, 528)
+texture = ExtResource("4_igmy8")
+
+[node name="Flag" parent="." instance=ExtResource("5_igmy8")]
+position = Vector2(1824, 832)
+scale = Vector2(0.9, 0.9)
+
+[node name="KillZone" type="Area2D" parent="."]
+position = Vector2(0, 50)
+scale = Vector2(5, 1)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("7_bv48q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(217.9, 1103.5)
 shape = SubResource("RectangleShape2D_osu2p")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="KillZone" index="2"]
-position = Vector2(2020, 160)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_osu2p")
+[node name="Checkpoint" type="Node2D" parent="."]
+position = Vector2(188, 826)
 
-[node name="Checkpoint" parent="." index="3"]
-position = Vector2(30, 566)
+[node name="SignInfo" type="Area2D" parent="."]
 
-[node name="Chain" type="Node2D" parent="." index="4"]
-z_index = 1
-script = ExtResource("2_ne2mo")
-player1_path = NodePath("../Player1")
-player2_path = NodePath("../Player2")
-rope_length = 150.0
+[node name="Sign" type="Sprite2D" parent="SignInfo"]
+position = Vector2(336, 855.99994)
+scale = Vector2(0.7624556, 0.6331413)
+texture = ExtResource("5_wdtqu")
 
-[node name="Player1" parent="." index="5"]
-position = Vector2(53, 570)
+[node name="Warning" type="Sprite2D" parent="SignInfo"]
+position = Vector2(333, 800)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_7qsfm")
 
-[node name="Player2" parent="." index="6"]
-position = Vector2(122, 568)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignInfo"]
+position = Vector2(332, 840)
+shape = SubResource("RectangleShape2D_guvtl")
+
+[node name="Player1" parent="." instance=ExtResource("8_k22d5")]
+position = Vector2(136, 844)
+collision_mask = 1
+
+[node name="Player2" parent="." instance=ExtResource("8_k22d5")]
+position = Vector2(232, 852)
+collision_mask = 1
 player_id = 2
 
-[node name="TileMapLayer" parent="." index="7"]
-position = Vector2(-7.9999995, 0)
-rotation = -0.00062188593
-tile_map_data = PackedByteArray("AAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAZAAoAAQAAAAAAAAAZAAsAAQAAAAEAAAAZAAwAAQAAAAEAAAAZAA0AAQAAAAEAAAAZAA4AAQAAAAEAAAAdAAoAAQABAAAAAAAdAAsAAQABAAEAAAAdAAwAAQABAAEAAAAdAA0AAQABAAEAAAAdAA4AAQABAAEAAAAdAA8AAQACAAEAAAAcAA8AAQABAAEAAAAcAA4AAQABAAEAAAAcAA0AAQABAAEAAAAcAAwAAQABAAEAAAAcAAsAAQABAAEAAAAcAAoAAQABAAAAAAAeAA0AAQACAAEAAAAeAA4AAQACAAEAAAAeAAwAAQACAAEAAAAeAAsAAQACAAEAAAAeAA8AAQACAAEAAAAdABAAAQABAAEAAAAcABAAAQABAAEAAAAZABAAAQAAAAEAAAAZABEAAQAAAAIAAAAZAA8AAQAAAAEAAAAcABEAAQABAAIAAAAeABAAAQACAAEAAAAeABEAAQABAAIAAAAdABEAAQABAAIAAAAeAAoAAQABAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQACAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAAAAAoAAQAAAAAAAAAHAAoAAQADAAAAAAAGAAoAAQACAAAAAAAHAAsAAQADAAEAAAAHAAwAAQADAAEAAAAHAA0AAQADAAEAAAAHAA4AAQADAAEAAAAHAA8AAQADAAEAAAAHABAAAQADAAEAAAAHABEAAQADAAIAAAAGABEAAQACAAIAAAAGAAsAAQACAAEAAAAGAAwAAQACAAEAAAAGAA0AAQACAAEAAAAGABAAAQACAAEAAAAGAA8AAQACAAEAAAAGAA4AAQACAAEAAAAaAAoAAQABAAAAAAAaAAsAAQABAAEAAAAaAAwAAQABAAEAAAAaAA0AAQABAAEAAAAaAA4AAQABAAEAAAAaAA8AAQABAAEAAAAaABAAAQABAAEAAAAaABEAAQABAAIAAAAbAAoAAQABAAAAAAAbAAsAAQABAAEAAAAbAAwAAQABAAEAAAAbAA0AAQABAAEAAAAbAA4AAQABAAEAAAAbAA8AAQABAAEAAAAbABAAAQABAAEAAAAbABEAAQABAAIAAAAfAAsAAQACAAEAAAAfAAwAAQACAAEAAAAfAA0AAQACAAEAAAAfAA4AAQACAAEAAAAfAA8AAQACAAEAAAAfABAAAQACAAEAAAAfABEAAQABAAIAAAAgAA8AAQABAAEAAAAgAA4AAQABAAEAAAAgAA0AAQABAAEAAAAgAAwAAQABAAEAAAAgAAsAAQABAAEAAAAgAAoAAQABAAAAAAAfAAoAAQABAAAAAAAqAAoAAQADAAAAAAAqAAsAAQADAAEAAAAqAAwAAQADAAEAAAAqAA0AAQADAAEAAAAqAA4AAQADAAEAAAAqAA8AAQADAAEAAAAqABAAAQADAAEAAAAqABEAAQADAAIAAAApABEAAQACAAIAAAAoABEAAQACAAIAAAAnABEAAQACAAIAAAAmABEAAQACAAIAAAAlABEAAQACAAIAAAAkABEAAQACAAIAAAAjAAsAAQABAAEAAAAkAAsAAQACAAEAAAAlAAsAAQACAAEAAAAmAAsAAQACAAEAAAAnAAsAAQACAAEAAAAoAAsAAQABAAEAAAApAAsAAQABAAEAAAApAAwAAQABAAEAAAApAA0AAQABAAEAAAAoAA0AAQACAAEAAAAoAA4AAQACAAEAAAAoAA8AAQACAAEAAAAoABAAAQABAAEAAAAnABAAAQABAAEAAAAmABAAAQABAAEAAAAmAA8AAQACAAEAAAAlAA8AAQACAAEAAAAlAA4AAQACAAEAAAAkAA4AAQACAAEAAAAkAA0AAQACAAEAAAAjAA0AAQABAAEAAAAkAAwAAQACAAEAAAAkAA8AAQACAAEAAAAjAA8AAQABAAEAAAAjAA4AAQABAAEAAAAjAAwAAQABAAEAAAAlABAAAQABAAEAAAAkABAAAQABAAEAAAAlAA0AAQACAAEAAAAlAAwAAQACAAEAAAAmAAwAAQACAAEAAAAmAA0AAQACAAEAAAAmAA4AAQACAAEAAAAnAA4AAQACAAEAAAAnAA0AAQACAAEAAAAnAA8AAQACAAEAAAAnAAwAAQACAAEAAAAoAAwAAQACAAEAAAApAA4AAQABAAEAAAApAA8AAQABAAEAAAApABAAAQABAAEAAAAjAAoAAQABAAAAAAAkAAoAAQABAAAAAAAlAAoAAQABAAAAAAAnAAoAAQABAAAAAAAoAAoAAQABAAAAAAApAAoAAQABAAAAAAAmAAoAAQABAAAAAAAjABAAAQABAAEAAAAjABEAAQACAAIAAAAgABAAAQABAAEAAAAgABEAAQACAAIAAAArAAoAAQABAAAAAAAsAAoAAQABAAAAAAAtAAoAAQABAAAAAAAuAAoAAQABAAAAAAA=")
-
-[node name="MovingBlock" parent="." index="8" instance=ExtResource("3_6cvei")]
-position = Vector2(441, 521)
-move_speed = 500.0
-
-[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" index="0"]
-position = Vector2(-0.5, -80.5)
-shape = SubResource("RectangleShape2D_2cbcq")
-
-[node name="DroppingBlock" parent="." index="9" instance=ExtResource("4_que50")]
-position = Vector2(758, 444)
-respawn_time = 0.0
-
-[node name="NormalBlock" parent="." index="10" instance=ExtResource("5_hey2k")]
-position = Vector2(943, 521)
-
-[node name="NormalBlock2" parent="." index="11" instance=ExtResource("5_hey2k")]
-position = Vector2(1005, 521)
-
-[node name="DroppingGround" parent="." index="12" instance=ExtResource("6_172wr")]
-position = Vector2(1519, 612)
-drop_delay = 0.0
-shake_amount = 0.0
-respawn_time = 0.0
-
-[node name="SpikeMove" parent="." index="13" instance=ExtResource("7_g2hoc")]
-position = Vector2(2110, 572)
-collision_mask = 1
-move_speed = 600.0
-move_direction = Vector2(-1, 0)
-
-[node name="Img8639" type="Sprite2D" parent="." index="15"]
-position = Vector2(222, 567)
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+visible = false
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_e3sih")
+tile_set = SubResource("TileSet_8rhjg")
 
-[node name="Img8642" type="Sprite2D" parent="." index="16"]
-material = SubResource("ShaderMaterial_2cbcq")
-position = Vector2(81, 424)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("9_2y5yt")
+[node name="Chain" type="Node2D" parent="."]
+script = ExtResource("3_chain")
+player1_path = NodePath("../Player1")
+player2_path = NodePath("../Player2")
 
-[node name="Img8640" type="Sprite2D" parent="." index="17"]
-position = Vector2(1267, 575)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("15_7nomh")
+[node name="Platform" type="Node2D" parent="."]
 
-[node name="Img8645" type="Sprite2D" parent="." index="18"]
-material = SubResource("ShaderMaterial_2cbcq")
-position = Vector2(1420, 436)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("16_1s4pk")
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform"]
+position = Vector2(27, -3)
 
-[node name="Sign" parent="." index="19" instance=ExtResource("15_6dial")]
-position = Vector2(261, 551)
-dialog_text = "Never let off your guard ;)"
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D"]
+position = Vector2(102, 1082)
+scale = Vector2(1.8, 1)
+texture = ExtResource("11_1sb0y")
 
-[node name="Sun" parent="." index="20" instance=ExtResource("16_7nomh")]
-position = Vector2(1858, 114)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2(112, 1075)
+shape = SubResource("RectangleShape2D_wo48x")
 
-[node name="Img8641" type="Sprite2D" parent="." index="21"]
-position = Vector2(1174, 571)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_x2xxo")
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platform"]
+position = Vector2(2839, 1100)
+rotation = 1.5707964
 
-[editable path="MovingBlock"]
-[editable path="DroppingBlock"]
+[node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
+position = Vector2(107.706215, 1082)
+scale = Vector2(1.7708122, 1)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D2"]
+position = Vector2(108.00006, 1075)
+shape = SubResource("RectangleShape2D_wo48x")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Platform"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D3"]
+position = Vector2(-40, 656.5)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Platform"]
+position = Vector2(2007, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D4"]
+position = Vector2(-40, 656.5)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Platform"]
+position = Vector2(1682, 1167)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D5"]
+position = Vector2(9, 674)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Platform"]
+position = Vector2(1683, -1)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D6"]
+position = Vector2(-39.99951, 683.9999)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(188, 826)
+
+[node name="PlayerPlatform" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="PlayerPlatform"]
+position = Vector2(-144, 120)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerPlatform/StaticBody2D"]
+position = Vector2(1156.0001, 813.05)
+scale = Vector2(3.0649352, 0.19129512)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPlatform/StaticBody2D"]
+position = Vector2(1156, 809.75)
+shape = SubResource("RectangleShape2D_pbc48")
+
+[node name="Button" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Button"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Button/Area2D"]
+position = Vector2(56, 864)
+texture = SubResource("AtlasTexture_b4j7a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button/Area2D"]
+position = Vector2(56, 864)
+shape = SubResource("RectangleShape2D_eqxsl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Button/Area2D"]
+
+[node name="Box" type="RigidBody2D" parent="."]
+position = Vector2(372, 840)
+collision_layer = 2
+collision_mask = 3
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_1")
+freeze_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Box"]
+position = Vector2(198, -146)
+scale = Vector2(0.47, 0.47)
+texture = ExtResource("6_box_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box"]
+position = Vector2(0, -3)
+scale = Vector2(0.8, 0.8)
+shape = SubResource("RectangleShape2D_box")
+
+[node name="WarningLabel" type="Label" parent="."]
+offset_left = 856.0
+offset_top = 680.0
+offset_right = 1356.0
+offset_bottom = 780.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpikePoint" type="Marker2D" parent="."]
+position = Vector2(2432, 1712)
+rotation = -0.28043637
+scale = Vector2(30.000002, 30.000002)
+
+[node name="MassiveSpike" parent="." instance=ExtResource("7_spike")]
+position = Vector2(2432, 1712)
+rotation = -0.4753248
+scale = Vector2(30, 30)
+
+[node name="TriggerSpike" type="Area2D" parent="."]
+position = Vector2(-8, 24)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerSpike"]
+position = Vector2(1307.6918, 96.4427)
+rotation = -3.1376107
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_ne2mo")
+
+[node name="TextKiller" type="Area2D" parent="."]
+position = Vector2(32, -96)
+
+[node name="Label" type="Label" parent="TextKiller"]
+offset_left = 1584.0
+offset_top = 144.0
+offset_right = 1831.0
+offset_bottom = 178.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Congrats, You Passed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextKiller"]
+position = Vector2(1708, 160)
+shape = SubResource("RectangleShape2D_6cvei")
+
+[node name="TriggerText" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerText"]
+position = Vector2(1664.016, 298.04736)
+rotation = 1.5629785
+scale = Vector2(0.9999996, 0.9999996)
+shape = SubResource("RectangleShape2D_que50")
+
+[node name="BoxPlatform" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-104, 32)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(48, -64)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D2"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D2"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-200, -144)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D3"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D3"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-368, -248)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D4"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D4"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-160, -336)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D5"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D5"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(32, -416)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D6"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D6"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(240, -504)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D7"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D7"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-184, 648)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D8"]
+position = Vector2(1309, -141.25)
+scale = Vector2(0.8956044, 0.19146006)
+texture = ExtResource("16_igmy8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D8"]
+position = Vector2(1305.5, -139.5)
+shape = SubResource("RectangleShape2D_wdtqu")
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(792, -184)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D9"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D9"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(-80, 376)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D10"]
+position = Vector2(1309, -141.25)
+scale = Vector2(0.8956044, 0.19146006)
+texture = ExtResource("16_igmy8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D10"]
+position = Vector2(1305.5, -139.5)
+shape = SubResource("RectangleShape2D_wdtqu")
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="BoxPlatform"]
+position = Vector2(208, -184)
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxPlatform/StaticBody2D11"]
+position = Vector2(626.125, 777.56256)
+scale = Vector2(0.33712122, 0.16321658)
+texture = ExtResource("11_1sb0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxPlatform/StaticBody2D11"]
+position = Vector2(625.5, 779.5)
+shape = SubResource("RectangleShape2D_igmy8")
+
+[node name="Spike3" parent="." instance=ExtResource("7_spike")]
+position = Vector2(1136, 448)
+scale = Vector2(2, 2)
+
+[node name="Spike1" parent="." instance=ExtResource("7_spike")]
+position = Vector2(1072, 448)
+scale = Vector2(2, 2)
+
+[node name="Spike2" parent="." instance=ExtResource("7_spike")]
+position = Vector2(1008, 448)
+scale = Vector2(2, 2)
+
+[node name="SpikeAlone" parent="." instance=ExtResource("7_spike")]
+position = Vector2(832, 520)
+scale = Vector2(3, 3)
+
+[node name="Spike4" parent="." instance=ExtResource("7_spike")]
+position = Vector2(1200, 448)
+scale = Vector2(2, 2)
+
+[node name="Spike5" parent="." instance=ExtResource("7_spike")]
+position = Vector2(1248, 448)
+scale = Vector2(2, 2)
+
+[node name="TriggerManySpike" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerManySpike"]
+position = Vector2(1096, 368)
+shape = SubResource("RectangleShape2D_7qsfm")
+
+[node name="TriggerOneSpike" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerOneSpike"]
+position = Vector2(805.6315, 515.18805)
+rotation = -1.5893383
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_bv48q")
+
+[connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
+[connection signal="body_entered" from="TriggerSpike" to="." method="_on_trigger_spike_entered"]
+[connection signal="body_entered" from="TriggerText" to="." method="_on_trigger_text_entered"]
+[connection signal="body_entered" from="TriggerManySpike" to="." method="_on_trigger_many_spike_entered"]
+[connection signal="body_entered" from="TriggerOneSpike" to="." method="_on_trigger_one_spike_entered"]

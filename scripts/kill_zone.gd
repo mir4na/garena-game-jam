@@ -12,7 +12,12 @@ func _on_body_entered(body: Node2D) -> void:
 		print("[KillZone] Resetting Box Only")
 		reset_target.call_deferred("_reset_box")
 		return
-	reset_target.call_deferred("_reset_level")
+	
+	# Try to show death flash first (visual polish)
+	if reset_target.has_method("_show_death_flash"):
+		reset_target.call_deferred("_show_death_flash")
+	else:
+		reset_target.call_deferred("_reset_level")
 
 func _find_reset_target() -> Node:
 	var root = get_tree().current_scene

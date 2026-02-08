@@ -22,7 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
-AudioGlobal="*uid://cvoa7csw0sysr"
+AudioGlobal="*res://scripts/audio_global.gd"
 
 [display]
 

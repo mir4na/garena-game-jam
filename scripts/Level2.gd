@@ -7,7 +7,8 @@ extends Node2D
 @onready var player2 = $Player2
 @onready var chain = $Chain
 @onready var spawn_point = $SpawnPoint
-@onready var moving_platform = $MovingPlatform
+@onready var player_platform = $PlayerPlatform
+@onready var box_platform = $BoxPlatform
 @onready var button_area = $Button/Area2D
 @onready var warning_label = $WarningLabel
 @onready var box = $Box
@@ -16,6 +17,21 @@ extends Node2D
 @onready var massive_spike = $MassiveSpike
 @onready var trigger_text = $TriggerText
 @onready var text_killer = $TextKiller # The "Congrats" text that falls and kills
+@onready var spike_point = $SpikePoint # Optional: User defined spawn point for spike
+@onready var platform_part_2 = $Platform/StaticBody2D2 # The part that moves with box button
+@onready var flag = $Flag # Flag moves with box button
+
+# New Spikes
+@onready var trigger_one_spike = $TriggerOneSpike
+@onready var trigger_many_spike = $TriggerManySpike
+@onready var spike_alone = $SpikeAlone
+# Include Spike6 in case user adds it, logic handles nulls
+@onready var spikes_many = [$Spike1, $Spike2, $Spike3, $Spike4, $Spike5, get_node_or_null("Spike6")]
+
+var one_spike_triggered: bool = false
+var many_spikes_triggered: bool = false
+var spike_alone_target_pos: Vector2
+var spikes_many_target_pos: Array[Vector2] = []
 
 # Death overlay for visual feedback
 var death_overlay: ColorRect
@@ -41,10 +57,11 @@ var trigger_spike_activated: bool = false
 
 # Store original platform positions/rotations
 var original_platform_transforms: Array = []
+var original_box_platform_transforms: Array = []
 
 # Button state
-# Button state
-var is_button_pressed: bool = false
+var is_player_pressed: bool = false
+var is_box_pressed: bool = false
 # is_bridge_mode REMOVED
 
 # Bodies currently on button
@@ -55,6 +72,7 @@ var bodies_on_button: Array = []
 
 # Active tween
 var platform_tween: Tween
+var box_platform_tween: Tween
 var spike_tween: Tween
 
 @onready var spike_scene = preload("res://scenes/spike.tscn")
@@ -98,15 +116,17 @@ func _ready():
 		box.contact_monitor = true
 		box.max_contacts_reported = 4
 
-		# Also ensure it cannot rotate too fast? (AngularDamp)
-		box.angular_damp = 5.0
+		# STRICT PHYSICS: No rotation, heavy gravity to stick to ground
+		box.lock_rotation = true
+		box.gravity_scale = 3.0 # Heavy falling
+		box.linear_damp = 1.0   # Stop sliding quickly when not pushed
 	
 	if text_killer:
 		text_killer.z_index = 100 # Ensure on top of everything
 		text_killer.visible = false  # Hidden until triggered
 
 	# Restore platform setup which was deleted
-	for child in moving_platform.get_children():
+	for child in player_platform.get_children():
 		if child is StaticBody2D:
 			original_platform_transforms.append({
 				"node": child,
@@ -115,8 +135,20 @@ func _ready():
 			})
 	
 	# Initially hide moving platform and warning
-	moving_platform.visible = false
-	_disable_platform_collision(moving_platform)
+	player_platform.visible = false
+	_disable_platform_collision(player_platform)
+	
+	# SETUP BOX PLATFORM
+	if box_platform:
+		for child in box_platform.get_children():
+			if child is StaticBody2D:
+				original_box_platform_transforms.append({
+					"node": child,
+					"position": child.position,
+					"rotation": child.rotation
+				})
+		box_platform.visible = false
+		_disable_platform_collision(box_platform)
 	
 	if warning_label:
 		warning_label.visible = false
@@ -136,7 +168,11 @@ func _ready():
 	button_area.body_exited.connect(_on_button_body_exited)
 	
 	if massive_spike:
-		massive_spike_start_pos = massive_spike.position
+		if spike_point:
+			massive_spike_start_pos = spike_point.position
+			massive_spike.position = spike_point.position
+		else:
+			massive_spike_start_pos = massive_spike.position
 	
 	# BUG FIX: Force TriggerSpike to have its OWN unique shape
 	# This is required because TriggerSpike and TriggerText share the same resource in the editor.
@@ -154,6 +190,24 @@ func _ready():
 
 	# Setup Info Sign (Dynamic Creation if not found)
 	_setup_info_sign()
+
+	# SETUP NEW SPIKES
+	# Store target positions and hide them below ground AND make invisible
+	if spike_alone:
+		spike_alone_target_pos = spike_alone.position
+		spike_alone.position.y += 200 # Move below
+		spike_alone.visible = false   # Hide until triggered
+		
+	for s in spikes_many:
+		if s:
+			spikes_many_target_pos.append(s.position)
+			s.position.y += 200 # Move below
+			s.visible = false   # Hide until triggered
+	
+	if trigger_one_spike:
+		trigger_one_spike.body_entered.connect(_on_trigger_one_spike_entered)
+	if trigger_many_spike:
+		trigger_many_spike.body_entered.connect(_on_trigger_many_spike_entered)
 
 	# Setup Drop Text Trap (Already in scene)
 	# Setup Drop Text Trap (Already in scene)
@@ -239,7 +293,7 @@ func _on_info_sign_entered(body):
 	if body == player1 or body == player2:
 		if warning_label:
 			warning_label.visible = true
-			warning_label.text = "Caution: Spike!\nDo not touch!"
+			warning_label.text = "In this world,\nthere is no one you can trust."
 			warning_label.modulate.a = 1.0
 
 func _on_info_sign_exited(body):
@@ -273,43 +327,42 @@ func _on_button_body_exited(body):
 	_update_button_state()
 
 func _update_button_state():
+	var bodies = button_area.get_overlapping_bodies()
 	var player_on_button = false
 	var box_on_button = false
 	
-	for body in bodies_on_button:
+	for body in bodies:
 		if body == player1 or body == player2:
 			player_on_button = true
 		if body == box:
 			box_on_button = true
 	
-	var something_on_button = player_on_button or box_on_button
-	
-	# Button pressed -> reveal platform
-	if something_on_button and not is_button_pressed:
-		is_button_pressed = true
-		_reveal_moving_platform()
-		# Warning now shows via SignInfo collision, not button
-	
-	# Button released -> hide platform
-	if not something_on_button and is_button_pressed:
-		is_button_pressed = false
-		_hide_moving_platform()
-		if warning_label:
-			warning_label.visible = false
+	# Player on button -> reveal Moving Platform (Trap)
+	if player_on_button and not is_player_pressed:
+		is_player_pressed = true
+		_reveal_player_platform()
+	elif not player_on_button and is_player_pressed:
+		is_player_pressed = false
+		_hide_player_platform()
+		
+	# Box on button -> reveal Box Platform (Safe)
+	if box_on_button and not is_box_pressed:
+		is_box_pressed = true
+		_reveal_box_platform()
+	elif not box_on_button and is_box_pressed:
+		is_box_pressed = false
+		_hide_box_platform()
 
-	# Box on button -> transform to bridge (REMOVED as requested)
-	# Now just standard reveal (above)
-
-func _reveal_moving_platform():
+func _reveal_player_platform():
 	print("Button pressed! Revealing moving platform...")
 	
 	# Kill any existing tween
 	if platform_tween and platform_tween.is_valid():
 		platform_tween.kill()
 	
-	moving_platform.visible = true
-	moving_platform.modulate.a = 1.0  # Ensure fully visible
-	_enable_platform_collision(moving_platform)
+	player_platform.visible = true
+	player_platform.modulate.a = 1.0  # Ensure fully visible
+	_enable_platform_collision(player_platform)
 	
 	# Reset to original positions (always, no more bridge mode)
 	_reset_platform_transforms()
@@ -317,13 +370,13 @@ func _reveal_moving_platform():
 	# Animate slide up (from below)
 	platform_tween = create_tween()
 	platform_tween.set_parallel(true)
-	for child in moving_platform.get_children():
+	for child in player_platform.get_children():
 		if child is StaticBody2D:
 			var target_pos = child.position
 			child.position.y += 200  # Start 200px below
 			platform_tween.tween_property(child, "position:y", target_pos.y, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-func _hide_moving_platform():
+func _hide_player_platform():
 	print("Button released! Hiding moving platform...")
 	
 	# Kill any existing tween
@@ -333,15 +386,15 @@ func _hide_moving_platform():
 	# Animate slide down (disappear below)
 	platform_tween = create_tween()
 	platform_tween.set_parallel(true)
-	for child in moving_platform.get_children():
+	for child in player_platform.get_children():
 		if child is StaticBody2D:
 			var target_y = child.position.y + 200  # Go 200px down
 			platform_tween.tween_property(child, "position:y", target_y, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	
 	platform_tween.set_parallel(false)
 	platform_tween.tween_callback(func():
-		moving_platform.visible = false
-		_disable_platform_collision(moving_platform)
+		player_platform.visible = false
+		_disable_platform_collision(player_platform)
 		_reset_platform_transforms()
 	)
 
@@ -350,12 +403,80 @@ func _reset_platform_transforms():
 		data.node.position = data.position
 		data.node.rotation = data.rotation
 
-# _transform_to_bridge REMOVED
+func _reset_box_platform_transforms():
+	for data in original_box_platform_transforms:
+		data.node.position = data.position
+		data.node.rotation = data.rotation
+
+func _reveal_box_platform():
+	print("Box on button! Revealing safe platform...")
+	if box_platform:
+		if box_platform_tween and box_platform_tween.is_valid():
+			box_platform_tween.kill()
+		
+		box_platform.visible = true
+		box_platform.modulate.a = 1.0
+		_enable_platform_collision(box_platform)
+		_reset_box_platform_transforms()
+		
+		box_platform_tween = create_tween()
+		box_platform_tween.set_parallel(true)
+		for child in box_platform.get_children():
+			if child is StaticBody2D:
+				var target_pos = child.position
+				child.position.y += 200
+				box_platform_tween.tween_property(child, "position:y", target_pos.y, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
+		# Animate the extra platform part
+		if platform_part_2:
+			# Target 2839, 810 specified by user
+			var target = Vector2(2839, 810)
+			box_platform_tween.tween_property(platform_part_2, "position", target, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+		# Animate Flag
+		if flag:
+			var target = Vector2(1824, 565)
+			box_platform_tween.tween_property(flag, "position", target, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _hide_box_platform():
+	print("Box left button! Hiding safe platform...")
+	if box_platform:
+		if box_platform_tween and box_platform_tween.is_valid():
+			box_platform_tween.kill()
+			
+		box_platform_tween = create_tween()
+		box_platform_tween.set_parallel(true)
+		for child in box_platform.get_children():
+			if child is StaticBody2D:
+				var target_y = child.position.y + 200
+				box_platform_tween.tween_property(child, "position:y", target_y, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		
+		# Animate extra platform part back to original (assumed 1100Y from scene)
+		if platform_part_2:
+			var target = Vector2(2839, 1100)
+			box_platform_tween.tween_property(platform_part_2, "position", target, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+		# Animate Flag back
+		if flag:
+			var target = Vector2(1824, 832)
+			box_platform_tween.tween_property(flag, "position", target, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+		box_platform_tween.set_parallel(false)
+		box_platform_tween.tween_callback(func():
+			box_platform.visible = false
+			_disable_platform_collision(box_platform)
+			_reset_box_platform_transforms()
+			# Reset platform part 2 pos strictly (though tween should have done it)
+			if platform_part_2:
+				platform_part_2.position = Vector2(2839, 1100)
+			if flag:
+				flag.position = Vector2(1824, 832)
+		)
 
 func _show_warning():
 	if warning_label:
 		warning_label.visible = true
-		warning_label.text = "Hati-hati dengan spike!\nJangan pernah menyentuhnya!"
+		warning_label.text = "In this world,\nthere is no one you can trust."
 		# "Langsung muncul saja" = No animation required, just show it
 		warning_label.modulate.a = 1.0
 
@@ -441,17 +562,26 @@ func _reset_level():
 	player2.velocity = Vector2.ZERO
 	
 	# Reset button state
-	is_button_pressed = false
-	# is_bridge_mode removed
+	is_player_pressed = false
+	is_box_pressed = false
 	bodies_on_button.clear()
 	if button_area:
 		button_area.set_deferred("monitoring", false)
 		button_area.set_deferred("monitoring", true)
 	
-	# Hide and reset platform
-	moving_platform.visible = false
-	_disable_platform_collision(moving_platform)
+	# Hide and reset platforms
+	player_platform.visible = false
+	_disable_platform_collision(player_platform)
 	_reset_platform_transforms()
+	
+	if box_platform:
+		box_platform.visible = false
+		_disable_platform_collision(box_platform)
+		_reset_box_platform_transforms()
+		if platform_part_2:
+			platform_part_2.position = Vector2(2839, 1100)
+		if flag:
+			flag.position = Vector2(1824, 832)
 	if warning_label:
 		warning_label.visible = false
 	
@@ -466,7 +596,19 @@ func _reset_level():
 	
 	# Reset massive spike
 	if massive_spike:
-		massive_spike.position = massive_spike_start_pos
+		if spike_tween and spike_tween.is_valid():
+			spike_tween.kill()
+		
+		# Reset position to SpikePoint if exists, else start pos
+		if spike_point:
+			massive_spike.position = spike_point.position
+			# Update start pos too so next reset is consistent
+			massive_spike_start_pos = spike_point.position
+		else:
+			massive_spike.position = massive_spike_start_pos
+			
+		massive_spike.rotation = -0.28 # Approx -16 deg as seen in scene
+		
 	is_launching_spike = false
 	
 	# FIX: Reset flag deferredly so it happens AFTER monitoring toggle check
@@ -484,6 +626,20 @@ func _reset_level():
 	if text_killer:
 		text_killer.position = text_killer_start_pos
 		text_killer.visible = false
+
+	# Reset New Spikes
+	one_spike_triggered = false
+	many_spikes_triggered = false
+	
+	if spike_alone:
+		spike_alone.position.y = spike_alone_target_pos.y + 200
+		spike_alone.visible = false
+		
+	for i in range(spikes_many.size()):
+		var s = spikes_many[i]
+		if s and i < spikes_many_target_pos.size():
+			s.position.y = spikes_many_target_pos[i].y + 200
+			s.visible = false
 
 	# Reset Box
 	_reset_box()
@@ -525,17 +681,46 @@ func _on_trigger_spike_entered(body: Node2D) -> void:
 		_launch_massive_spike()
 
 
+func _on_trigger_one_spike_entered(body):
+	print("test")
+	if one_spike_triggered: return
+	if body == player1 or body == player2:
+		one_spike_triggered = true
+		print("Trigger One Spike!")
+		if spike_alone:
+			spike_alone.visible = true # Reveal
+			var tween = create_tween()
+			tween.tween_property(spike_alone, "position", spike_alone_target_pos, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _on_trigger_many_spike_entered(body):
+	if many_spikes_triggered: return
+	if body == player1 or body == player2:
+		many_spikes_triggered = true
+		print("Trigger Many Spikes!")
+		
+		var tween = create_tween()
+		for i in range(spikes_many.size()):
+			var s = spikes_many[i]
+			if s:
+				s.visible = true # Reveal
+				var target = spikes_many_target_pos[i]
+				# Parallel or sequence? Let's do parallel with delay
+				tween.parallel().tween_property(s, "position", target, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(i * 0.1)
+
 func _on_trigger_text_entered(body: Node2D) -> void:
 	if body == player1 or body == player2:
 		# If not falling -> Trigger fall sequence
 		if not is_text_falling and (text_fall_tween == null or not text_fall_tween.is_valid()):
 			print("Text Trap Triggered! Waiting...")
-		
+			
+			if text_fall_tween: text_fall_tween.kill()
+			text_fall_tween = create_tween()
+			
 			if text_killer:
 				text_killer.visible = true
 			
-			# User requested 2 minutes (120 seconds) delay
-			var delay = 120.0 
+			# User requested 1.5 seconds delay
+			var delay = 1.5 
 			text_fall_tween.tween_interval(delay)
 			text_fall_tween.tween_callback(_execute_text_drop)
 

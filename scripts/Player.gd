@@ -160,8 +160,6 @@ func _physics_process(delta: float) -> void:
 		did_jump = true
 		is_jumping = true
 		jump_hold_timer = jump_hold_time
-		AudioGlobal.start_ui_sfx("res://assets/sfx/Jump.wav", [0.95, 1.02])
-		
 
 	# Variable jump height (Pico Park-ish):
 	# - Hold: gravity lebih kecil sebentar saat masih naik
