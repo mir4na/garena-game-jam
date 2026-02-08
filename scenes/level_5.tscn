@@ -1,4 +1,4 @@
-[gd_scene load_steps=0 format=4 uid="uid://c1fvkgn0igotq"]
+[gd_scene format=4 uid="uid://c1fvkgn0igotq"]
 
 [ext_resource type="Script" uid="uid://dgo01i84d467s" path="res://scripts/Level5.gd" id="1_level5"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_player"]
@@ -113,6 +113,9 @@ shader_parameter/offset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_flag"]
 size = Vector2(64, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vorqn"]
+size = Vector2(2247, 177)
 
 [node name="Level5" type="Node2D" unique_id=1137203276]
 script = ExtResource("1_level5")
@@ -274,5 +277,28 @@ horizontal_alignment = 1
 [node name="Camera2D" type="Camera2D" parent="." unique_id=254470236]
 position = Vector2(960, 540)
 script = ExtResource("8_camshake")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=861982161]
+position = Vector2(890, 1166)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=867349877]
+position = Vector2(96.5, 3.5)
+shape = SubResource("RectangleShape2D_vorqn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=458658535]
+position = Vector2(-978, -739)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vorqn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1514053055]
+position = Vector2(1118, -729)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vorqn")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=622662940]
+position = Vector2(147, -1255)
+shape = SubResource("RectangleShape2D_vorqn")
 
 [connection signal="body_entered" from="FlagTrigger" to="." method="_on_flag_touched"]

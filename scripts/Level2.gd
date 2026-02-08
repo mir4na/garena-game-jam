@@ -3,6 +3,10 @@ extends Node2D
 ## Level 2 - Trap filled level with Box puzzle
 ## Polished with visual feedback and smooth transitions
 
+# Sound effects
+var hurt_sound: AudioStreamPlayer
+var hurt_audio = preload("res://assets/sfx/Hurt.wav")
+
 @onready var player1 = $Player1
 @onready var player2 = $Player2
 @onready var chain = $Chain
@@ -83,8 +87,15 @@ var spike_tween: Tween
 # Trap checks now handled by signal toggling.
 
 func _ready():
+	$AudioStreamPlayer.play()
+
 	# Create death overlay for visual feedback
 	_create_death_overlay()
+	
+	# Setup hurt sound
+	hurt_sound = AudioStreamPlayer.new()
+	hurt_sound.stream = hurt_audio
+	add_child(hurt_sound)
 	
 	# Store initial spawn positions
 	player1_spawn = player1.global_position
@@ -513,6 +524,10 @@ func _create_death_overlay() -> void:
 	add_child(canvas_layer)
 
 func _show_death_flash() -> void:
+	# Play hurt sound
+	if hurt_sound:
+		hurt_sound.play()
+	
 	if death_overlay:
 		death_overlay.color = Color(1, 0.2, 0.2, 0)
 		var tween = create_tween()

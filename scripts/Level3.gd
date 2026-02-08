@@ -5,6 +5,10 @@ extends Node2D
 ## Dunia miring kanan. Lalu ketika miring kiri, flag pindah ke kanan (troll)
 ## Polished with visual feedback and smooth transitions
 
+# Sound effects
+var hurt_sound: AudioStreamPlayer
+var hurt_audio = preload("res://assets/sfx/Hurt.wav")
+
 @export var tilt_right_time: float = 12.0  # Durasi miring kanan
 @export var tilt_left_time: float = 12.0  # Durasi miring kiri
 @export var tilt_angle_deg: float = 10.0
@@ -27,6 +31,7 @@ var death_overlay: ColorRect
 
 # Flag platform
 @onready var flag_platform: Node2D = $FlagPlatform if has_node("FlagPlatform") else null
+var flag_area: Area2D  # Reference to the flag Area2D for collision control
 
 @onready var timer_label: Label = $UI/TimerLabel if has_node("UI/TimerLabel") else null
 @onready var instruction_label: Label = $UI/InstructionLabel if has_node("UI/InstructionLabel") else null
@@ -52,6 +57,11 @@ func _ready() -> void:
 	# Create death overlay for visual feedback
 	_create_death_overlay()
 	
+	# Setup hurt sound
+	hurt_sound = AudioStreamPlayer.new()
+	hurt_sound.stream = hurt_audio
+	add_child(hurt_sound)
+	
 	current_phase = Phase.WAITING
 	target_rotation = 0.0
 	
@@ -67,6 +77,11 @@ func _ready() -> void:
 	# Setup flag positions
 	if flag_platform:
 		flag_start_pos = flag_platform.global_position
+		# Get flag Area2D and disable collision until level complete
+		flag_area = flag_platform.get_node_or_null("Flag")
+		if flag_area:
+			flag_area.set_deferred("monitoring", false)
+			flag_area.set_deferred("monitorable", false)
 	
 	# Ground mulai datar
 	if ground:
@@ -185,6 +200,13 @@ func _complete_level() -> void:
 		drop.set_ease(Tween.EASE_OUT)
 		drop.set_trans(Tween.TRANS_SINE)
 		drop.tween_property(flag_platform, "global_position", drop_target, 2.0)
+		# Enable flag collision after drop animation
+		drop.tween_callback(_enable_flag_collision)
+
+func _enable_flag_collision() -> void:
+	if flag_area:
+		flag_area.monitoring = true
+		flag_area.monitorable = true
 	
 
 
@@ -233,6 +255,10 @@ func _create_death_overlay() -> void:
 	add_child(canvas_layer)
 
 func _show_death_flash() -> void:
+	# Play hurt sound
+	if hurt_sound:
+		hurt_sound.play()
+	
 	if death_overlay:
 		death_overlay.color = Color(1, 0.2, 0.2, 0)
 		var tween = create_tween()

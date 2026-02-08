@@ -108,7 +108,7 @@ func _perform_attack() -> void:
 	var pattern = attack_patterns[current_pattern_index]
 	current_pattern_index = (current_pattern_index + 1) % attack_patterns.size()
 	_emit_skill_label(pattern)
-	
+	AudioGlobal.start_ui_sfx("res://assets/sfx/short-fireball-woosh-6146.mp3")
 	match pattern:
 		"radial":
 			_attack_radial_burst()

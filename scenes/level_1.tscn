@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=39 format=3 uid="uid://83kdporfvghl"]
 
 [ext_resource type="Script" uid="uid://d0srw8y53ymlm" path="res://scripts/Level2.gd" id="2_level2"]
@@ -29,6 +30,33 @@ size = Vector2(1939, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guvtl"]
 size = Vector2(136, 80)
+=======
+[gd_scene format=4 uid="uid://bu65ei2emjkkb"]
+
+[ext_resource type="PackedScene" uid="uid://da1xty3fptsa1" path="res://scenes/level_base.tscn" id="1_y0kc7"]
+[ext_resource type="PackedScene" uid="uid://cwkm3ev70p4jp" path="res://scenes/cloud_background.tscn" id="2_go7sj"]
+[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="2_ne2mo"]
+[ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="3_6cvei"]
+[ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="3_7gny6"]
+[ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="4_2aecg"]
+[ext_resource type="PackedScene" uid="uid://d0gs6p2dmo8f0" path="res://scenes/DroppingBlock.tscn" id="4_que50"]
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="5_hey2k"]
+[ext_resource type="PackedScene" uid="uid://3ccehdmfmhue" path="res://scenes/dropping_ground.tscn" id="6_172wr"]
+[ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="7_g2hoc"]
+[ext_resource type="Texture2D" uid="uid://dvmk5ck78ntio" path="res://assets/tileset/IMG_8638.png" id="8_e3sih"]
+[ext_resource type="Texture2D" uid="uid://d0kk6yjbel7rm" path="res://assets/tileset/Pohon.png" id="9_2y5yt"]
+[ext_resource type="Shader" uid="uid://b3lgapgsdutu6" path="res://shaders/sawit.gdshader" id="12_1s4pk"]
+[ext_resource type="PackedScene" uid="uid://rbdxmvum81rx" path="res://scenes/sign.tscn" id="15_6dial"]
+[ext_resource type="Texture2D" uid="uid://dqavbtfuulp8k" path="res://assets/tileset/IMG_8639.png" id="15_7nomh"]
+[ext_resource type="Texture2D" uid="uid://cspwcekrsvo5x" path="res://assets/tileset/IMG_8645.png" id="16_1s4pk"]
+[ext_resource type="PackedScene" uid="uid://c0nx1wiowyuv8" path="res://scenes/sun.tscn" id="16_7nomh"]
+[ext_resource type="Texture2D" uid="uid://b1264480cgc2j" path="res://assets/tileset/IMG_8640.png" id="18_x2xxo"]
+[ext_resource type="AudioStream" uid="uid://cvwm8gtrtnitu" path="res://assets/sfx/main_music.mp3" id="19_2cbcq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2xxo"]
+resource_local_to_scene = true
+size = Vector2(91, 223)
+>>>>>>> Stashed changes
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k8qy"]
 texture = ExtResource("9_k6a82")
@@ -59,6 +87,7 @@ texture_region_size = Vector2i(124, 124)
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
 3:1/0 = 0
 
+<<<<<<< Updated upstream
 [sub_resource type="TileSet" id="TileSet_8rhjg"]
 tile_size = Vector2i(124, 124)
 physics_layer_0/collision_layer = 1
@@ -66,6 +95,17 @@ sources/0 = SubResource("TileSetAtlasSource_6k8qy")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wo48x"]
 size = Vector2(634, 359.5)
+=======
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cbcq"]
+size = Vector2(2247, 177)
+
+[node name="LevelBase" unique_id=1259302262 instance=ExtResource("1_y0kc7")]
+
+[node name="Background" parent="." index="0"]
+offset_left = 1.0
+offset_right = 2001.0
+offset_bottom = 2000.0
+>>>>>>> Stashed changes
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0kc7"]
 size = Vector2(78, 2103.9998)
@@ -115,6 +155,7 @@ cloud_textures = Array[Texture2D]([ExtResource("3_awan1"), ExtResource("3_guvtl"
 cloud_count = 4
 spawn_margin = 400.0
 
+<<<<<<< Updated upstream
 [node name="Background" type="TextureRect" parent="."]
 z_index = -1
 texture_repeat = 2
@@ -147,12 +188,20 @@ shape = SubResource("RectangleShape2D_osu2p")
 position = Vector2(188, 826)
 
 [node name="SignInfo" type="Area2D" parent="."]
+=======
+[node name="CollisionShape2D" parent="KillZone" index="0"]
+position = Vector2(1204, 1103.5)
+
+[node name="Checkpoint" parent="." index="3"]
+position = Vector2(30, 566)
+>>>>>>> Stashed changes
 
 [node name="Sign" type="Sprite2D" parent="SignInfo"]
 position = Vector2(336, 855.99994)
 scale = Vector2(0.7624556, 0.6331413)
 texture = ExtResource("5_wdtqu")
 
+<<<<<<< Updated upstream
 [node name="Warning" type="Sprite2D" parent="SignInfo"]
 position = Vector2(333, 800)
 scale = Vector2(0.6, 0.6)
@@ -173,6 +222,55 @@ player_id = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 visible = false
+=======
+[node name="Player1" parent="." index="5"]
+position = Vector2(53, 570)
+
+[node name="Player2" parent="." index="6"]
+position = Vector2(122, 568)
+player_id = 2
+
+[node name="TileMapLayer" parent="." index="7"]
+position = Vector2(-7.9999995, 0)
+rotation = -0.00062188593
+tile_map_data = PackedByteArray("AAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAZAAoAAQAAAAAAAAAZAAsAAQAAAAEAAAAZAAwAAQAAAAEAAAAZAA0AAQAAAAEAAAAZAA4AAQAAAAEAAAAdAAoAAQABAAAAAAAdAAsAAQABAAEAAAAdAAwAAQABAAEAAAAdAA0AAQABAAEAAAAdAA4AAQABAAEAAAAdAA8AAQACAAEAAAAcAA8AAQABAAEAAAAcAA4AAQABAAEAAAAcAA0AAQABAAEAAAAcAAwAAQABAAEAAAAcAAsAAQABAAEAAAAcAAoAAQABAAAAAAAeAA0AAQACAAEAAAAeAA4AAQACAAEAAAAeAAwAAQACAAEAAAAeAAsAAQACAAEAAAAeAA8AAQACAAEAAAAdABAAAQABAAEAAAAcABAAAQABAAEAAAAZABAAAQAAAAEAAAAZABEAAQAAAAIAAAAZAA8AAQAAAAEAAAAcABEAAQABAAIAAAAeABAAAQACAAEAAAAeABEAAQABAAIAAAAdABEAAQABAAIAAAAeAAoAAQABAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQACAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAAAAAoAAQAAAAAAAAAHAAoAAQADAAAAAAAGAAoAAQACAAAAAAAHAAsAAQADAAEAAAAHAAwAAQADAAEAAAAHAA0AAQADAAEAAAAHAA4AAQADAAEAAAAHAA8AAQADAAEAAAAHABAAAQADAAEAAAAHABEAAQADAAIAAAAGABEAAQACAAIAAAAGAAsAAQACAAEAAAAGAAwAAQACAAEAAAAGAA0AAQACAAEAAAAGABAAAQACAAEAAAAGAA8AAQACAAEAAAAGAA4AAQACAAEAAAAaAAoAAQABAAAAAAAaAAsAAQABAAEAAAAaAAwAAQABAAEAAAAaAA0AAQABAAEAAAAaAA4AAQABAAEAAAAaAA8AAQABAAEAAAAaABAAAQABAAEAAAAaABEAAQABAAIAAAAbAAoAAQABAAAAAAAbAAsAAQABAAEAAAAbAAwAAQABAAEAAAAbAA0AAQABAAEAAAAbAA4AAQABAAEAAAAbAA8AAQABAAEAAAAbABAAAQABAAEAAAAbABEAAQABAAIAAAAfAAsAAQACAAEAAAAfAAwAAQACAAEAAAAfAA0AAQACAAEAAAAfAA4AAQACAAEAAAAfAA8AAQACAAEAAAAfABAAAQACAAEAAAAfABEAAQABAAIAAAAgAA8AAQABAAEAAAAgAA4AAQABAAEAAAAgAA0AAQABAAEAAAAgAAwAAQABAAEAAAAgAAsAAQABAAEAAAAgAAoAAQABAAAAAAAfAAoAAQABAAAAAAAqAAoAAQADAAAAAAAqAAsAAQADAAEAAAAqAAwAAQADAAEAAAAqAA0AAQADAAEAAAAqAA4AAQADAAEAAAAqAA8AAQADAAEAAAAqABAAAQADAAEAAAAqABEAAQADAAIAAAApABEAAQACAAIAAAAoABEAAQACAAIAAAAnABEAAQACAAIAAAAmABEAAQACAAIAAAAlABEAAQACAAIAAAAkABEAAQACAAIAAAAjAAsAAQABAAEAAAAkAAsAAQACAAEAAAAlAAsAAQACAAEAAAAmAAsAAQACAAEAAAAnAAsAAQACAAEAAAAoAAsAAQABAAEAAAApAAsAAQABAAEAAAApAAwAAQABAAEAAAApAA0AAQABAAEAAAAoAA0AAQACAAEAAAAoAA4AAQACAAEAAAAoAA8AAQACAAEAAAAoABAAAQABAAEAAAAnABAAAQABAAEAAAAmABAAAQABAAEAAAAmAA8AAQACAAEAAAAlAA8AAQACAAEAAAAlAA4AAQACAAEAAAAkAA4AAQACAAEAAAAkAA0AAQACAAEAAAAjAA0AAQABAAEAAAAkAAwAAQACAAEAAAAkAA8AAQACAAEAAAAjAA8AAQABAAEAAAAjAA4AAQABAAEAAAAjAAwAAQABAAEAAAAlABAAAQABAAEAAAAkABAAAQABAAEAAAAlAA0AAQACAAEAAAAlAAwAAQACAAEAAAAmAAwAAQACAAEAAAAmAA0AAQACAAEAAAAmAA4AAQACAAEAAAAnAA4AAQACAAEAAAAnAA0AAQACAAEAAAAnAA8AAQACAAEAAAAnAAwAAQACAAEAAAAoAAwAAQACAAEAAAApAA4AAQABAAEAAAApAA8AAQABAAEAAAApABAAAQABAAEAAAAjAAoAAQABAAAAAAAkAAoAAQABAAAAAAAlAAoAAQABAAAAAAAnAAoAAQABAAAAAAAoAAoAAQABAAAAAAApAAoAAQABAAAAAAAmAAoAAQABAAAAAAAjABAAAQABAAEAAAAjABEAAQACAAIAAAAgABAAAQABAAEAAAAgABEAAQACAAIAAAArAAoAAQABAAAAAAAsAAoAAQABAAAAAAAtAAoAAQABAAAAAAAuAAoAAQABAAAAAAA=")
+
+[node name="MovingBlock" parent="." index="8" unique_id=1504593245 instance=ExtResource("3_6cvei")]
+position = Vector2(441, 521)
+move_speed = 500.0
+
+[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" parent_id_path=PackedInt32Array(1504593245, 2078843788) index="0" unique_id=1206900178]
+position = Vector2(-0.5, -80.5)
+shape = SubResource("RectangleShape2D_x2xxo")
+
+[node name="DroppingBlock" parent="." index="9" unique_id=2117705523 instance=ExtResource("4_que50")]
+position = Vector2(758, 444)
+respawn_time = 0.0
+
+[node name="NormalBlock" parent="." index="10" unique_id=2118917713 instance=ExtResource("5_hey2k")]
+position = Vector2(943, 521)
+
+[node name="NormalBlock2" parent="." index="11" unique_id=1842734218 instance=ExtResource("5_hey2k")]
+position = Vector2(1005, 521)
+
+[node name="DroppingGround" parent="." index="12" unique_id=1441491989 instance=ExtResource("6_172wr")]
+position = Vector2(1519, 612)
+drop_delay = 0.0
+shake_amount = 0.0
+respawn_time = 0.0
+
+[node name="SpikeMove" parent="." index="13" unique_id=758195686 instance=ExtResource("7_g2hoc")]
+position = Vector2(2046, 572)
+collision_mask = 1
+move_speed = 600.0
+move_direction = Vector2(-1, 0)
+
+[node name="Flag" parent="." index="14"]
+level = 2
+
+[node name="Img8639" type="Sprite2D" parent="." index="15" unique_id=1886773285]
+position = Vector2(222, 567)
+>>>>>>> Stashed changes
 scale = Vector2(0.5, 0.5)
 tile_set = SubResource("TileSet_8rhjg")
 
@@ -199,6 +297,7 @@ shape = SubResource("RectangleShape2D_wo48x")
 position = Vector2(2839, 1100)
 rotation = 1.5707964
 
+<<<<<<< Updated upstream
 [node name="Sprite2D" type="Sprite2D" parent="Platform/StaticBody2D2"]
 position = Vector2(107.706215, 1082)
 scale = Vector2(1.7708122, 1)
@@ -525,3 +624,23 @@ shape = SubResource("RectangleShape2D_bv48q")
 [connection signal="body_entered" from="TriggerText" to="." method="_on_trigger_text_entered"]
 [connection signal="body_entered" from="TriggerManySpike" to="." method="_on_trigger_many_spike_entered"]
 [connection signal="body_entered" from="TriggerOneSpike" to="." method="_on_trigger_one_spike_entered"]
+=======
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="22" unique_id=1468276847]
+position = Vector2(890, 1166)
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" index="0" unique_id=366559052]
+position = Vector2(-978, -739)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_2cbcq")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" index="1" unique_id=1751637114]
+position = Vector2(147, -1255)
+shape = SubResource("RectangleShape2D_2cbcq")
+
+[node name="Music" type="AudioStreamPlayer" parent="." index="23" unique_id=1365335901]
+stream = ExtResource("19_2cbcq")
+
+[editable path="MovingBlock"]
+[editable path="DroppingBlock"]
+>>>>>>> Stashed changes

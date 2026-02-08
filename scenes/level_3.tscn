@@ -18,8 +18,9 @@
 [ext_resource type="PackedScene" path="res://scenes/cloud_background.tscn" id="14_ema3p"]
 [ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="15_8uepa"]
 [ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="16_q7pjq"]
-[ext_resource type="PackedScene" path="res://scenes/sun.tscn" id="17_wa6ex"]
-[ext_resource type="PackedScene" path="res://scenes/sign.tscn" id="20_wa6ex"]
+[ext_resource type="PackedScene" uid="uid://c0nx1wiowyuv8" path="res://scenes/sun.tscn" id="17_wa6ex"]
+[ext_resource type="PackedScene" uid="uid://rbdxmvum81rx" path="res://scenes/sign.tscn" id="20_wa6ex"]
+[ext_resource type="AudioStream" uid="uid://cvwm8gtrtnitu" path="res://assets/sfx/main_music.mp3" id="21_sx8yt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sx8yt"]
 shader = ExtResource("2_q7pjq")
@@ -166,13 +167,30 @@ dialog_text = "What an easy journey"
 
 [node name="Sign2" parent="Ground" instance=ExtResource("20_wa6ex")]
 position = Vector2(-392, -290)
-dialog_text = "Walk in a path and its all yours"
+dialog_text = "Walk this path, and it's all yours"
 
 [node name="Sign3" parent="Ground" instance=ExtResource("20_wa6ex")]
 position = Vector2(-182, -290)
 dialog_text = "Almost got there"
 
+[node name="Img8596" type="Sprite2D" parent="Ground" unique_id=241209914]
+material = SubResource("ShaderMaterial_q7pjq")
+position = Vector2(-769, -404)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_wae8j")
+region_enabled = true
+region_rect = Rect2(1372, 104, 490, 679)
+
+[node name="Img8596" type="Sprite2D" parent="Ground" unique_id=241209914]
+material = SubResource("ShaderMaterial_q7pjq")
+position = Vector2(-769, -404)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_wae8j")
+region_enabled = true
+region_rect = Rect2(1372, 104, 490, 679)
+
 [node name="SpikeSpawner" type="Node2D" parent="Ground"]
+
 position = Vector2(-1014, -250)
 script = ExtResource("11_ax3dk")
 spawn_y_offset = 30.0
@@ -211,10 +229,12 @@ pull_force = 3500.0
 
 [node name="Player1" parent="." instance=ExtResource("5_vcx5n")]
 position = Vector2(264, 580)
+collision_mask = 1
 jump_velocity = -1000.0
 
 [node name="Player2" parent="." instance=ExtResource("5_vcx5n")]
 position = Vector2(200, 580)
+collision_mask = 1
 player_id = 2
 jump_velocity = -1000.0
 
@@ -263,5 +283,13 @@ position = Vector2(960, 540)
 
 [node name="Sun" parent="." instance=ExtResource("17_wa6ex")]
 position = Vector2(1858, 114)
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=25964484]
+stream = ExtResource("21_sx8yt")
+volume_db = -10.0
+
+[node name="IntenseMusic" type="AudioStreamPlayer" parent="." unique_id=1601994568]
+stream = ExtResource("21_sx8yt")
+volume_db = -10.0
 
 [connection signal="body_entered" from="KillZone" to="." method="_on_kill_zone_body_entered"]

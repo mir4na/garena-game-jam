@@ -3,6 +3,10 @@ extends Node2D
 ## Level 4 - Flappy Bird Co-op Mode
 ## Full Intro Animation + Flappy Bird Gameplay
 
+# Sound effects
+var hurt_sound: AudioStreamPlayer
+var hurt_audio = preload("res://assets/sfx/Hurt.wav")
+
 # === State Machine ===
 enum GameState {
 	INTRO_APPROACH,     # Players + Rock walk toward flag
@@ -105,6 +109,11 @@ var trigger_win_start_x: float = 0.0
 var win_platform_start_x: float = 0.0
 
 func _ready() -> void:
+	# Setup hurt sound
+	hurt_sound = AudioStreamPlayer.new()
+	hurt_sound.stream = hurt_audio
+	add_child(hurt_sound)
+	
 	# FREEZE PLAYERS - They don't control themselves during intro
 	player1.set_physics_process(false)
 	player2.set_physics_process(false)
@@ -978,6 +987,10 @@ func _on_kill_zone_entered(body: Node2D) -> void:
 func _game_over() -> void:
 	current_state = GameState.GAME_OVER
 	is_flappy_mode = false
+	
+	# Play hurt sound
+	if hurt_sound:
+		hurt_sound.play()
 	
 	var tween = create_tween()
 	tween.tween_interval(0.5)

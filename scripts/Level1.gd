@@ -3,6 +3,10 @@ extends Node2D
 ## Level 1 - Introduction level with shrinking platform puzzle
 ## Polished with visual feedback and smooth transitions
 
+# Sound effects
+var hurt_sound: AudioStreamPlayer
+var hurt_audio = preload("res://assets/sfx/Hurt.wav")
+
 @onready var player1 = $Player1
 @onready var player2 = $Player2
 @onready var spawn_point = $SpawnPoint
@@ -36,6 +40,11 @@ const SHRINK_SPEED = 250.0
 func _ready():
 	# Create death overlay for visual feedback
 	_create_death_overlay()
+	
+	# Setup hurt sound
+	hurt_sound = AudioStreamPlayer.new()
+	hurt_sound.stream = hurt_audio
+	add_child(hurt_sound)
 	
 	original_sprite_scale = platform_sprite.scale
 	original_sprite_pos = platform_sprite.position
@@ -120,6 +129,10 @@ func _on_death_area_body_entered(body):
 		_show_death_flash()
 
 func _show_death_flash() -> void:
+	# Play hurt sound
+	if hurt_sound:
+		hurt_sound.play()
+	
 	if death_overlay:
 		death_overlay.color = Color(1, 0.2, 0.2, 0)
 		var tween = create_tween()

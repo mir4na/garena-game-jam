@@ -22,7 +22,7 @@ extends Node2D
 @export var fake_death_duration: float = 3.0
 @export var phase2_duration: float = 12.0
 @export var player_lives: int = 5
-
+var level_completed = false
 # Node references - will be set depending on scene structure
 var sun_boss: Node2D
 var sun_sprite: Node2D  # Sun visual in sky during platformer (AnimatedSprite2D parent)
@@ -60,10 +60,17 @@ var sun_center_position: Vector2 = Vector2(960, 400)
 
 # Flag reference
 var flag: Node2D
+var flag_area: Area2D  # Reference to the Flag Area2D for collision control
 var flag_orbit_distance: float = 200.0
 
 # Camera reference for shake
 var camera: Camera2D
+
+# Sound effects
+var hurt_sound: AudioStreamPlayer
+var crunch_sound: AudioStreamPlayer
+var hurt_audio = preload("res://assets/sfx/Hurt.wav")
+var crunch_audio = preload("res://assets/sfx/Crunch.wav")
 
 # Burn effect materials
 var burn_materials: Array[ShaderMaterial] = []
@@ -97,6 +104,11 @@ func _ready() -> void:
 			sun_sky_position = sun_boss.global_position
 	if flag_trigger:
 		flag = flag_trigger
+		# Get the actual Flag Area2D inside FlagTrigger and disable collision until victory
+		flag_area = flag_trigger.get_node_or_null("Flag")
+		if flag_area:
+			flag_area.set_deferred("monitoring", false)
+			flag_area.set_deferred("monitorable", false)
 	
 	# Store player spawn positions for soft reset
 	if player1:
@@ -110,6 +122,15 @@ func _ready() -> void:
 	_setup_burn_materials()
 	# Defer cloud burn setup to ensure CloudBackground._ready() has completed
 	call_deferred("_setup_cloud_burn_materials")
+	
+	# Setup sound effects
+	hurt_sound = AudioStreamPlayer.new()
+	hurt_sound.stream = hurt_audio
+	add_child(hurt_sound)
+	
+	crunch_sound = AudioStreamPlayer.new()
+	crunch_sound.stream = crunch_audio
+	add_child(crunch_sound)
 	
 	_update_ui()
 
@@ -291,6 +312,7 @@ func _process(delta: float) -> void:
 				_trigger_real_victory()
 		
 		GamePhase.VICTORY:
+			level_completed = true
 			_check_flag_collision()
 
 ## ========== FLAG TRIGGER - STARTS TRANSITION ==========
@@ -603,6 +625,14 @@ func _check_flag_collision() -> void:
 func _win_level() -> void:
 	current_phase = GamePhase.DEFEAT  # Stop processing
 	
+	# Enable flag collision for proper scene transition
+	if flag_area:
+		flag_area.monitoring = true
+		flag_area.monitorable = true
+		# Set level_5_completed so flag.gd allows advancement
+		if flag_area.has_method("get") or "level_5_completed" in flag_area:
+			flag_area.level_5_completed = true
+	
 	if message_label:
 		message_label.text = "YOU WIN!"
 		message_label.modulate = Color(1, 0.9, 0.2, 1)  # Golden color
@@ -633,6 +663,10 @@ func on_player_hit(player: Node2D) -> void:
 		if was_hit:
 			return
 		player.take_hit()
+	
+	# Play hurt sound
+	if hurt_sound:
+		hurt_sound.play()
 	
 	# Camera shake on hit
 	if camera and camera.has_method("add_trauma"):
@@ -744,6 +778,10 @@ func _animate_timer_tick(seconds_left: int, max_time: float) -> void:
 ## ========== CAMERA SHAKE ==========
 
 func _shake_camera(intensity: float) -> void:
+	# Play crunch sound for dramatic effect
+	if crunch_sound and intensity >= 0.3:
+		crunch_sound.play()
+	
 	if camera and camera.has_method("add_trauma"):
 		camera.add_trauma(intensity)
 	elif camera:

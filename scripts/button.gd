@@ -25,7 +25,7 @@ func _notification(what: int) -> void:
 		pivot_offset = size / 2.0
 
 func _on_mouse_entered() -> void:
-	#AudioGlobal.start_ui_sfx("res://Assets/SFX/button_hover.wav", [0.97, 1.05])
+	AudioGlobal.start_ui_sfx("res://assets/sfx/button_hover.wav", [0.97, 1.05])
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_animate_scale(_hover_scale)
 
@@ -34,7 +34,7 @@ func _on_mouse_exited() -> void:
 	_animate_scale(_base_scale)
 
 func _on_pressed() -> void:
-	#AudioGlobal.start_ui_sfx("res://Assets/SFX/button_click.wav", [0.97, 1.05], 2)
+	AudioGlobal.start_ui_sfx("res://assets/sfx/button_click.wav", [0.97, 1.05], 2)
 
 	if _tween: _tween.kill()
 	
