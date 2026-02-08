@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0kk6yjbel7rm"
-path="res://.godot/imported/IMG_8642.png-e17ce53696cea3d676187ad9bf8b5fd9.ctex"
+uid="uid://b363dcs17vpyv"
+path="res://.godot/imported/Untitled845_20260208021350.png-a10ba14c8ced366fd2eda637ce97226c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tileset/IMG_8642.png"
-dest_files=["res://.godot/imported/IMG_8642.png-e17ce53696cea3d676187ad9bf8b5fd9.ctex"]
+source_file="res://assets/matahari/Untitled845_20260208021350.png"
+dest_files=["res://.godot/imported/Untitled845_20260208021350.png-a10ba14c8ced366fd2eda637ce97226c.ctex"]
 
 [params]
 

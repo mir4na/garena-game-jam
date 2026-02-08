@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cm5t8cay2alqg"]
+
+[ext_resource type="Script" uid="uid://bhqokoo04564p" path="res://scripts/sun_boss.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss"]
+radius = 80.0
+
+[node name="SunBoss" type="Node2D" unique_id=1932991537]
+script = ExtResource("1_script")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1797391915]
+modulate = Color(1, 0.9, 0.3, 1)
+scale = Vector2(1.5, 1.5)
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1191044432]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1335013443]
+shape = SubResource("CircleShape2D_boss")

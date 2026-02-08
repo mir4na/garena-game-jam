@@ -59,6 +59,13 @@ var partner: CharacterBody2D = null
 # Get gravity from project settings
 var base_gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+# Top-down mode for bullet hell
+var topdown_mode: bool = false
+var topdown_speed: float = 300.0
+var is_hit: bool = false
+var invincible_timer: float = 0.0
+var invincible_duration: float = 1.5
+
 func _ready() -> void:
 	if gravity_right:
 		rotation = rad_to_deg(3.14159)
@@ -98,6 +105,12 @@ func _ready() -> void:
 	last_y_position = global_position.y
 
 func _physics_process(delta: float) -> void:
+	# TOP-DOWN MODE - untuk bullet hell
+	if topdown_mode:
+		_physics_process_topdown(delta)
+		return
+	
+	# PLATFORMER MODE - normal gameplay
 	if gravity_right:
 		gravity_scale = 0
 		velocity.x += delta * base_gravity
@@ -279,3 +292,90 @@ func set_partner(p: CharacterBody2D) -> void:
 ## Launch player with impulse
 func launch(impulse: Vector2) -> void:
 	velocity += impulse
+
+## ========== TOP-DOWN MODE FOR BULLET HELL ==========
+
+func set_topdown_mode(enabled: bool) -> void:
+	topdown_mode = enabled
+	if enabled:
+		# Reset velocity when switching modes
+		velocity = Vector2.ZERO
+		rotation = 0
+		# Reset animation
+		if current_sprite:
+			current_sprite.play("run")
+
+func _physics_process_topdown(delta: float) -> void:
+	# Invincibility after hit
+	if invincible_timer > 0:
+		invincible_timer -= delta
+		# Flash effect
+		if current_sprite:
+			current_sprite.visible = int(invincible_timer * 10) % 2 == 0
+		if invincible_timer <= 0:
+			is_hit = false
+			if current_sprite:
+				current_sprite.visible = true
+	
+	# Get 8-directional input
+	var input_dir := _get_topdown_input()
+	last_input_dir = input_dir.x
+	has_movement_input = (input_dir != Vector2.ZERO)
+	
+	# Movement - no gravity
+	if input_dir != Vector2.ZERO:
+		velocity = input_dir * topdown_speed
+		# Flip sprite based on horizontal direction
+		if current_sprite:
+			if input_dir.x < 0:
+				current_sprite.flip_h = true
+			elif input_dir.x > 0:
+				current_sprite.flip_h = false
+			current_sprite.play("run")
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, topdown_speed * 0.2)
+		if current_sprite and current_sprite.animation != "idle":
+			current_sprite.play("idle")
+	
+	# Apply rope force
+	velocity += rope_force
+	rope_force = Vector2.ZERO
+	
+	move_and_slide()
+
+func _get_topdown_input() -> Vector2:
+	var dir := Vector2.ZERO
+	
+	if player_id == 1:
+		if Input.is_key_pressed(KEY_W):
+			dir.y -= 1
+		if Input.is_key_pressed(KEY_S):
+			dir.y += 1
+		if Input.is_key_pressed(KEY_A):
+			dir.x -= 1
+		if Input.is_key_pressed(KEY_D):
+			dir.x += 1
+	else:
+		if Input.is_key_pressed(KEY_UP):
+			dir.y -= 1
+		if Input.is_key_pressed(KEY_DOWN):
+			dir.y += 1
+		if Input.is_key_pressed(KEY_LEFT):
+			dir.x -= 1
+		if Input.is_key_pressed(KEY_RIGHT):
+			dir.x += 1
+	
+	return dir.normalized()
+
+func take_hit() -> void:
+	if is_hit or invincible_timer > 0:
+		return
+	
+	is_hit = true
+	invincible_timer = invincible_duration
+	
+	# Red flash effect on hit
+	if current_sprite:
+		var tween = create_tween()
+		tween.tween_property(current_sprite, "modulate", Color(1, 0.3, 0.3, 1), 0.05)
+		tween.tween_property(current_sprite, "modulate", Color.WHITE, 0.15)

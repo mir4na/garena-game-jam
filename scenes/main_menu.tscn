@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://dgrx1ay6f8eqi"]
+
+[ext_resource type="Texture2D" uid="uid://ce3vexjisolo8" path="res://assets/title.png" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://bux0uxqbq7oyl" path="res://scripts/main_menu.gd" id="1_oa1go"]
+[ext_resource type="Texture2D" uid="uid://xybrgouj58o4" path="res://assets/bush.png" id="2_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://bnlyy6akicopv" path="res://assets/button.png" id="4_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://cy0totcyg2xty" path="res://assets/button_pressed.png" id="5_8ln24"]
+[ext_resource type="Script" uid="uid://c70cj13ynq4im" path="res://scripts/button.gd" id="6_rtw2f"]
+[ext_resource type="PackedScene" path="res://scenes/menu_walker_p1.tscn" id="8_jk1qb"]
+[ext_resource type="PackedScene" path="res://scenes/menu_walker_p3.tscn" id="9_5dd4i"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtw2f"]
+texture = ExtResource("4_rtw2f")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oa1go"]
+texture = ExtResource("5_8ln24")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbmy8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jk1qb"]
+size = Vector2(2247, 177)
+
+[node name="MainMenu" type="Node2D" unique_id=1879853243]
+script = ExtResource("1_oa1go")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1376831509]
+position = Vector2(960, 540)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_tbmy8")
+
+[node name="Title" type="Sprite2D" parent="." unique_id=1008557196]
+position = Vector2(599.99994, 405.99994)
+rotation = -0.37873644
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_l6cm7")
+
+[node name="PlayButton" type="Button" parent="." unique_id=1663551245]
+offset_left = 833.18835
+offset_top = 527.82086
+offset_right = 1297.1885
+offset_bottom = 775.82086
+rotation = -0.2617994
+pivot_offset = Vector2(232, 124)
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oa1go")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tbmy8")
+script = ExtResource("6_rtw2f")
+
+[node name="Label" type="Label" parent="PlayButton" unique_id=1289794789]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 57.0
+offset_right = 339.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 82
+text = "PLAY"
+
+[node name="ExitButton" type="Button" parent="." unique_id=1123010262]
+offset_left = 1030.1884
+offset_top = 662.82086
+offset_right = 1494.1885
+offset_bottom = 910.8208
+rotation = -0.2617994
+pivot_offset = Vector2(232, 124)
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oa1go")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tbmy8")
+script = ExtResource("6_rtw2f")
+
+[node name="Label" type="Label" parent="ExitButton" unique_id=23129851]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 57.0
+offset_right = 339.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 82
+text = "EXIT"
+
+[node name="Walker2" parent="." unique_id=1556604474 instance=ExtResource("9_5dd4i")]
+position = Vector2(1792, 376)
+scale = Vector2(2, 2)
+floor_y = 376.0
+min_x = 1150.0
+max_x = 1800.0
+
+[node name="Walker1" parent="." unique_id=1609345938 instance=ExtResource("8_jk1qb")]
+position = Vector2(1017, 974)
+scale = Vector2(2.0000002, 2.0000002)
+floor_y = 974.0
+min_x = 70.425
+max_x = 500.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=704607863]
+position = Vector2(890, 1164)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=369288773]
+position = Vector2(96.5, 3.5)
+shape = SubResource("RectangleShape2D_jk1qb")
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

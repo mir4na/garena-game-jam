@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://menu_walker_p1"]
+
+[ext_resource type="Script" uid="uid://menu_walker_script" path="res://scripts/menu_walker.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bha8yeahld01u" path="res://assets/player1/idle1.png" id="2_idle1"]
+[ext_resource type="Texture2D" uid="uid://btk558l7tkagl" path="res://assets/player1/idle2.png" id="3_idle2"]
+[ext_resource type="Texture2D" uid="uid://pd4ysb0ft1sv" path="res://assets/player1/jump1.png" id="4_jump1"]
+[ext_resource type="Texture2D" uid="uid://wtq0acxnhi0o" path="res://assets/player1/jump2.png" id="5_jump2"]
+[ext_resource type="Texture2D" uid="uid://c2ks8clpnofaq" path="res://assets/player1/jump3.png" id="6_jump3"]
+[ext_resource type="Texture2D" uid="uid://r0dfahalv3w1" path="res://assets/player1/jump4.png" id="7_jump4"]
+[ext_resource type="Texture2D" uid="uid://dgbs3q3q435tt" path="res://assets/player1/run1.png" id="8_run1"]
+[ext_resource type="Texture2D" uid="uid://dy0sn8gic7i8g" path="res://assets/player1/run2.png" id="9_run2"]
+[ext_resource type="Texture2D" uid="uid://dcq6joycadcas" path="res://assets/player1/run3.png" id="10_run3"]
+[ext_resource type="Texture2D" uid="uid://dmsx4oxxw6ih4" path="res://assets/player1/run4.png" id="11_run4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_walker"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jump1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jump2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_jump3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jump4")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_run4")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[node name="MenuWalkerP1" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_walker")
+animation = &"run"

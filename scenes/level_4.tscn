@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://834ahddecqsc" path="res://scenes/level_base.tscn" id="1_6malg"]
 [ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="2_6j14n"]
 [ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="3_6j14n"]
+[ext_resource type="Script" path="res://scripts/Level4.gd" id="4_level4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rbbjd"]
 texture = ExtResource("2_6j14n")
@@ -40,6 +41,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rbbjd")
 
 [node name="Level4" unique_id=1259302262 instance=ExtResource("1_6malg")]
+script = ExtResource("4_level4")
 
 [node name="KillZone" parent="." index="1" unique_id=1780928457]
 position = Vector2(60, 267)
