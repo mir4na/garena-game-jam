@@ -89,8 +89,12 @@ func _ready() -> void:
 		_:
 			current_sprite = animated
 	
-	current_sprite.visible = true
-	current_sprite.play("idle")
+	if current_sprite:
+		current_sprite.visible = true
+		current_sprite.play("idle")
+		print("DEBUG PLAYER: Player ", name, " Style: ", style, " Sprite: ", current_sprite.name, " Vis: ", current_sprite.visible, " Mod: ", current_sprite.modulate)
+	else:
+		print("ERROR PLAYER: No current_sprite selected for ", name)
 	
 	# Add to player group for stacking detection
 	add_to_group("player")

@@ -103,7 +103,7 @@ scale = Vector2(0.99600005, 0.628)
 texture = ExtResource("2_fldb1")
 
 [node name="Awan1" type="Sprite2D" parent="Background"]
-position = Vector2(1024, 208)
+position = Vector2(1024, 205)
 texture = ExtResource("3_guvtl")
 
 [node name="Awan2" type="Sprite2D" parent="Background"]
@@ -115,7 +115,7 @@ position = Vector2(1504, 416)
 texture = ExtResource("3_guvtl")
 
 [node name="Sawit" type="Sprite2D" parent="Background"]
-position = Vector2(160, 528)
+position = Vector2(160, 560)
 texture = ExtResource("4_igmy8")
 
 [node name="Flag" type="Sprite2D" parent="Background"]
