@@ -108,6 +108,7 @@ var trigger_win_start_x: float = 0.0
 var win_platform_start_x: float = 0.0
 
 func _ready() -> void:
+	$AudioStreamPlayer.play()
 	# Setup hurt sound
 	hurt_sound = AudioStreamPlayer.new()
 	hurt_sound.stream = hurt_audio
@@ -624,6 +625,9 @@ func _start_playing() -> void:
 # Store initial positions of obstacles for resetting
 var obstacle_initial_positions: Dictionary = {}
 
+# Outline shader for flying objects
+var outline_shader = preload("res://shaders/outline.gdshader")
+
 func _collect_scene_obstacles() -> void:
 	obstacles.clear()
 	obstacle_initial_positions.clear()
@@ -640,7 +644,25 @@ func _collect_scene_obstacles() -> void:
 						# Add Layer 2 to mask so it detects Players
 						subchild.collision_mask |= 2
 						subchild.monitoring = true
+						
+						# Apply outline shader to Sawit and Car sprites
+						_apply_outline_to_obstacle(subchild)
 
+## Apply outline shader to flying objects (Sawit, Car)
+func _apply_outline_to_obstacle(area: Area2D) -> void:
+	for sprite_child in area.get_children():
+		if sprite_child is Sprite2D:
+			var sprite_name = sprite_child.name.to_lower()
+			if "sawit" in sprite_name or "car" in sprite_name:
+				var mat = ShaderMaterial.new()
+				mat.shader = outline_shader
+				# Red outline for danger
+				mat.set_shader_parameter("color", Color(1.0, 0.2, 0.1, 1.0))
+				mat.set_shader_parameter("width", 5.0)
+				mat.set_shader_parameter("pattern", 1)  # Circle pattern
+				mat.set_shader_parameter("inside", false)
+				mat.set_shader_parameter("add_margins", true)
+				sprite_child.material = mat
 
 # Remove dynamic spawning functions since we use scene obstacles
 # func _spawn_all_obstacles() ... DELETED

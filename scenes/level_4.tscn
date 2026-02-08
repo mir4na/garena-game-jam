@@ -8,13 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="4_g31h8"]
 [ext_resource type="PackedScene" uid="uid://dcagtpnah3328" path="res://scenes/flag.tscn" id="5_7ewpb"]
 [ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="5_hy5x3"]
-[ext_resource type="PackedScene" uid="uid://spike001" path="res://scenes/spike.tscn" id="6_dmmei"]
 [ext_resource type="Texture2D" uid="uid://b08m5iyuo0eyx" path="res://assets/platform.png" id="6_ycko3"]
 [ext_resource type="Script" uid="uid://087t8rkl1jb7" path="res://scripts/Level4.gd" id="9_level4"]
 [ext_resource type="Texture2D" uid="uid://ctwxoop44edyh" path="res://assets/sawit.png" id="10_rr1tt"]
 [ext_resource type="Texture2D" uid="uid://e7ncpwkdkvbp" path="res://assets/car.png" id="11_7ewpb"]
 [ext_resource type="Texture2D" uid="uid://dmeqrevjgp0js" path="res://assets/pager.png" id="14_g31h8"]
 [ext_resource type="Texture2D" uid="uid://dhsg3l4ejvchs" path="res://assets/note.png" id="15_hy5x3"]
+[ext_resource type="AudioStream" uid="uid://wra84d6caljw" path="res://assets/sfx/02. Lively City.mp3" id="16_dmmei"]
 [ext_resource type="Shader" uid="uid://b3lgapgsdutu6" path="res://shaders/sawit.gdshader" id="16_sawit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
@@ -118,26 +118,6 @@ position = Vector2(1312, 648)
 scale = Vector2(0.5, 0.42626727)
 texture = ExtResource("4_g31h8")
 
-[node name="SpikeLayer" type="ParallaxLayer" parent="Background" unique_id=1706668992]
-motion_scale = Vector2(0.6, 1)
-motion_mirroring = Vector2(1920, 0)
-
-[node name="Spike" parent="Background/SpikeLayer" unique_id=1274227726 instance=ExtResource("6_dmmei")]
-position = Vector2(1288, 816)
-rotation = -0.63672644
-
-[node name="Spike2" parent="Background/SpikeLayer" unique_id=934548943 instance=ExtResource("6_dmmei")]
-position = Vector2(536, 176)
-rotation = 2.6480656
-
-[node name="Spike3" parent="Background/SpikeLayer" unique_id=1264610993 instance=ExtResource("6_dmmei")]
-position = Vector2(408, 840)
-rotation = -0.12894917
-
-[node name="Spike4" parent="Background/SpikeLayer" unique_id=977569637 instance=ExtResource("6_dmmei")]
-position = Vector2(1664, 184)
-rotation = -1.4057698
-
 [node name="Flag" parent="." unique_id=1658788905 instance=ExtResource("5_7ewpb")]
 position = Vector2(7504, 496)
 level = 4
@@ -238,6 +218,7 @@ scale = Vector2(0.7425083, 0.98558813)
 texture = ExtResource("10_rr1tt")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration2/Area2D" unique_id=399091524]
+position = Vector2(9, 24)
 polygon = PackedVector2Array(976, -112, 1032, -120, 1032, 200, 1120, 216, 1096, 384, 880, 408, 872, 184, 968, 200, 952, -120, 992, -120)
 
 [node name="Area2D2" type="Area2D" parent="ObstacleContainer/Iteration2" unique_id=653093279]
@@ -267,6 +248,8 @@ material = SubResource("ShaderMaterial_sawit")
 position = Vector2(1480.3677, 945.40466)
 scale = Vector2(0.45322794, 0.52777785)
 texture = ExtResource("10_rr1tt")
+region_enabled = true
+region_rect = Rect2(49, 72, 643, 680)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration3/Area2D2" unique_id=1841758745]
 polygon = PackedVector2Array(1456, 1096, 1464, 920, 1408, 968, 1400, 824, 1528, 840, 1544, 968, 1504, 960, 1504, 1112)
@@ -397,7 +380,12 @@ Press W to fly UP!
 
 PLAYER 2:
 Press UP ARROW to fly UP!
+
+BEWARE OF ANY FLYING OBJECT!
 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1543095469]
+stream = ExtResource("16_dmmei")
 
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
 [connection signal="body_entered" from="TriggerWin" to="." method="_on_trigger_win_body_entered"]
