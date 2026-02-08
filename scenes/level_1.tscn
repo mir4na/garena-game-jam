@@ -1,7 +1,7 @@
-[gd_scene load_steps=0 format=4 uid="uid://bu65ei2emjkkb"]
+[gd_scene load_steps=22 format=4 uid="uid://djq2trcuy6a1k"]
 
 [ext_resource type="PackedScene" uid="uid://da1xty3fptsa1" path="res://scenes/level_base.tscn" id="1_y0kc7"]
-[ext_resource type="PackedScene" uid="uid://cwkm3ev70p4jp" path="res://scenes/cloud_background.tscn" id="2_go7sj"]
+[ext_resource type="PackedScene" path="res://scenes/cloud_background.tscn" id="2_go7sj"]
 [ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="2_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="3_6cvei"]
 [ext_resource type="Texture2D" uid="uid://c7rw43m80h7k4" path="res://assets/awan1.png" id="3_7gny6"]
@@ -12,11 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="7_g2hoc"]
 [ext_resource type="Texture2D" uid="uid://dvmk5ck78ntio" path="res://assets/tileset/IMG_8638.png" id="8_e3sih"]
 [ext_resource type="Texture2D" uid="uid://d0kk6yjbel7rm" path="res://assets/tileset/Pohon.png" id="9_2y5yt"]
-[ext_resource type="Shader" uid="uid://b3lgapgsdutu6" path="res://shaders/sawit.gdshader" id="12_1s4pk"]
-[ext_resource type="PackedScene" uid="uid://rbdxmvum81rx" path="res://scenes/sign.tscn" id="15_6dial"]
+[ext_resource type="Shader" path="res://shaders/sawit.gdshader" id="12_1s4pk"]
+[ext_resource type="PackedScene" path="res://scenes/sign.tscn" id="15_6dial"]
 [ext_resource type="Texture2D" uid="uid://dqavbtfuulp8k" path="res://assets/tileset/IMG_8639.png" id="15_7nomh"]
 [ext_resource type="Texture2D" uid="uid://cspwcekrsvo5x" path="res://assets/tileset/IMG_8645.png" id="16_1s4pk"]
-[ext_resource type="PackedScene" uid="uid://c0nx1wiowyuv8" path="res://scenes/sun.tscn" id="16_7nomh"]
+[ext_resource type="PackedScene" path="res://scenes/sun.tscn" id="16_7nomh"]
 [ext_resource type="Texture2D" uid="uid://b1264480cgc2j" path="res://assets/tileset/IMG_8640.png" id="18_x2xxo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
@@ -38,110 +38,110 @@ shader_parameter/distortion = 0.0
 shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
-[node name="LevelBase" unique_id=1259302262 instance=ExtResource("1_y0kc7")]
+[node name="LevelBase" instance=ExtResource("1_y0kc7")]
 
-[node name="Background" parent="." index="0" unique_id=1158967320]
+[node name="Background" parent="." index="0"]
 offset_left = 1.0
 offset_right = 2001.0
 offset_bottom = 2000.0
 
-[node name="CloudBackground" parent="." index="1" unique_id=1680140587 instance=ExtResource("2_go7sj")]
+[node name="CloudBackground" parent="." index="1" instance=ExtResource("2_go7sj")]
 cloud_textures = Array[Texture2D]([ExtResource("3_7gny6"), ExtResource("4_2aecg")])
 cloud_count = 4
 spawn_margin = 400.0
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="KillZone" parent_id_path=PackedInt32Array(1155490085) index="1" unique_id=407895310]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="KillZone" index="1"]
 position = Vector2(-21, 160)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_osu2p")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="KillZone" parent_id_path=PackedInt32Array(1155490085) index="2" unique_id=1692584372]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="KillZone" index="2"]
 position = Vector2(2020, 160)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_osu2p")
 
-[node name="Checkpoint" parent="." index="3" unique_id=2049609378]
+[node name="Checkpoint" parent="." index="3"]
 position = Vector2(30, 566)
 
-[node name="Chain" type="Node2D" parent="." index="4" unique_id=1307565403]
+[node name="Chain" type="Node2D" parent="." index="4"]
 z_index = 1
 script = ExtResource("2_ne2mo")
 player1_path = NodePath("../Player1")
 player2_path = NodePath("../Player2")
 rope_length = 150.0
 
-[node name="Player1" parent="." index="5" unique_id=1160041384]
+[node name="Player1" parent="." index="5"]
 position = Vector2(53, 570)
 
-[node name="Player2" parent="." index="6" unique_id=8277381]
+[node name="Player2" parent="." index="6"]
 position = Vector2(122, 568)
 player_id = 2
 
-[node name="TileMapLayer" parent="." index="7" unique_id=327613252]
+[node name="TileMapLayer" parent="." index="7"]
 position = Vector2(-7.9999995, 0)
 rotation = -0.00062188593
 tile_map_data = PackedByteArray("AAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAZAAoAAQAAAAAAAAAZAAsAAQAAAAEAAAAZAAwAAQAAAAEAAAAZAA0AAQAAAAEAAAAZAA4AAQAAAAEAAAAdAAoAAQABAAAAAAAdAAsAAQABAAEAAAAdAAwAAQABAAEAAAAdAA0AAQABAAEAAAAdAA4AAQABAAEAAAAdAA8AAQACAAEAAAAcAA8AAQABAAEAAAAcAA4AAQABAAEAAAAcAA0AAQABAAEAAAAcAAwAAQABAAEAAAAcAAsAAQABAAEAAAAcAAoAAQABAAAAAAAeAA0AAQACAAEAAAAeAA4AAQACAAEAAAAeAAwAAQACAAEAAAAeAAsAAQACAAEAAAAeAA8AAQACAAEAAAAdABAAAQABAAEAAAAcABAAAQABAAEAAAAZABAAAQAAAAEAAAAZABEAAQAAAAIAAAAZAA8AAQAAAAEAAAAcABEAAQABAAIAAAAeABAAAQACAAEAAAAeABEAAQABAAIAAAAdABEAAQABAAIAAAAeAAoAAQABAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQACAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAAAAAoAAQAAAAAAAAAHAAoAAQADAAAAAAAGAAoAAQACAAAAAAAHAAsAAQADAAEAAAAHAAwAAQADAAEAAAAHAA0AAQADAAEAAAAHAA4AAQADAAEAAAAHAA8AAQADAAEAAAAHABAAAQADAAEAAAAHABEAAQADAAIAAAAGABEAAQACAAIAAAAGAAsAAQACAAEAAAAGAAwAAQACAAEAAAAGAA0AAQACAAEAAAAGABAAAQACAAEAAAAGAA8AAQACAAEAAAAGAA4AAQACAAEAAAAaAAoAAQABAAAAAAAaAAsAAQABAAEAAAAaAAwAAQABAAEAAAAaAA0AAQABAAEAAAAaAA4AAQABAAEAAAAaAA8AAQABAAEAAAAaABAAAQABAAEAAAAaABEAAQABAAIAAAAbAAoAAQABAAAAAAAbAAsAAQABAAEAAAAbAAwAAQABAAEAAAAbAA0AAQABAAEAAAAbAA4AAQABAAEAAAAbAA8AAQABAAEAAAAbABAAAQABAAEAAAAbABEAAQABAAIAAAAfAAsAAQACAAEAAAAfAAwAAQACAAEAAAAfAA0AAQACAAEAAAAfAA4AAQACAAEAAAAfAA8AAQACAAEAAAAfABAAAQACAAEAAAAfABEAAQABAAIAAAAgAA8AAQABAAEAAAAgAA4AAQABAAEAAAAgAA0AAQABAAEAAAAgAAwAAQABAAEAAAAgAAsAAQABAAEAAAAgAAoAAQABAAAAAAAfAAoAAQABAAAAAAAqAAoAAQADAAAAAAAqAAsAAQADAAEAAAAqAAwAAQADAAEAAAAqAA0AAQADAAEAAAAqAA4AAQADAAEAAAAqAA8AAQADAAEAAAAqABAAAQADAAEAAAAqABEAAQADAAIAAAApABEAAQACAAIAAAAoABEAAQACAAIAAAAnABEAAQACAAIAAAAmABEAAQACAAIAAAAlABEAAQACAAIAAAAkABEAAQACAAIAAAAjAAsAAQABAAEAAAAkAAsAAQACAAEAAAAlAAsAAQACAAEAAAAmAAsAAQACAAEAAAAnAAsAAQACAAEAAAAoAAsAAQABAAEAAAApAAsAAQABAAEAAAApAAwAAQABAAEAAAApAA0AAQABAAEAAAAoAA0AAQACAAEAAAAoAA4AAQACAAEAAAAoAA8AAQACAAEAAAAoABAAAQABAAEAAAAnABAAAQABAAEAAAAmABAAAQABAAEAAAAmAA8AAQACAAEAAAAlAA8AAQACAAEAAAAlAA4AAQACAAEAAAAkAA4AAQACAAEAAAAkAA0AAQACAAEAAAAjAA0AAQABAAEAAAAkAAwAAQACAAEAAAAkAA8AAQACAAEAAAAjAA8AAQABAAEAAAAjAA4AAQABAAEAAAAjAAwAAQABAAEAAAAlABAAAQABAAEAAAAkABAAAQABAAEAAAAlAA0AAQACAAEAAAAlAAwAAQACAAEAAAAmAAwAAQACAAEAAAAmAA0AAQACAAEAAAAmAA4AAQACAAEAAAAnAA4AAQACAAEAAAAnAA0AAQACAAEAAAAnAA8AAQACAAEAAAAnAAwAAQACAAEAAAAoAAwAAQACAAEAAAApAA4AAQABAAEAAAApAA8AAQABAAEAAAApABAAAQABAAEAAAAjAAoAAQABAAAAAAAkAAoAAQABAAAAAAAlAAoAAQABAAAAAAAnAAoAAQABAAAAAAAoAAoAAQABAAAAAAApAAoAAQABAAAAAAAmAAoAAQABAAAAAAAjABAAAQABAAEAAAAjABEAAQACAAIAAAAgABAAAQABAAEAAAAgABEAAQACAAIAAAArAAoAAQABAAAAAAAsAAoAAQABAAAAAAAtAAoAAQABAAAAAAAuAAoAAQABAAAAAAA=")
 
-[node name="MovingBlock" parent="." index="8" unique_id=1504593245 instance=ExtResource("3_6cvei")]
+[node name="MovingBlock" parent="." index="8" instance=ExtResource("3_6cvei")]
 position = Vector2(441, 521)
 move_speed = 500.0
 
-[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" parent_id_path=PackedInt32Array(1504593245, 2078843788) index="0" unique_id=1206900178]
+[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" index="0"]
 position = Vector2(-0.5, -80.5)
 shape = SubResource("RectangleShape2D_2cbcq")
 
-[node name="DroppingBlock" parent="." index="9" unique_id=2117705523 instance=ExtResource("4_que50")]
+[node name="DroppingBlock" parent="." index="9" instance=ExtResource("4_que50")]
 position = Vector2(758, 444)
 respawn_time = 0.0
 
-[node name="NormalBlock" parent="." index="10" unique_id=2118917713 instance=ExtResource("5_hey2k")]
+[node name="NormalBlock" parent="." index="10" instance=ExtResource("5_hey2k")]
 position = Vector2(943, 521)
 
-[node name="NormalBlock2" parent="." index="11" unique_id=1842734218 instance=ExtResource("5_hey2k")]
+[node name="NormalBlock2" parent="." index="11" instance=ExtResource("5_hey2k")]
 position = Vector2(1005, 521)
 
-[node name="DroppingGround" parent="." index="12" unique_id=1441491989 instance=ExtResource("6_172wr")]
+[node name="DroppingGround" parent="." index="12" instance=ExtResource("6_172wr")]
 position = Vector2(1519, 612)
 drop_delay = 0.0
 shake_amount = 0.0
 respawn_time = 0.0
 
-[node name="SpikeMove" parent="." index="13" unique_id=758195686 instance=ExtResource("7_g2hoc")]
+[node name="SpikeMove" parent="." index="13" instance=ExtResource("7_g2hoc")]
 position = Vector2(2110, 572)
 collision_mask = 1
 move_speed = 600.0
 move_direction = Vector2(-1, 0)
 
-[node name="Img8639" type="Sprite2D" parent="." index="15" unique_id=1886773285]
+[node name="Img8639" type="Sprite2D" parent="." index="15"]
 position = Vector2(222, 567)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e3sih")
 
-[node name="Img8642" type="Sprite2D" parent="." index="16" unique_id=591260865]
+[node name="Img8642" type="Sprite2D" parent="." index="16"]
 material = SubResource("ShaderMaterial_2cbcq")
 position = Vector2(81, 424)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_2y5yt")
 
-[node name="Img8640" type="Sprite2D" parent="." index="17" unique_id=351354892]
+[node name="Img8640" type="Sprite2D" parent="." index="17"]
 position = Vector2(1267, 575)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("15_7nomh")
 
-[node name="Img8645" type="Sprite2D" parent="." index="18" unique_id=1346507296]
+[node name="Img8645" type="Sprite2D" parent="." index="18"]
 material = SubResource("ShaderMaterial_2cbcq")
 position = Vector2(1420, 436)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("16_1s4pk")
 
-[node name="Sign" parent="." index="19" unique_id=1684161716 instance=ExtResource("15_6dial")]
+[node name="Sign" parent="." index="19" instance=ExtResource("15_6dial")]
 position = Vector2(261, 551)
 dialog_text = "Never let off your guard ;)"
 
-[node name="Sun" parent="." index="20" unique_id=286137051 instance=ExtResource("16_7nomh")]
+[node name="Sun" parent="." index="20" instance=ExtResource("16_7nomh")]
 position = Vector2(1858, 114)
 
-[node name="Img8641" type="Sprite2D" parent="." index="21" unique_id=454516605]
+[node name="Img8641" type="Sprite2D" parent="." index="21"]
 position = Vector2(1174, 571)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("18_x2xxo")

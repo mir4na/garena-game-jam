@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://uqpx527ikvcj"]
+[gd_scene load_steps=32 format=3 uid="uid://uqpx527ikvcj"]
 
 [ext_resource type="Texture2D" uid="uid://llm80baohwbq" path="res://assets/bg.jpg" id="1_yk4f3"]
 [ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="2_cp0rv"]
@@ -15,9 +15,22 @@
 [ext_resource type="Texture2D" uid="uid://e7ncpwkdkvbp" path="res://assets/car.png" id="11_7ewpb"]
 [ext_resource type="Texture2D" uid="uid://dmeqrevjgp0js" path="res://assets/pager.png" id="14_g31h8"]
 [ext_resource type="Texture2D" uid="uid://dhsg3l4ejvchs" path="res://assets/note.png" id="15_hy5x3"]
+[ext_resource type="Shader" path="res://shaders/sawit.gdshader" id="16_sawit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osu2p"]
-size = Vector2(2511, 41)
+size = Vector2(3319.5, 41)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sawit"]
+shader = ExtResource("16_sawit")
+shader_parameter/speed = 0.78
+shader_parameter/minStrength = 0.303
+shader_parameter/maxStrength = 0.406
+shader_parameter/strengthScale = 100.0
+shader_parameter/interval = 3.5
+shader_parameter/detail = 1.0
+shader_parameter/distortion = 0.0
+shader_parameter/heightOffset = 0.0
+shader_parameter/offset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_py6g0"]
 size = Vector2(160, 256)
@@ -29,16 +42,10 @@ size = Vector2(157, 249)
 size = Vector2(161, 296)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g31h8"]
-size = Vector2(135.99997, 48)
+size = Vector2(83.999985, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lp0k0"]
-size = Vector2(135.99997, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hy5x3"]
-size = Vector2(304, 552)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifqri"]
-size = Vector2(304, 552)
+size = Vector2(83.999985, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmmei"]
 size = Vector2(344, 85)
@@ -48,9 +55,6 @@ size = Vector2(345, 81)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bee8o"]
 size = Vector2(276.36548, 109.331055)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_675ay"]
-size = Vector2(384, 549)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q41qf"]
 size = Vector2(373.66772, 195)
@@ -145,7 +149,7 @@ collision_mask = 2
 script = ExtResource("2_cp0rv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
-position = Vector2(1056, 592)
+position = Vector2(1460.25, 592)
 shape = SubResource("RectangleShape2D_osu2p")
 
 [node name="Player1" parent="." instance=ExtResource("3_rr1tt")]
@@ -170,6 +174,7 @@ rope_length = 150.0
 [node name="Area2D" type="Area2D" parent="ObstacleContainer/Iteration1"]
 
 [node name="Sawit" type="Sprite2D" parent="ObstacleContainer/Iteration1/Area2D"]
+material = SubResource("ShaderMaterial_sawit")
 position = Vector2(944, 96)
 rotation = 3.1412032
 scale = Vector2(0.4871541, 0.52777785)
@@ -188,13 +193,10 @@ shape = SubResource("RectangleShape2D_u7ckc")
 [node name="Area2D2" type="Area2D" parent="ObstacleContainer/Iteration1"]
 
 [node name="Sawit" type="Sprite2D" parent="ObstacleContainer/Iteration1/Area2D2"]
+material = SubResource("ShaderMaterial_sawit")
 position = Vector2(919.12506, 929)
 scale = Vector2(0.4871541, 0.52777785)
 texture = ExtResource("10_rr1tt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration1/Area2D2"]
-position = Vector2(912, 960)
-shape = SubResource("RectangleShape2D_py6g0")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="ObstacleContainer/Iteration1/Area2D2"]
 
@@ -202,22 +204,25 @@ shape = SubResource("RectangleShape2D_py6g0")
 position = Vector2(912.5, 980)
 shape = SubResource("RectangleShape2D_rg5ri")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration1/Area2D2"]
+polygon = PackedVector2Array(904, 1088, 904, 936, 840, 952, 840, 832, 976, 824, 984, 944, 936, 936, 944, 1104, 904, 1104)
+
 [node name="Area2D3" type="Area2D" parent="ObstacleContainer/Iteration1"]
 rotation = 1.5707964
 
 [node name="Car" type="Sprite2D" parent="ObstacleContainer/Iteration1/Area2D3"]
-position = Vector2(497.74994, -921.75)
-scale = Vector2(0.45228627, 0.4139785)
+position = Vector2(461.20172, -896.402)
+scale = Vector2(0.30696538, 0.23227243)
 texture = ExtResource("11_7ewpb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration1/Area2D3"]
-position = Vector2(499.99997, -920)
+position = Vector2(461.99997, -896)
 shape = SubResource("RectangleShape2D_g31h8")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="ObstacleContainer/Iteration1/Area2D3"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration1/Area2D3/StaticBody2D"]
-position = Vector2(499.99997, -920)
+position = Vector2(461.99997, -900)
 shape = SubResource("RectangleShape2D_lp0k0")
 
 [node name="Iteration2" type="Node2D" parent="ObstacleContainer"]
@@ -226,20 +231,14 @@ shape = SubResource("RectangleShape2D_lp0k0")
 position = Vector2(1016, 112)
 
 [node name="Sawit" type="Sprite2D" parent="ObstacleContainer/Iteration2/Area2D"]
+material = SubResource("ShaderMaterial_sawit")
 position = Vector2(992.0001, 216)
 rotation = 3.1412032
 scale = Vector2(0.7425083, 0.98558813)
 texture = ExtResource("10_rr1tt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration2/Area2D"]
-position = Vector2(1000, 172)
-shape = SubResource("RectangleShape2D_hy5x3")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="ObstacleContainer/Iteration2/Area2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration2/Area2D/StaticBody2D"]
-position = Vector2(1000, 172)
-shape = SubResource("RectangleShape2D_ifqri")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration2/Area2D"]
+polygon = PackedVector2Array(976, -112, 1032, -120, 1032, 200, 1120, 216, 1096, 384, 880, 408, 872, 184, 968, 200, 952, -120, 992, -120)
 
 [node name="Area2D2" type="Area2D" parent="ObstacleContainer/Iteration2"]
 position = Vector2(1016, 112)
@@ -264,13 +263,13 @@ shape = SubResource("RectangleShape2D_hxced")
 position = Vector2(1888, 0)
 
 [node name="Sawit" type="Sprite2D" parent="ObstacleContainer/Iteration3/Area2D2"]
+material = SubResource("ShaderMaterial_sawit")
 position = Vector2(1480.3677, 945.40466)
 scale = Vector2(0.45322794, 0.52777785)
 texture = ExtResource("10_rr1tt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration3/Area2D2"]
-position = Vector2(1486.1177, 968.40466)
-shape = SubResource("RectangleShape2D_py6g0")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration3/Area2D2"]
+polygon = PackedVector2Array(1456, 1096, 1464, 920, 1408, 968, 1400, 824, 1528, 840, 1544, 968, 1504, 960, 1504, 1112)
 
 [node name="Area2D3" type="Area2D" parent="ObstacleContainer/Iteration3"]
 position = Vector2(1888, 0)
@@ -292,12 +291,12 @@ shape = SubResource("RectangleShape2D_bee8o")
 [node name="Area2D" type="Area2D" parent="ObstacleContainer/Iteration4"]
 
 [node name="Sawit" type="Sprite2D" parent="ObstacleContainer/Iteration4/Area2D"]
+material = SubResource("ShaderMaterial_sawit")
 position = Vector2(4555.5, 604)
 texture = ExtResource("10_rr1tt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleContainer/Iteration4/Area2D"]
-position = Vector2(4560, 650.5)
-shape = SubResource("RectangleShape2D_675ay")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ObstacleContainer/Iteration4/Area2D"]
+polygon = PackedVector2Array(4416, 624, 4496, 936, 4584, 928, 4600, 584, 4712, 576, 4680, 400, 4400, 400, 4360, 520)
 
 [node name="Iteration5" type="Node2D" parent="ObstacleContainer"]
 
@@ -366,22 +365,23 @@ shape = SubResource("RectangleShape2D_kqmrt")
 [node name="Trigger1" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger1"]
-position = Vector2(1320, 536)
+position = Vector2(1464, 560)
 shape = SubResource("RectangleShape2D_sykev")
 
 [node name="Trigger2" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger2"]
-position = Vector2(2632, 552)
+position = Vector2(2744, 544)
 shape = SubResource("RectangleShape2D_sykev")
 
 [node name="Trigger3" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger3"]
-position = Vector2(5152, 576)
+position = Vector2(5272, 576)
 shape = SubResource("RectangleShape2D_sykev")
 
 [node name="Note" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(696, 528)
 texture = ExtResource("15_hy5x3")
 

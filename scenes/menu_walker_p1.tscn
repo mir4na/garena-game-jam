@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://menu_walker_p1"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://menu_walker_script" path="res://scripts/menu_walker.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/menu_walker.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bha8yeahld01u" path="res://assets/player1/idle1.png" id="2_idle1"]
 [ext_resource type="Texture2D" uid="uid://btk558l7tkagl" path="res://assets/player1/idle2.png" id="3_idle2"]
 [ext_resource type="Texture2D" uid="uid://pd4ysb0ft1sv" path="res://assets/player1/jump1.png" id="4_jump1"]

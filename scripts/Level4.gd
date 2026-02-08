@@ -101,6 +101,9 @@ var target_it5_area2d2: Area2D
 
 var surprise_target_initial_pos: Dictionary = {}
 
+var trigger_win_start_x: float = 0.0
+var win_platform_start_x: float = 0.0
+
 func _ready() -> void:
 	# FREEZE PLAYERS - They don't control themselves during intro
 	player1.set_physics_process(false)
@@ -157,6 +160,9 @@ func _ready() -> void:
 	# Connect MANUAL Win Nodes
 	trigger_win = get_node_or_null("TriggerWin")
 	win_platform = get_node_or_null("WinPlatform") 
+	
+	if trigger_win: trigger_win_start_x = trigger_win.position.x
+	if win_platform: win_platform_start_x = win_platform.position.x 
 	
 	# Setup Surprise Triggers
 	_setup_surprise_triggers() 
@@ -895,13 +901,22 @@ func _setup_surprise_triggers() -> void:
 	trigger2 = get_node_or_null("Trigger2")
 	trigger3 = get_node_or_null("Trigger3")
 	
-	if trigger1: trigger1.body_entered.connect(_on_trigger_1_entered)
-	if trigger2: trigger2.body_entered.connect(_on_trigger_2_entered)
-	if trigger3: trigger3.body_entered.connect(_on_trigger_3_entered)
+	if trigger1: 
+		trigger1.body_entered.connect(_on_trigger_1_entered)
+		trigger1.collision_mask = 15 # Detect Layers 1-4
+		trigger1.monitoring = true
+	if trigger2: 
+		trigger2.body_entered.connect(_on_trigger_2_entered)
+		trigger2.collision_mask = 15
+		trigger2.monitoring = true
+	if trigger3: 
+		trigger3.body_entered.connect(_on_trigger_3_entered)
+		trigger3.collision_mask = 15
+		trigger3.monitoring = true
 	
 	# Get Targets (In ObstacleContainer)
 	if obstacle_container:
-		target_it2_area2d2 = obstacle_container.get_node_or_null("Iteration2/Area2D2")
+		target_it2_area2d2 = obstacle_container.get_node_or_null("Iteration2/Area2D")
 		target_it3_area2d2 = obstacle_container.get_node_or_null("Iteration3/Area2D2")
 		target_it5_area2d = obstacle_container.get_node_or_null("Iteration5/Area2D")
 		target_it5_area2d2 = obstacle_container.get_node_or_null("Iteration5/Area2D2")
@@ -916,14 +931,14 @@ func _on_trigger_1_entered(body: Node) -> void:
 		print("trigger1")
 		trigger1.set_deferred("monitoring", false)
 		var tween = create_tween()
-		tween.tween_property(target_it2_area2d2, "global_position:y", target_it2_area2d2.global_position.y + 450, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(target_it2_area2d2, "global_position:y", target_it2_area2d2.global_position.y + 400, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_trigger_2_entered(body: Node) -> void:
 	if (body == player1 or body == player2) and target_it3_area2d2:
 		print("trigger2")
 		trigger2.set_deferred("monitoring", false)
 		var tween = create_tween()
-		tween.tween_property(target_it3_area2d2, "global_position:y", target_it3_area2d2.global_position.y - 450, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(target_it3_area2d2, "global_position:y", target_it3_area2d2.global_position.y - 400, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_trigger_3_entered(body: Node) -> void:
 	if (body == player1 or body == player2):
@@ -931,10 +946,10 @@ func _on_trigger_3_entered(body: Node) -> void:
 		trigger3.set_deferred("monitoring", false)
 		if target_it5_area2d:
 			var tween = create_tween()
-			tween.tween_property(target_it5_area2d, "global_position:y", target_it5_area2d.global_position.y - 450, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tween.tween_property(target_it5_area2d, "global_position:y", target_it5_area2d.global_position.y - 300, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		if target_it5_area2d2:
 			var tween = create_tween()
-			tween.tween_property(target_it5_area2d2, "global_position:y", target_it5_area2d2.global_position.y + 450, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tween.tween_property(target_it5_area2d2, "global_position:y", target_it5_area2d2.global_position.y + 300, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _reset_surprise_obstacles() -> void:
 	for target in surprise_target_initial_pos:
@@ -987,6 +1002,10 @@ func _reset_to_buffer() -> void:
 	
 	# Reset Surprise Obstacles
 	_reset_surprise_obstacles()
+	
+	# Reset Win Nodes
+	if trigger_win: trigger_win.position.x = trigger_win_start_x
+	if win_platform: win_platform.position.x = win_platform_start_x
 	
 	# Hide control hints
 	if note_sprite:
