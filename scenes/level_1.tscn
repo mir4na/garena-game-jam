@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b08m5iyuo0eyx" path="res://assets/platform.png" id="11_1sb0y"]
 [ext_resource type="PackedScene" uid="uid://rbdxmvum81rx" path="res://scenes/sign.tscn" id="15_6dial"]
 [ext_resource type="Texture2D" uid="uid://bpssw2k1s2ard" path="res://assets/tileset/IMG_8361.png" id="16_igmy8"]
-[ext_resource type="AudioStream" uid="uid://cvwm8gtrtnitu" path="res://assets/sfx/main_music.mp3" id="19_2cbcq"]
+[ext_resource type="AudioStream" uid="uid://wra84d6caljw" path="res://assets/sfx/02. Lively City.mp3" id="19_2cbcq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
 shader = ExtResource("4_scroll")

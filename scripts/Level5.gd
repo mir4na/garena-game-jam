@@ -89,6 +89,8 @@ var checkpoint_p1: Vector2
 var checkpoint_p2: Vector2
 
 func _ready() -> void:
+	
+	$MainMusic.play()
 	current_lives = player_lives
 	
 	# Get node references - flexible to handle different scene structures
@@ -330,6 +332,7 @@ func _on_flag_touched(body: Node2D) -> void:
 func _animate_flag_to_sun() -> void:
 	if not flag or not sun_boss:
 		_start_transition()
+		
 		return
 	
 	var tween = create_tween()
@@ -348,6 +351,9 @@ func _start_transition() -> void:
 	# Sun becomes ANGRY - turn red and play angry animation!
 	if sun_anim:
 		sun_anim.play("angry")
+	
+	$MainMusic.stop()
+	$IntenseMusic.play()
 	
 	# Tint sun red
 	if sun_sprite:
@@ -645,7 +651,7 @@ func _win_level() -> void:
 		timer_label.text = ""
 	
 	await get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	SceneTransition.change_scene("res://scenes/main_menu.tscn")
 
 ## ========== DAMAGE HANDLING ==========
 
@@ -715,9 +721,10 @@ func update_checkpoint() -> void:
 	checkpoint_p2 = player2.global_position
 
 func _update_ui() -> void:
-	if lives_label:
-		lives_label.text = "LIVES: %d" % current_lives
-
+	#if lives_label:
+		#lives_label.text = "LIVES: %d" % current_lives
+	pass
+	
 ## ========== POLISHED TIMER ==========
 
 var last_timer_second: int = -1

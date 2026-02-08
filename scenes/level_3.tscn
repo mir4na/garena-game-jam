@@ -20,7 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://cn710ye3wufgc" path="res://assets/awan2.png" id="16_q7pjq"]
 [ext_resource type="PackedScene" uid="uid://c0nx1wiowyuv8" path="res://scenes/sun.tscn" id="17_wa6ex"]
 [ext_resource type="PackedScene" uid="uid://rbdxmvum81rx" path="res://scenes/sign.tscn" id="20_wa6ex"]
-[ext_resource type="AudioStream" uid="uid://cvwm8gtrtnitu" path="res://assets/sfx/main_music.mp3" id="21_sx8yt"]
+[ext_resource type="AudioStream" uid="uid://wra84d6caljw" path="res://assets/sfx/02. Lively City.mp3" id="21_k5r18"]
+[ext_resource type="AudioStream" uid="uid://bass0dak5ee6v" path="res://assets/sfx/27. The Evil One.mp3" id="22_w5nkq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sx8yt"]
 shader = ExtResource("2_q7pjq")
@@ -285,11 +286,11 @@ position = Vector2(960, 540)
 position = Vector2(1858, 114)
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=25964484]
-stream = ExtResource("21_sx8yt")
+stream = ExtResource("21_k5r18")
 volume_db = -10.0
 
 [node name="IntenseMusic" type="AudioStreamPlayer" parent="." unique_id=1601994568]
-stream = ExtResource("21_sx8yt")
+stream = ExtResource("22_w5nkq")
 volume_db = -10.0
 
 [connection signal="body_entered" from="KillZone" to="." method="_on_kill_zone_body_entered"]

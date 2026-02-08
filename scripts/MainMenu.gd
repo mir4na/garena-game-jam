@@ -214,11 +214,5 @@ func _on_play_pressed():
 	GameManager.set_player_style(1, player1_selected)
 	GameManager.set_player_style(2, player2_selected)
 	
-	# Smooth fade out before level transition
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN)
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "modulate:a", 0.0, 0.4)
-	tween.tween_callback(func():
-		get_tree().change_scene_to_file("res://scenes/Level1.tscn")
-	)
+	# Use SceneTransition for smooth fade
+	SceneTransition.change_scene("res://scenes/Level1.tscn")

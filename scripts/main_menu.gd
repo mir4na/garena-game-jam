@@ -15,6 +15,9 @@ var parallax_smooth: float = 6.0
 var screen_center: Vector2 = Vector2(960, 540)
 var current_parallax_offset: Vector2 = Vector2.ZERO
 
+func _ready() -> void:
+	$AudioStreamPlayer.play()
+
 func _process(delta: float) -> void:
 	# Calculate parallax offset based on mouse position
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -32,7 +35,7 @@ func _process(delta: float) -> void:
 		title.position = title_base_pos + current_parallax_offset * parallax_title_strength
 
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
+	SceneTransition.change_scene("res://scenes/level_1.tscn")
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()

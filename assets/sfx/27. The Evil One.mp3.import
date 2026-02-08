@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bass0dak5ee6v"
+path="res://.godot/imported/27. The Evil One.mp3-c1f6d55e4cab4177a348a581df0702e1.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/27. The Evil One.mp3"
+dest_files=["res://.godot/imported/27. The Evil One.mp3-c1f6d55e4cab4177a348a581df0702e1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

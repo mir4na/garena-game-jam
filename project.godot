@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scripts/GameManager.gd"
 AudioGlobal="*uid://cvoa7csw0sysr"
+SceneTransition="*res://scripts/SceneTransition.gd"
 
 [display]
 

@@ -114,14 +114,8 @@ func _on_door_body_entered(body):
 		_level_complete()
 
 func _level_complete() -> void:
-	# Smooth fade to next level
-	if death_overlay:
-		death_overlay.color = Color(0, 0, 0, 0)
-		var tween = create_tween()
-		tween.tween_property(death_overlay, "color:a", 1.0, 0.5)
-		tween.tween_callback(func():
-			get_tree().change_scene_to_file("res://scenes/Level2.tscn")
-		)
+	# Use SceneTransition for smooth fade
+	SceneTransition.change_scene("res://scenes/Level2.tscn")
 
 func _on_death_area_body_entered(body):
 	if body == player1 or body == player2:

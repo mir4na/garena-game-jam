@@ -55,6 +55,7 @@ var checkpoint_p2: Vector2
 
 func _ready() -> void:
 	# Create death overlay for visual feedback
+	$MainMusic.play()
 	_create_death_overlay()
 	
 	# Setup hurt sound
@@ -86,6 +87,8 @@ func _ready() -> void:
 	# Ground mulai datar
 	if ground:
 		ground.rotation = 0.0
+	
+	
 	
 	if instruction_label:
 		instruction_label.text = "Ambil flag di ujung kanan!"
@@ -137,6 +140,8 @@ func _start_tilt_right() -> void:
 	
 	# Animasi flag langsung ke tengah atas
 	_move_flag_to_top_center()
+	$IntenseMusic.play()
+	$MainMusic.stop()
 	
 	if instruction_label:
 		instruction_label.text = "HAH?! Flag kabur!\nDunia MIRING KANAN!\nLARI KE KIRI!"

@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://dkqbuj6btlogi" path="res://assets/tileset/IMG_8631.png" id="15_i670b"]
 [ext_resource type="Texture2D" uid="uid://dscua4q81s4cn" path="res://assets/tileset/IMG_8632.png" id="16_csif5"]
 [ext_resource type="Texture2D" uid="uid://ctwxoop44edyh" path="res://assets/sawit.png" id="17_i670b"]
+[ext_resource type="AudioStream" uid="uid://wra84d6caljw" path="res://assets/sfx/02. Lively City.mp3" id="24_5kbkd"]
+[ext_resource type="AudioStream" uid="uid://c7i5jcwm6u6xo" path="res://assets/sfx/26. Demon King Castle (full).mp3" id="25_u1mn7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_csif5"]
 shader = ExtResource("2_xxvx7")
@@ -262,6 +264,7 @@ rope_length = 180.0
 [node name="UI" type="CanvasLayer" parent="." unique_id=94938406]
 
 [node name="MessageLabel" type="Label" parent="UI" unique_id=1352513441]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -301,5 +304,11 @@ shape = SubResource("RectangleShape2D_vorqn")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=622662940]
 position = Vector2(147, -1255)
 shape = SubResource("RectangleShape2D_vorqn")
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=1995482728]
+stream = ExtResource("24_5kbkd")
+
+[node name="IntenseMusic" type="AudioStreamPlayer" parent="." unique_id=390595372]
+stream = ExtResource("25_u1mn7")
 
 [connection signal="body_entered" from="FlagTrigger" to="." method="_on_flag_touched"]

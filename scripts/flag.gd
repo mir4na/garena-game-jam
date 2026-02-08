@@ -5,9 +5,9 @@ extends Area2D
 func advance_to_next_level():
 	var scene_file_name = "res://scenes/level_" + str(level + 1) + ".tscn"
 	if level >= 5:
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		SceneTransition.change_scene("res://scenes/main_menu.tscn")
 	else:
-		get_tree().change_scene_to_file(scene_file_name)
+		SceneTransition.change_scene(scene_file_name)
 
 
 func _on_body_entered(body: Node2D) -> void:
