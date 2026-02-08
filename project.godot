@@ -22,8 +22,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
+AudioGlobal="*uid://cvoa7csw0sysr"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[gui]
+
+theme/custom_font="uid://d3vs5sbyhxroy"
