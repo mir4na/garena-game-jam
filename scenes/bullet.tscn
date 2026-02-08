@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bjqeraxno2j64"]
+[gd_scene load_steps=0 format=3 uid="uid://bjqeraxno2j64"]
 
 [ext_resource type="Script" uid="uid://chob3rv84gisl" path="res://scripts/bullet.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bcfavdwwqm5gd" path="res://assets/IMG_8662.png" id="2_y25gk"]

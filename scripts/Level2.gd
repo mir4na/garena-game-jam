@@ -79,8 +79,10 @@ func _ready():
 	if box:
 		box_start_pos = box.global_position
 		# TUE BOX PHYSICS: Heavier, no bounce
-		# User requested "harus didorong/dibody 2 player" -> Very heavy
-		box.mass = 100.0
+		# Initially set to IMMOVABLE (Wait for 2 players to push)
+		box.mass = 10000.0
+		box.angular_damp = 50.0 # Prevent rotation
+		
 		# If physics material exists, modify it
 		if box.physics_material_override:
 			box.physics_material_override.friction = 1.0 # High friction
@@ -91,6 +93,10 @@ func _ready():
 			mat.friction = 1.0
 			mat.bounce = 0.0
 			box.physics_material_override = mat
+
+		# Enable contact monitoring for "2-player push" logic
+		box.contact_monitor = true
+		box.max_contacts_reported = 4
 
 		# Also ensure it cannot rotate too fast? (AngularDamp)
 		box.angular_damp = 5.0
@@ -150,45 +156,84 @@ func _ready():
 	_setup_info_sign()
 
 	# Setup Drop Text Trap (Already in scene)
+	# Setup Drop Text Trap (Already in scene)
 	if trigger_text:
 		trigger_text_start_pos = trigger_text.position
+		# FORCE COLLISION MASK: Detect Layer 2 (Players)
+		trigger_text.collision_mask = 2
+		trigger_text.collision_layer = 0
 		if not trigger_text.body_entered.is_connected(_on_trigger_text_entered):
 			trigger_text.body_entered.connect(_on_trigger_text_entered)
+		print("TriggerText Setup: Mask: ", trigger_text.collision_mask, " Pos: ", trigger_text.global_position)
+
+	if text_killer:
+		# Force maximum visibility
+		text_killer.z_index = 4096
+		text_killer.modulate = Color(1, 0, 0, 1) # Red for visibility
+		print("TextKiller Setup: Z: ", text_killer.z_index, " Pos: ", text_killer.global_position)
+
+func _physics_process(_delta):
+	# LOGIC: Box requires 2 Players to push
+	if box:
+		var bodies = box.get_colliding_bodies()
+		var p1_touching = false
+		var p2_touching = false
+		
+		for b in bodies:
+			if b == player1: p1_touching = true
+			if b == player2: p2_touching = true
+		
+		if p1_touching and p2_touching:
+			# Both pushing -> Make it heavy but movable
+			box.mass = 60.0 # Heavy but manageable by 2 players (force 100)
+			box.physics_material_override.friction = 0.5 # Allow slide
+		else:
+			# Just one or none -> IMMOVABLE
+			box.mass = 10000.0 # Extremely heavy
+			box.physics_material_override.friction = 1.0 # Sticky
+			# Kill residual velocity if one player stops pushing
+			if not (p1_touching and p2_touching) and box.linear_velocity.length() > 10:
+				box.linear_velocity = box.linear_velocity.lerp(Vector2.ZERO, 0.1)
 
 func _setup_info_sign():
-	# Look for existing InfoSign node
-	var info_sign = get_node_or_null("InfoSign")
+	# Look for existing SignInfo node (scene uses "SignInfo" not "InfoSign")
+	var info_sign = get_node_or_null("SignInfo")
 	if not info_sign:
-		# Search recursively or check common locations
+		info_sign = get_node_or_null("InfoSign")
+	if not info_sign:
 		info_sign = get_node_or_null("Background/InfoSign")
 	
-	# If not found, try to attach to the visual Sign sprite
+	# If still not found, create dynamically on Sign sprite
 	if not info_sign:
 		var sign_sprite = get_node_or_null("Background/Sign")
+		if not sign_sprite:
+			sign_sprite = get_node_or_null("SignInfo/Sign")
 		if sign_sprite:
-			print("InfoSign node not found, creating dynamic trigger on 'Sign' sprite...")
+			print("Creating dynamic SignInfo trigger...")
 			info_sign = Area2D.new()
-			info_sign.name = "InfoSign_Dynamic"
-			# Convert sprite global position to local? Or just add as child of Level2
-			# Adding as child of Level2 is safest for coordinate space
+			info_sign.name = "SignInfo_Dynamic"
 			add_child(info_sign)
 			info_sign.global_position = sign_sprite.global_position
 			
 			var col = CollisionShape2D.new()
 			var rect = RectangleShape2D.new()
-			rect.size = Vector2(100, 100) # Reasonable trigger size
+			rect.size = Vector2(120, 120)
 			col.shape = rect
 			info_sign.add_child(col)
 			
-			# Setup collision mask to detect players
 			info_sign.collision_layer = 0
-			info_sign.collision_mask = 2 # Players
+			info_sign.collision_mask = 2
 	
 	if info_sign:
+		# Connect signals for SignInfo
 		if not info_sign.body_entered.is_connected(_on_info_sign_entered):
 			info_sign.body_entered.connect(_on_info_sign_entered)
 		if not info_sign.body_exited.is_connected(_on_info_sign_exited):
 			info_sign.body_exited.connect(_on_info_sign_exited)
+		# Ensure collision mask is set
+		info_sign.collision_layer = 0
+		info_sign.collision_mask = 2
+		print("SignInfo connected at: ", info_sign.global_position)
 
 func _on_info_sign_entered(body):
 	if body == player1 or body == player2:
@@ -243,8 +288,7 @@ func _update_button_state():
 	if something_on_button and not is_button_pressed:
 		is_button_pressed = true
 		_reveal_moving_platform()
-		# As requested: "warning label langsung muncul saja" when button is pressed
-		_show_warning()
+		# Warning now shows via SignInfo collision, not button
 	
 	# Button released -> hide platform
 	if not something_on_button and is_button_pressed:

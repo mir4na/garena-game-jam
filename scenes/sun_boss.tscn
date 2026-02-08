@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cm5t8cay2alqg"]
+[gd_scene load_steps=0 format=3 uid="uid://cm5t8cay2alqg"]
 
 [ext_resource type="Script" uid="uid://bhqokoo04564p" path="res://scripts/sun_boss.gd" id="1_script"]
 

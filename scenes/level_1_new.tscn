@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=4 uid="uid://bu65ei2emjkkb"]
+
+[ext_resource type="PackedScene" uid="uid://da1xty3fptsa1" path="res://scenes/level_base.tscn" id="1_8lckh"]
+[ext_resource type="PackedScene" uid="uid://dugij7m2sitep" path="res://scenes/moving_block.tscn" id="2_ite7j"]
+[ext_resource type="Script" uid="uid://646xge22d10n" path="res://scripts/Chain.gd" id="4_b4fgl"]
+[ext_resource type="PackedScene" uid="uid://3ccehdmfmhue" path="res://scenes/dropping_ground.tscn" id="7_g5rll"]
+[ext_resource type="PackedScene" uid="uid://spikemove001" path="res://scenes/SpikeMove.tscn" id="8_f76hb"]
+[ext_resource type="PackedScene" uid="uid://d0gs6p2dmo8f0" path="res://scenes/DroppingBlock.tscn" id="8_gba4x"]
+[ext_resource type="PackedScene" uid="uid://gc1jfo64i1xj" path="res://scenes/normal_block.tscn" id="9_f76hb"]
+[ext_resource type="PackedScene" uid="uid://bb2w83ex3k24u" path="res://scenes/hidden_spike.tscn" id="10_y84te"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gba4x"]
+resource_local_to_scene = true
+size = Vector2(91, 223)
+
+[node name="LevelBase" instance=ExtResource("1_8lckh")]
+
+[node name="Background" parent="." index="0"]
+offset_left = 7.0
+offset_top = 2.0
+offset_right = 1927.0
+offset_bottom = 1082.0
+
+[node name="Checkpoint" parent="." index="2"]
+position = Vector2(116, 566)
+
+[node name="Player1" parent="." index="3"]
+position = Vector2(161, 570)
+
+[node name="Player2" parent="." index="4"]
+position = Vector2(161, 570)
+player_id = 2
+
+[node name="Chain" type="Node2D" parent="." index="5"]
+script = ExtResource("4_b4fgl")
+player1_path = NodePath("../Player1")
+player2_path = NodePath("../Player2")
+rope_length = 150.0
+
+[node name="TileMapLayer" parent="." index="6"]
+tile_map_data = PackedByteArray("AAAAAAsAAAAAAAIAAAAAAAwAAAAAAAIAAAAAAA0AAAAAAAIAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAIAAAAAABAAAAAAAAIAAAAAABEAAAAAAAMAAAAFABEAAAACAAMAAAAEABEAAAABAAMAAAADABEAAAABAAMAAAACABEAAAABAAMAAAABABEAAAABAAMAAAACABAAAAABAAIAAAAdAAoAAAABAAEAAAAdAAsAAAABAAIAAAAdAAwAAAABAAIAAAAdAA0AAAABAAIAAAAdAA4AAAABAAIAAAAdAA8AAAABAAIAAAAcAA8AAAABAAIAAAAcAA4AAAABAAIAAAAcAA0AAAABAAIAAAAcAAwAAAABAAIAAAAcAAsAAAABAAIAAAAcAAoAAAABAAEAAAAeAA0AAAACAAIAAAAeAA4AAAACAAIAAAAeAAwAAAACAAIAAAAeAAsAAAACAAIAAAAeAA8AAAACAAIAAAAdABAAAAABAAIAAAAcABAAAAABAAIAAAAcABEAAAABAAMAAAAeABAAAAACAAIAAAAeABEAAAACAAMAAAAdABEAAAABAAMAAAAeAAoAAAACAAEAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAACAAIAAAABABAAAAABAAIAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAAEAA4AAAABAAIAAAAFAAoAAAACAAEAAAAFAA0AAAACAAIAAAAFAA4AAAACAAIAAAAFAAwAAAACAAIAAAAFAAsAAAACAAIAAAADAA0AAAABAAIAAAADAAwAAAABAAIAAAACAAwAAAABAAIAAAACAAsAAAABAAIAAAABAAsAAAABAAIAAAABAAoAAAABAAEAAAACAA0AAAABAAIAAAACAAoAAAABAAEAAAADAAoAAAABAAEAAAADAAsAAAABAAIAAAACAA4AAAABAAIAAAABAA0AAAABAAIAAAABAAwAAAABAAIAAAADAA4AAAABAAIAAAAEAA8AAAABAAIAAAAFAA8AAAACAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA4AAAABAAIAAAABAA8AAAABAAIAAAAAAAoAAAAAAAEAAAAiAAoAAAABAAEAAAAhAAoAAAABAAEAAAAgAAoAAAABAAEAAAAfAAoAAAABAAEAAAAVAAoAAAABAAEAAAAVAAsAAAABAAIAAAAVAAwAAAABAAIAAAAVAA0AAAABAAIAAAAVAA4AAAABAAIAAAAVAA8AAAABAAIAAAAVABAAAAABAAIAAAAVABEAAAABAAMAAAAWAAoAAAABAAEAAAAWAAsAAAABAAIAAAAWAAwAAAABAAIAAAAWAA0AAAABAAIAAAAWAA4AAAABAAIAAAAWAA8AAAABAAIAAAAWABAAAAABAAIAAAAWABEAAAABAAMAAAAXAAoAAAABAAEAAAAXAAsAAAABAAIAAAAXAAwAAAABAAIAAAAXAA0AAAABAAIAAAAXAA4AAAABAAIAAAAXAA8AAAABAAIAAAAXABAAAAABAAIAAAAXABEAAAABAAMAAAAUAAoAAAAAAAEAAAAUAAsAAAAAAAIAAAAUAAwAAAAAAAIAAAAUAA0AAAAAAAIAAAAUAA4AAAAAAAIAAAAUAA8AAAAAAAIAAAAUABAAAAAAAAIAAAAUABEAAAAAAAMAAAAaAAsAAAABAAIAAAAaAAwAAAABAAIAAAAaAA0AAAABAAIAAAAaAA4AAAABAAIAAAAaAA8AAAABAAIAAAAaABAAAAABAAIAAAAaABEAAAABAAMAAAAbAAsAAAABAAIAAAAbAAwAAAABAAIAAAAbAA0AAAABAAIAAAAbAA4AAAABAAIAAAAbAA8AAAABAAIAAAAbABAAAAABAAIAAAAbABEAAAABAAMAAAAaAAoAAAABAAEAAAAbAAoAAAABAAEAAAA=")
+
+[node name="MovingBlock" parent="." index="7" instance=ExtResource("2_ite7j")]
+position = Vector2(441, 521)
+move_speed = 500.0
+
+[node name="CollisionShape2D" parent="MovingBlock/MoveTrigger" index="0"]
+position = Vector2(-0.5, -80.5)
+shape = SubResource("RectangleShape2D_gba4x")
+
+[node name="DroppingBlock" parent="." index="8" instance=ExtResource("8_gba4x")]
+position = Vector2(758, 444)
+respawn_time = 0.0
+
+[node name="NormalBlock" parent="." index="9" instance=ExtResource("9_f76hb")]
+position = Vector2(941, 521)
+
+[node name="NormalBlock2" parent="." index="10" instance=ExtResource("9_f76hb")]
+position = Vector2(1005, 521)
+
+[node name="HiddenSpike" parent="." index="11" instance=ExtResource("10_y84te")]
+position = Vector2(927, 491)
+
+[node name="DroppingGround" parent="." index="12" instance=ExtResource("7_g5rll")]
+position = Vector2(1519, 612)
+drop_delay = 0.0
+shake_amount = 0.0
+respawn_time = 0.0
+
+[node name="SpikeMove" parent="." index="13" instance=ExtResource("8_f76hb")]
+position = Vector2(2110, 591)
+move_speed = 800.0
+move_direction = Vector2(-1, 0)
+
+[editable path="MovingBlock"]
+[editable path="DroppingBlock"]

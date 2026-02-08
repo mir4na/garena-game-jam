@@ -20,6 +20,7 @@ var player2: CharacterBody2D
 @export var rope_width: float = 4.0
 @export var rope_color: Color = Color(0.55, 0.35, 0.2)  # Brown rope
 @export var tension_color: Color = Color.ORANGE_RED
+@export var physics_enabled: bool = true
 
 # Visual rope points
 var rope_points: Array[Vector2] = []
@@ -49,7 +50,9 @@ func _physics_process(delta: float) -> void:
 	if not is_initialized or not player1 or not player2:
 		return
 	
-	_apply_pico_park_constraint(delta)
+	if physics_enabled:
+		_apply_pico_park_constraint(delta)
+	
 	_update_rope_visual()
 
 func _apply_pico_park_constraint(_delta: float) -> void:

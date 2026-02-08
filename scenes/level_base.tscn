@@ -1,11 +1,11 @@
-[gd_scene format=4 uid="uid://da1xty3fptsa1"]
+[gd_scene load_steps=17 format=4 uid="uid://da1xty3fptsa1"]
 
 [ext_resource type="Script" uid="uid://yuww3d2tuiox" path="res://scripts/kill_zone.gd" id="1_548ah"]
-[ext_resource type="Shader" uid="uid://dmaq7dryhvamx" path="res://shaders/scroll_background.gdshader" id="1_vm68j"]
+[ext_resource type="Shader" path="res://shaders/scroll_background.gdshader" id="1_vm68j"]
 [ext_resource type="Texture2D" uid="uid://oj482pgdflbk" path="res://assets/background.jpg" id="2_6k8qy"]
 [ext_resource type="PackedScene" uid="uid://b8d8d8d8d8d8" path="res://scenes/Player.tscn" id="2_osu2p"]
 [ext_resource type="Texture2D" uid="uid://b0kawc7eyibob" path="res://assets/tileset/IMG_8601.png" id="3_bkdr1"]
-[ext_resource type="PackedScene" uid="uid://dcagtpnah3328" path="res://scenes/flag.tscn" id="7_8n3nq"]
+[ext_resource type="PackedScene" path="res://scenes/flag.tscn" id="7_8n3nq"]
 [ext_resource type="Texture2D" uid="uid://dkqbuj6btlogi" path="res://assets/tileset/IMG_8631.png" id="7_evabm"]
 [ext_resource type="Shader" uid="uid://bqfvdsmdxonph" path="res://shaders/squigglevision.gdshader" id="8_2v7b3"]
 [ext_resource type="Texture2D" uid="uid://dscua4q81s4cn" path="res://assets/tileset/IMG_8632.png" id="8_qurbw"]
@@ -99,9 +99,9 @@ shader_parameter/scale = Vector2(1, 1)
 shader_parameter/strength = 1.0
 shader_parameter/fps = 6.0
 
-[node name="LevelBase" type="Node2D" unique_id=856221967]
+[node name="LevelBase" type="Node2D"]
 
-[node name="Background" type="TextureRect" parent="." unique_id=1158967320]
+[node name="Background" type="TextureRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_evabm")
 custom_minimum_size = Vector2(1920, 1080)
@@ -109,29 +109,29 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("2_6k8qy")
 
-[node name="KillZone" type="Area2D" parent="." unique_id=1155490085]
+[node name="KillZone" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_548ah")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1686546298]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
 position = Vector2(959.5, 1103.5)
 shape = SubResource("RectangleShape2D_osu2p")
 
-[node name="Checkpoint" type="Node2D" parent="." unique_id=2049609378]
+[node name="Checkpoint" type="Node2D" parent="."]
 
-[node name="Player1" parent="." unique_id=1160041384 instance=ExtResource("2_osu2p")]
+[node name="Player1" parent="." instance=ExtResource("2_osu2p")]
 collision_mask = 1
 
-[node name="Player2" parent="." unique_id=8277381 instance=ExtResource("2_osu2p")]
+[node name="Player2" parent="." instance=ExtResource("2_osu2p")]
 collision_mask = 1
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=327613252]
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAAAAA4AAQAAAAEAAAAAAA8AAQAAAAEAAAAAABAAAQAAAAEAAAAAABEAAQAAAAIAAAAFABEAAQACAAIAAAAEABEAAQABAAIAAAADABEAAQABAAIAAAACABEAAQABAAIAAAABABEAAQABAAIAAAACABAAAQABAAEAAAAZAAoAAQABAAAAAAAZAAsAAQACAAEAAAAZAAwAAQACAAEAAAAYAA0AAQAAAAEAAAAYAA4AAQAAAAEAAAAYAAwAAQAAAAEAAAAYAAsAAQAAAAEAAAAYAAoAAQAAAAAAAAAZAA0AAQACAAEAAAAZAA4AAQACAAEAAAAdAAoAAQACAAAAAAAdAAsAAQACAAEAAAAdAAwAAQACAAEAAAAdAA0AAQACAAEAAAAdAA4AAQACAAEAAAAdAA8AAQACAAEAAAAcAA8AAQACAAEAAAAcAA4AAQACAAEAAAAcAA0AAQACAAEAAAAcAAwAAQACAAEAAAAcAAsAAQACAAEAAAAcAAoAAQACAAAAAAAeAA0AAQADAAEAAAAeAA4AAQADAAEAAAAeAAwAAQADAAEAAAAeAAsAAQADAAEAAAAeAA8AAQADAAEAAAAdABAAAQACAAEAAAAcABAAAQACAAEAAAAZABAAAQACAAEAAAAYABAAAQAAAAEAAAAYABEAAQAAAAIAAAAZABEAAQABAAIAAAAZAA8AAQACAAEAAAAYAA8AAQAAAAEAAAAcABEAAQABAAIAAAAeABAAAQADAAEAAAAeABEAAQADAAIAAAAdABEAAQABAAIAAAAeAAoAAQADAAAAAAADABAAAQABAAEAAAAEABAAAQABAAEAAAAFABAAAQACAAEAAAABABAAAQABAAEAAAAEAAoAAQABAAAAAAAEAAsAAQABAAEAAAAEAAwAAQABAAEAAAAEAA0AAQABAAEAAAAEAA4AAQABAAEAAAAFAAoAAQACAAAAAAAFAA0AAQACAAEAAAAFAA4AAQABAAEAAAAFAAwAAQACAAEAAAAFAAsAAQACAAEAAAADAA0AAQABAAEAAAADAAwAAQABAAEAAAACAAwAAQABAAEAAAACAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAoAAQABAAAAAAACAA0AAQABAAEAAAACAAoAAQABAAAAAAADAAoAAQABAAAAAAADAAsAAQABAAEAAAACAA4AAQABAAEAAAABAA0AAQABAAEAAAABAAwAAQABAAEAAAADAA4AAQABAAEAAAAEAA8AAQABAAEAAAAFAA8AAQACAAEAAAADAA8AAQABAAEAAAACAA8AAQABAAEAAAABAA4AAQABAAEAAAABAA8AAQABAAEAAAAAAAoAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_8rhjg")
 
-[node name="Flag" parent="." unique_id=1000268655 instance=ExtResource("7_8n3nq")]
+[node name="Flag" parent="." instance=ExtResource("7_8n3nq")]
 material = SubResource("ShaderMaterial_6k8qy")
 position = Vector2(1834, 566)
 
